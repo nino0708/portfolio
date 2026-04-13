@@ -1,6 +1,6 @@
 project_name         = "contact-form"
-domain_name          = "kktestkk.com"
-site_domain_name     = "kktestkk.com"
+domain_name          = "www.udemytestnino.com"
+site_domain_name     = "www.udemytestnino.com"
 s3_bucket_name       = "20260412-aws-s3-test1"
 ses_from_email       = "2026awstest@gmail.com"
 operator_email       = "kazuhiro19851013@hotmail.com"

@@ -1,6 +1,7 @@
 resource "aws_cloudfront_distribution" "site_distribution" {
   enabled             = true
   default_root_object = var.default_root_object
+
   aliases             = [var.site_domain_name]
 
   origin {
