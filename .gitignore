@@ -1,0 +1,10 @@
+# Terraformキャッシュ・プロバイダー
+.terraform/
+.terraform.lock.hcl
+
+# tfstateファイル（機密情報含む）
+*.tfstate
+*.tfstate.backup
+
+# 機密情報
+*.tfvars
