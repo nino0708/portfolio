@@ -1,0 +1,8 @@
+project_name         = "contact-form"
+domain_name          = "www.udemytestnino.com"
+site_domain_name     = "www.udemytestnino.com"
+s3_bucket_name       = "20260412-aws-s3-test1"
+ses_from_email       = "2026awstest@gmail.com"
+operator_email       = "kazuhiro19851013@hotmail.com"
+lambda_function_name = "contact-form-handler"
+dynamodb_table_name  = "contact-form-table"
