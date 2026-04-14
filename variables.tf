@@ -42,13 +42,9 @@ variable "domain_name" {
 variable "site_domain_name" {
   description = "cloudfront_alias_domain_for_website"
   type        = string
-<<<<<<< HEAD
 }
 
 variable "default_root_object" {
   description = "CloudFront distribution default root object"
   type        = string
 }
-=======
-}
->>>>>>> 5cf454c391979baf9c864a93f9212ccb323fc297
