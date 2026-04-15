@@ -11,21 +11,21 @@ https://nino0708.github.io/portfolio/HTMLfiles/admin.html
 ![alt text](images/architecture.png)
 
 
-##(構成概要)
-1.ユーザーがhtmlフォームに情報を入力<br>
-2.htmlへはhttpsで接続<br>
-3.htmlへのアクセスは独自ドメイン<br>
-4.入力された情報はDBに保存<br>
+(構成概要)<br>
+1.ユーザーがhtmlフォームに情報を入力<br><br>
+2.htmlへはhttpsで接続<br><br>
+3.htmlへのアクセスは独自ドメイン<br><br>
+4.入力された情報はDBに保存<br><br>
 5.DBに書き込まれた情報をオペレーターにメールで通知<br>
 -----
 -----
-##構図：
+構図：
 <p>1.静的Web Pageの提供<br>
 ユーザー→Route53→CloudFront(HTTPS)→S3(静的html)</p>
 <p>2.問い合わせ内容の送信<br>
 ユーザーがフォーム送信→API Gateway(REST API)(HTTPS)→Lamda→DynamoDB/SESでメール送信</p>
 -----
------
+-----<br>
 サービス選定：
 ・CloudFront+S3
 選定理由：
