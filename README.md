@@ -11,7 +11,7 @@ https://nino0708.github.io/portfolio/HTMLfiles/admin.html
 ![alt text](images/architecture.png)
 
 
-(構成概要)<br>
+##(構成概要)
 1.ユーザーがhtmlフォームに情報を入力<br>
 2.htmlへはhttpsで接続<br>
 3.htmlへのアクセスは独自ドメイン<br>
@@ -19,10 +19,10 @@ https://nino0708.github.io/portfolio/HTMLfiles/admin.html
 5.DBに書き込まれた情報をオペレーターにメールで通知<br>
 -----
 -----
-構図：<br>
-<p>１：静的Web Pageの提供<br>
+##構図：
+<p>1.静的Web Pageの提供<br>
 ユーザー→Route53→CloudFront(HTTPS)→S3(静的html)</p>
-<p>２：問い合わせ内容の送信<br>
+<p>2.問い合わせ内容の送信<br>
 ユーザーがフォーム送信→API Gateway(REST API)(HTTPS)→Lamda→DynamoDB/SESでメール送信</p>
 -----
 -----
