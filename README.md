@@ -11,11 +11,11 @@ https://nino0708.github.io/portfolio/HTMLfiles/admin.html
 ![alt text](images/architecture.png)
 
 
-(構成概要)<br>
-1.ユーザーがhtmlフォームに情報を入力<br><br>
-2.htmlへはhttpsで接続<br><br>
-3.htmlへのアクセスは独自ドメイン<br><br>
-4.入力された情報はDBに保存<br><br>
+<h1>(構成概要)</h1>
+1.ユーザーがhtmlフォームに情報を入力<br>
+2.htmlへはhttpsで接続<br>
+3.htmlへのアクセスは独自ドメイン<br>
+4.入力された情報はDBに保存<br>
 5.DBに書き込まれた情報をオペレーターにメールで通知<br>
 -----
 -----
