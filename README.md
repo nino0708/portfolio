@@ -20,10 +20,10 @@ https://nino0708.github.io/portfolio/HTMLfiles/admin.html
 -----
 -----
 構図：<br>
-１：静的Web Pageの提供<br>
-ユーザー→Route53→CloudFront(HTTPS)→S3(静的html)<br>
-２：問い合わせ内容の送信<br>
-ユーザーがフォーム送信→API Gateway(REST API)(HTTPS)→Lamda→DynamoDB/SESでメール送信<br>
+<p>１：静的Web Pageの提供<br>
+ユーザー→Route53→CloudFront(HTTPS)→S3(静的html)</p>
+<p>２：問い合わせ内容の送信<br>
+ユーザーがフォーム送信→API Gateway(REST API)(HTTPS)→Lamda→DynamoDB/SESでメール送信</p>
 -----
 -----
 サービス選定：
