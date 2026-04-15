@@ -11,7 +11,7 @@ https://nino0708.github.io/portfolio/HTMLfiles/admin.html
 ![alt text](images/architecture.png)
 
 
-(構成概要)
+(構成概要)<br>
 1.ユーザーがhtmlフォームに情報を入力<br>
 2.htmlへはhttpsで接続<br>
 3.htmlへのアクセスは独自ドメイン<br>
@@ -19,7 +19,7 @@ https://nino0708.github.io/portfolio/HTMLfiles/admin.html
 5.DBに書き込まれた情報をオペレーターにメールで通知<br>
 -----
 -----
-構図：
+構図：<br>
 １：静的Web Pageの提供<br>
 ユーザー→Route53→CloudFront(HTTPS)→S3(静的html)<br>
 ２：問い合わせ内容の送信<br>
