@@ -48,3 +48,4 @@ variable "default_root_object" {
   description = "CloudFront distribution default root object"
   type        = string
 }
+
