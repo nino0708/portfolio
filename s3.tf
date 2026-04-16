@@ -1,8 +1,7 @@
 resource "aws_s3_bucket" "site_bucket" {
   bucket = var.s3_bucket_name
-
   force_destroy = true
-
+  
   tags = local.common_tags
 }
 
@@ -70,4 +69,30 @@ data "aws_iam_policy_document" "site_bucket_policy" {
 resource "aws_s3_bucket_policy" "site_bucket_policy" {
   bucket = aws_s3_bucket.site_bucket.id
   policy = data.aws_iam_policy_document.site_bucket_policy.json
+}
+
+resource "aws_s3_object" "contact_form_html" {
+  bucket       = aws_s3_bucket.site_bucket.id
+  key          = "contact_form.html"
+  content      = local.rendered_index_html
+  content_type = "text/html"
+
+  etag = md5(local.rendered_index_html)
+
+  depends_on = [
+    aws_api_gateway_stage.prod
+  ]
+}
+  
+resource "aws_s3_object" "admin_html" {
+  bucket       = aws_s3_bucket.site_bucket.id
+  key          = "admin.html"
+  content      = local.rendered_admin_html
+  content_type = "text/html"
+
+  etag = md5(local.rendered_admin_html)
+
+  depends_on = [
+    aws_api_gateway_stage.prod
+  ]
 }
