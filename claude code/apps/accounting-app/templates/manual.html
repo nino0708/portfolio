@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaikei 会計ソフト ― はじめてガイド（説明書）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..600,0..1,0">
+<style>
+:root{
+  --primary:#0b57d0; --primary-hover:#0a4bb5; --on-primary:#fff;
+  --primary-container:#d3e3fd; --on-primary-container:#041e49;
+  --bg:#f6f8fc; --surface:#fff; --surface-1:#f3f6fc; --surface-2:#eef3fb; --surface-3:#e9eef6;
+  --text:#1f1f1f; --text-secondary:#444746; --text-muted:#5f6368; --text-disabled:#9aa0a6;
+  --border:#e3e6eb; --border-strong:#c7cdd6;
+  --success:#188038; --success-bg:#e6f4ea;
+  --danger:#d93025;  --danger-bg:#fce8e6;
+  --warning:#ea8600; --warning-bg:#fef7e0;
+  --purple:#8430ce; --purple-bg:#f3e8fd;
+  --elev-1:0 1px 2px rgba(60,64,67,.18),0 1px 3px 1px rgba(60,64,67,.05);
+  --elev-2:0 1px 3px rgba(60,64,67,.20),0 4px 8px 3px rgba(60,64,67,.08);
+  --radius:16px; --radius-sm:10px;
+  --font:'Noto Sans JP','Hiragino Sans','Yu Gothic UI',system-ui,sans-serif;
+  --mono:'Roboto Mono','SF Mono','Consolas',monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; font-family:var(--font); color:var(--text);
+  background:var(--bg);
+  background-image:
+    radial-gradient(1200px 600px at 80% -10%, rgba(11,87,208,.10), transparent 60%),
+    radial-gradient(900px 500px at 102% 100%, rgba(132,48,206,.08), transparent 55%),
+    radial-gradient(700px 500px at -5% 95%, rgba(24,128,56,.07), transparent 55%);
+  background-attachment:fixed;
+  font-size:15px; line-height:1.85; -webkit-font-smoothing:antialiased;
+}
+.material-symbols-rounded{font-variation-settings:'opsz' 24,'wght' 400,'FILL' 0,'GRAD' 0;vertical-align:-5px}
+
+/* ===== レイアウト ===== */
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:248px 1fr;gap:40px}
+@media(max-width:900px){.wrap{grid-template-columns:1fr;gap:0}}
+
+/* ===== ヒーロー ===== */
+.hero{
+  background:linear-gradient(125deg,#0b57d0 0%,#1769e0 45%,#5b34c9 100%);
+  color:#fff;padding:54px 24px 90px;position:relative;overflow:hidden;
+}
+.hero::after{content:"";position:absolute;right:-80px;bottom:-120px;width:380px;height:380px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);border-radius:50%}
+.hero-inner{max-width:1180px;margin:0 auto;position:relative;z-index:1}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.28);padding:6px 14px;border-radius:999px;font-size:13px;font-weight:500;letter-spacing:.02em}
+.hero h1{font-size:34px;line-height:1.3;margin:18px 0 10px;font-weight:700;letter-spacing:-.01em}
+.hero p{margin:0;font-size:16px;opacity:.92;max-width:640px}
+.hero .logo-mark{display:inline-grid;place-items:center;width:30px;height:30px;background:#fff;color:var(--primary);border-radius:8px}
+.hero .logo-mark .material-symbols-rounded{font-variation-settings:'wght' 500;vertical-align:-6px}
+
+/* ===== 目次（サイド） ===== */
+.toc{position:sticky;top:24px;align-self:start;margin-top:-58px;z-index:2}
+.toc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--elev-1);padding:14px;max-height:calc(100vh - 48px);overflow:auto}
+.toc-card .toc-title{font-size:12px;font-weight:700;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;padding:6px 10px 8px}
+.toc a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;color:var(--text-secondary);text-decoration:none;font-size:13.5px;font-weight:500;line-height:1.4}
+.toc a:hover{background:var(--surface-2);color:var(--primary)}
+.toc a .material-symbols-rounded{font-size:19px;color:var(--text-muted)}
+.toc a:hover .material-symbols-rounded{color:var(--primary)}
+.toc .toc-group{font-size:11px;font-weight:700;color:var(--text-disabled);letter-spacing:.05em;padding:12px 10px 4px}
+@media(max-width:900px){.toc{position:static;margin-top:-58px;margin-bottom:8px}.toc-card{max-height:none}}
+
+/* ===== 本文 ===== */
+main{padding:0 0 100px;min-width:0}
+@media(max-width:900px){.toc{margin-top:-70px}main{padding-top:16px}}
+section{margin-top:14px;scroll-margin-top:20px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--elev-1);padding:30px 32px;margin-top:24px}
+@media(max-width:560px){.card{padding:22px 18px}}
+.sec-head{display:flex;align-items:center;gap:14px;margin:46px 0 4px}
+.sec-num{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--primary-container);color:var(--on-primary-container);font-weight:700;font-size:17px;flex:none}
+.sec-head h2{font-size:24px;margin:0;font-weight:700;letter-spacing:-.01em}
+.sec-head .sub{color:var(--text-muted);font-size:13.5px;margin-top:2px}
+h3{font-size:18px;font-weight:700;margin:30px 0 10px;display:flex;align-items:center;gap:9px}
+h3 .material-symbols-rounded{color:var(--primary);font-size:22px}
+h4{font-size:15.5px;font-weight:700;margin:20px 0 6px}
+p{margin:10px 0}
+.lead{font-size:16px;color:var(--text-secondary)}
+strong{font-weight:700}
+code{font-family:var(--mono);background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:1px 6px;font-size:.88em}
+a.inline{color:var(--primary);text-decoration:none;font-weight:500}
+a.inline:hover{text-decoration:underline}
+
+/* メニュー名チップ */
+.menu{display:inline-flex;align-items:center;gap:6px;background:var(--surface-1);border:1px solid var(--border-strong);border-radius:8px;padding:2px 9px;font-size:.9em;font-weight:500;white-space:nowrap}
+.menu .material-symbols-rounded{font-size:17px;color:var(--primary)}
+
+/* リスト */
+ul.clean,ol.steps{margin:12px 0;padding-left:0;list-style:none}
+ul.clean li{position:relative;padding-left:28px;margin:8px 0}
+ul.clean li::before{content:"check_circle";font-family:'Material Symbols Rounded';position:absolute;left:0;top:1px;color:var(--success);font-size:19px}
+ol.steps{counter-reset:s}
+ol.steps>li{counter-increment:s;position:relative;padding:4px 0 18px 50px;margin:0}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;font-weight:700;display:grid;place-items:center;font-size:15px}
+ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:15px;top:36px;bottom:2px;width:2px;background:var(--border-strong)}
+ol.steps>li .st{font-weight:700;display:block;margin-bottom:2px}
+
+/* コールアウト */
+.note{display:flex;gap:13px;border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid;font-size:14px;line-height:1.7}
+.note .material-symbols-rounded{flex:none;font-size:22px;margin-top:1px}
+.note .nt{font-weight:700;display:block;margin-bottom:1px}
+.note.tip{background:var(--primary-container);border-color:#aecbfa;color:#0a3a82}
+.note.tip .material-symbols-rounded{color:var(--primary)}
+.note.warn{background:var(--warning-bg);border-color:#fcd97f;color:#8a4f00}
+.note.warn .material-symbols-rounded{color:var(--warning)}
+.note.good{background:var(--success-bg);border-color:#a8d5b5;color:#0c5526}
+.note.good .material-symbols-rounded{color:var(--success)}
+
+/* テーブル */
+.tbl{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;overflow:hidden;border-radius:12px;border:1px solid var(--border)}
+.tbl th,.tbl td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+.tbl thead th{background:var(--surface-2);font-weight:700;color:var(--text-secondary);font-size:12.5px;letter-spacing:.02em}
+.tbl tbody tr:last-child td{border-bottom:none}
+.tbl tbody tr:hover{background:var(--surface-1)}
+.tbl .num{font-family:var(--mono);text-align:right;white-space:nowrap}
+
+/* 借方貸方 図 */
+.tcard{display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--border-strong);border-radius:12px;overflow:hidden;margin:18px 0}
+@media(max-width:560px){.tcard{grid-template-columns:1fr}}
+.tcard .side{padding:16px 18px}
+.tcard .side.l{background:var(--surface-1);border-right:2px solid var(--border-strong)}
+.tcard .side.r{background:#fff}
+@media(max-width:560px){.tcard .side.l{border-right:none;border-bottom:2px solid var(--border-strong)}}
+.tcard .lbl{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+.tcard .ex{font-family:var(--mono);font-size:14px;color:var(--text);display:flex;justify-content:space-between;padding:3px 0}
+
+/* 5つの箱 */
+.boxes{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:14px;margin:18px 0}
+.box{border-radius:14px;padding:16px;border:1px solid var(--border);background:var(--surface)}
+.box .ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;margin-bottom:10px}
+.box .ic .material-symbols-rounded{font-size:22px}
+.box .bt{font-weight:700;font-size:15px}
+.box .bd{font-size:12.5px;color:var(--text-muted);margin-top:4px;line-height:1.6}
+.box small{display:block;margin-top:8px;font-size:11.5px;color:var(--text-disabled);font-weight:500}
+
+/* Q&A */
+.qa{border:1px solid var(--border);border-radius:12px;margin:12px 0;overflow:hidden}
+.qa summary{cursor:pointer;padding:15px 18px;font-weight:600;display:flex;align-items:center;gap:10px;list-style:none;background:var(--surface)}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary .material-symbols-rounded{color:var(--primary);transition:.2s}
+.qa[open] summary .material-symbols-rounded{transform:rotate(180deg)}
+.qa .qa-body{padding:2px 18px 18px 44px;color:var(--text-secondary);font-size:14px}
+.qa summary .q{flex:1}
+
+/* フッター */
+footer{text-align:center;color:var(--text-muted);font-size:13px;padding:40px 24px 60px}
+footer .material-symbols-rounded{font-size:16px;vertical-align:-3px}
+.backtop{display:inline-flex;align-items:center;gap:6px;margin-top:14px;color:var(--primary);text-decoration:none;font-weight:600;font-size:13.5px}
+
+.pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;letter-spacing:.03em}
+.pill.req{background:var(--danger-bg);color:var(--danger)}
+.pill.opt{background:var(--surface-2);color:var(--text-muted)}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow"><span class="logo-mark"><span class="material-symbols-rounded">account_balance</span></span> Kaikei 会計管理</span>
+    <h1>はじめてガイド ― 会計ソフトの説明書</h1>
+    <p>簿記の知識がなくても大丈夫。このソフトでできること、最初にやること、毎日の入力から決算書づくりまでを、やさしい言葉で順番に説明します。</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ===== 目次 ===== -->
+  <nav class="toc">
+    <div class="toc-card">
+      <div class="toc-title">もくじ</div>
+      <a href="#about"><span class="material-symbols-rounded">waving_hand</span>このソフトでできること</a>
+      <a href="#basic"><span class="material-symbols-rounded">school</span>会計の超キホン</a>
+      <a href="#screen"><span class="material-symbols-rounded">dashboard</span>画面の見方</a>
+      <a href="#setup"><span class="material-symbols-rounded">rocket_launch</span>最初にやる3ステップ</a>
+
+      <div class="toc-group">毎日のしごと</div>
+      <a href="#journal"><span class="material-symbols-rounded">edit_square</span>仕訳入力</a>
+      <a href="#csv"><span class="material-symbols-rounded">upload_file</span>CSV取込</a>
+      <a href="#ledger"><span class="material-symbols-rounded">menu_book</span>仕訳帳で確認・修正</a>
+
+      <div class="toc-group">集計・決算書</div>
+      <a href="#books"><span class="material-symbols-rounded">calculate</span>元帳・試算表</a>
+      <a href="#statements"><span class="material-symbols-rounded">balance</span>財務諸表（B/Sなど）</a>
+      <a href="#monthly-trend"><span class="material-symbols-rounded">bar_chart</span>月次推移表</a>
+      <a href="#budget"><span class="material-symbols-rounded">target</span>予実分析</a>
+      <a href="#events"><span class="material-symbols-rounded">celebration</span>イベント収支・監査</a>
+
+      <div class="toc-group">設定・その他</div>
+      <a href="#manage"><span class="material-symbols-rounded">database</span>データ管理・履歴</a>
+      <a href="#faq"><span class="material-symbols-rounded">help</span>困ったとき Q&amp;A</a>
+      <a href="#glossary"><span class="material-symbols-rounded">menu_book</span>用語集</a>
+    </div>
+  </nav>
+
+  <!-- ===== 本文 ===== -->
+  <main>
+
+    <!-- このソフトでできること -->
+    <section id="about">
+      <div class="sec-head"><div class="sec-num">0</div><div><h2>このソフトでできること</h2><div class="sub">まずは全体像をつかみましょう</div></div></div>
+      <div class="card">
+        <p class="lead">Kaikei は、サークル・町内会・PTA・同好会などの<strong>団体（非営利）のお金を、複式簿記で正しく記録するための会計ソフト</strong>です。会費の入金、イベントの支払い、口座の残高などを記録すると、<strong>決算書（貸借対照表・損益計算書）まで自動で作ってくれます</strong>。</p>
+        <ul class="clean">
+          <li><strong>簿記が分からなくても入力できる</strong> ― 「会費をもらった」「交通費を払った」を選ぶだけの<em>かんたん入力</em>つき</li>
+          <li><strong>銀行・カードのCSVから自動で仕訳</strong> ― 手入力の手間を大幅カット</li>
+          <li><strong>決算書が自動でできる</strong> ― 貸借対照表（B/S）・損益計算書（P/L）・試算表をボタンひとつで</li>
+          <li><strong>残高がズレていないか自動チェック</strong> ― 左下のランプでいつでも健康診断</li>
+          <li><strong>月ごとのお金の動き（月次推移表）</strong>や、<strong>イベントごとの黒字・赤字</strong>、<strong>前年との比較（監査資料）</strong>もすぐ出せる</li>
+        </ul>
+        <div class="note good"><span class="material-symbols-rounded">tips_and_updates</span><div><span class="nt">この説明書の読み方</span>はじめての方は<strong>上から順番に</strong>読むのがおすすめです。「会計の超キホン」→「最初にやる3ステップ」だけ読めば、その日から記録を始められます。</div></div>
+      </div>
+    </section>
+
+    <!-- 会計の超キホン -->
+    <section id="basic">
+      <div class="sec-head"><div class="sec-num">1</div><div><h2>会計の超キホン</h2><div class="sub">この3つだけ知っていれば十分です</div></div></div>
+
+      <div class="card">
+        <h3><span class="material-symbols-rounded">swap_horiz</span>① 取引は「左」と「右」に分けて書く（複式簿記）</h3>
+        <p>会計では、ひとつの取引を必ず<strong>左（借方）</strong>と<strong>右（貸方）</strong>のペアで記録します。これを<strong>仕訳（しわけ）</strong>と呼びます。むずかしく考えず、<strong>「お金がどこに行って（左）／どこから来たか（右）」</strong>のメモだと思ってください。</p>
+        <p>例：<strong>会費 5,000円を現金でもらった</strong></p>
+        <div class="tcard">
+          <div class="side l">
+            <div class="lbl">借方（左）＝ 増えた・出ていった先</div>
+            <div class="ex"><span>現金</span><span>5,000</span></div>
+          </div>
+          <div class="side r">
+            <div class="lbl">貸方（右）＝ 元・原因</div>
+            <div class="ex"><span>会費収入</span><span>5,000</span></div>
+          </div>
+        </div>
+        <div class="note tip"><span class="material-symbols-rounded">lightbulb</span><div><span class="nt">左右の合計は必ず一致します</span>これが複式簿記の鉄則。左 5,000 ＝ 右 5,000。一致しない仕訳は登録できないので、自然と間違いが減ります。<br>※ 言葉が苦手なら<strong>「かんたん入力」モード</strong>を使えば、借方・貸方は自動で決まります。</div></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="material-symbols-rounded">category</span>② 勘定科目は5つの仲間に分かれる</h3>
+        <p><strong>勘定科目（かんじょうかもく）</strong>とは「現金」「会費収入」「交通費」など、お金につける<strong>ラベル</strong>のこと。すべての科目は次の<strong>5つのグループ</strong>のどれかに入ります。このグループ分けが、決算書のかたちを決めます。</p>
+        <div class="boxes">
+          <div class="box"><div class="ic" style="background:var(--primary-container)"><span class="material-symbols-rounded" style="color:var(--primary)">savings</span></div><div class="bt">資産</div><div class="bd">持っているお金やモノ</div><small>例：現金・普通預金・備品</small></div>
+          <div class="box"><div class="ic" style="background:var(--warning-bg)"><span class="material-symbols-rounded" style="color:var(--warning)">request_quote</span></div><div class="bt">負債</div><div class="bd">あとで払う・返す義務</div><small>例：未払金・預り金・借入金</small></div>
+          <div class="box"><div class="ic" style="background:var(--purple-bg)"><span class="material-symbols-rounded" style="color:var(--purple)">account_balance</span></div><div class="bt">剰余金</div><div class="bd">団体に残っている財産（純資産）</div><small>例：前期繰越剰余金</small></div>
+          <div class="box"><div class="ic" style="background:var(--success-bg)"><span class="material-symbols-rounded" style="color:var(--success)">trending_up</span></div><div class="bt">収益</div><div class="bd">入ってきたお金</div><small>例：会費収入・寄付金・イベント会費</small></div>
+          <div class="box"><div class="ic" style="background:var(--danger-bg)"><span class="material-symbols-rounded" style="color:var(--danger)">trending_down</span></div><div class="bt">費用</div><div class="bd">出ていったお金</div><small>例：交通費・会場費・消耗品費</small></div>
+        </div>
+        <div class="note tip"><span class="material-symbols-rounded">info</span><div>1年間の収益と費用をまとめた決算書を<strong>損益計算書（P/L）</strong>と呼びます。一般企業の「利益」にあたるものを、非営利団体では<strong>剰余金</strong>と呼ぶため、このソフトの損益計算書では利益のことを剰余金として表示します。</div></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="material-symbols-rounded">menu_book</span>③ 2種類の決算書ができる</h3>
+        <table class="tbl">
+          <thead><tr><th>決算書</th><th>何がわかる？</th><th>使う科目</th></tr></thead>
+          <tbody>
+            <tr><td><strong>貸借対照表（B/S）</strong></td><td>ある時点の<strong>財産の状態</strong>（いま、いくら持っていて、いくら借りがあるか）</td><td>資産・負債・剰余金</td></tr>
+            <tr><td><strong>損益計算書</strong><br><span class="text-muted" style="font-size:12px">（P/L＝剰余金増減）</span></td><td>1年間で<strong>いくら入って、いくら出て、いくら増えたか</strong></td><td>収益・費用</td></tr>
+          </tbody>
+        </table>
+        <p>あなたが仕訳を入力するだけで、この2つは<strong>全部自動で計算されます</strong>。電卓は不要です。</p>
+      </div>
+    </section>
+
+    <!-- 画面の見方 -->
+    <section id="screen">
+      <div class="sec-head"><div class="sec-num">2</div><div><h2>画面の見方</h2><div class="sub">左のメニューと、見落としがちな便利機能</div></div></div>
+      <div class="card">
+        <h3><span class="material-symbols-rounded">menu</span>左サイドバーのメニュー</h3>
+        <p>画面の左にあるメニューは、用途ごとに4つのグループに分かれています。</p>
+        <table class="tbl">
+          <thead><tr><th>グループ</th><th>入っているメニュー</th><th>いつ使う？</th></tr></thead>
+          <tbody>
+            <tr><td><strong>入力・帳簿</strong></td><td>仕訳入力／仕訳帳／CSV取込／総勘定元帳／試算表</td><td>毎日の記録と確認</td></tr>
+            <tr><td><strong>財務諸表</strong></td><td>貸借対照表／損益計算書／月次推移表／監査資料／イベント収支</td><td>月末・決算・報告のとき</td></tr>
+            <tr><td><strong>設定</strong></td><td>勘定科目設定／期首残高／会計期間設定／データ管理／変更・削除履歴</td><td>最初の準備とメンテナンス</td></tr>
+          </tbody>
+        </table>
+
+        <h3><span class="material-symbols-rounded">event</span>「表示期間」セレクト（左下）</h3>
+        <p>サイドバー下部の<span class="menu"><span class="material-symbols-rounded">event</span>表示期間</span>で、<strong>どの年度のデータを見るか</strong>を切り替えます。試算表や決算書は、ここで選んだ期間が対象になります。「あれ、数字が合わない？」というときは、まず表示期間が正しいか確認しましょう。</p>
+
+        <h3><span class="material-symbols-rounded">verified</span>残高整合性チェッカー（左下のランプ）</h3>
+        <p>サイドバー左下に、常に<strong>残高がズレていないかを見張るランプ</strong>があります。これは会計ソフトの<em>健康診断</em>です。</p>
+        <ul class="clean">
+          <li><strong>緑（OK）</strong>＝ 借方と貸方の合計、各科目の残高がすべて一致。問題なし。</li>
+          <li><strong>赤（NG）</strong>＝ どこかでズレています。クリックすると、どの項目が合わないか詳細が開きます。</li>
+        </ul>
+        <div class="note good"><span class="material-symbols-rounded">check_circle</span><div>入力作業のあとは、このランプが<strong>緑</strong>であることを確認するクセをつけましょう。これだけで決算の安心感が大きく変わります。</div></div>
+      </div>
+    </section>
+
+    <!-- 最初にやる3ステップ -->
+    <section id="setup">
+      <div class="sec-head"><div class="sec-num">3</div><div><h2>最初にやる3ステップ</h2><div class="sub">記録を始める前の準備。一度やればOKです</div></div></div>
+      <div class="card">
+        <ol class="steps">
+          <li>
+            <span class="st">会計期間を決める　<span class="menu"><span class="material-symbols-rounded">calendar_month</span>会計期間設定</span></span>
+            「2026年度（2026/4/1〜2027/3/31）」のように、<strong>1年の区切り</strong>を作ります。最初の年度を1つ登録すれば準備完了。翌年からは「次期を作成」で繰り越せます。
+          </li>
+          <li>
+            <span class="st">勘定科目をそろえる　<span class="menu"><span class="material-symbols-rounded">category</span>勘定科目設定</span></span>
+            自分の団体で使う科目（現金・普通預金・会費収入・交通費 など）を登録します。<strong>区分（資産・負債・剰余金・収益・費用）を選ぶだけ</strong>。よく使う科目は最初から用意されているので、足りないものを足す感覚でOK。<br>
+            <span class="text-muted" style="font-size:13px">※「中項目（カテゴリ）」を付けると、イベント収支などで自動集計できます（後述）。</span>
+          </li>
+          <li>
+            <span class="st">期首残高を入れる　<span class="menu"><span class="material-symbols-rounded">account_balance_wallet</span>期首残高</span></span>
+            年度のはじめに<strong>すでに持っていたお金</strong>（現金や預金の残高、前期からの繰越剰余金）を入力します。これを入れておかないと貸借対照表が合いません。<br>
+            <span class="text-muted" style="font-size:13px">※ 2年目以降は、前年度から「繰越」ボタンで自動的に引き継げます。</span>
+          </li>
+        </ol>
+        <div class="note warn"><span class="material-symbols-rounded">priority_high</span><div><span class="nt">この順番が大切</span>「期間 → 科目 → 期首残高」の順で進めてください。期間を決める前に仕訳を入れると、どの年度のデータか決まらず混乱します。</div></div>
+      </div>
+    </section>
+
+    <!-- 仕訳入力 -->
+    <section id="journal">
+      <div class="sec-head"><div class="sec-num">4</div><div><h2>仕訳入力 ― 毎日の記録</h2><div class="sub"><span class="menu"><span class="material-symbols-rounded">edit_square</span>仕訳入力</span> ／ 2つの入力方法があります</div></div></div>
+
+      <div class="card">
+        <h3><span class="material-symbols-rounded">assistant</span>方法A：かんたん入力（初心者はこちら）</h3>
+        <p>仕訳入力画面の右上にある<strong>「かんたん入力」スイッチをオン</strong>にすると、簿記の知識ゼロでも入力できます。<strong>初期状態はオフ</strong>なので、簿記が苦手な方はまずこのスイッチをオンにしてください（オン／オフはこの端末に記憶されます）。</p>
+        <ol class="steps">
+          <li><span class="st">「何があったか」を選ぶ</span>「会費をもらった」「交通費を払った」のようなカードから、近いものを選びます（検索もできます）。あなたの科目構成と過去の入力から、よく使うパターンを自動で提案します。</li>
+          <li><span class="st">金額と日付、お金の出入り先を入れる</span>「どの口座から払った？／どこに入った？」を選びます。<strong>借方・貸方は自動でセット</strong>されます。</li>
+          <li><span class="st">登録ボタンを押す</span>これで1件の仕訳が完成。左右どちらが何か、を意識しなくても正しく記録されます。</li>
+        </ol>
+        <div class="note tip"><span class="material-symbols-rounded">touch_app</span><div>「会費」「交通費」「イベント」などキーワードで検索すると、該当する取引パターンがすぐ見つかります。</div></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="material-symbols-rounded">edit</span>方法B：手動入力（慣れてきたら）</h3>
+        <p><strong>最初に開いたときはこの手動入力モードです。</strong>かんたん入力スイッチをオフにすると、自分で借方・貸方を選ぶ通常の入力になります。入力する項目は次のとおり。</p>
+        <table class="tbl">
+          <thead><tr><th>項目</th><th>内容</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>日付</td><td>取引があった日</td><td><span class="pill req">必須</span></td></tr>
+            <tr><td>摘要</td><td>取引の内容（例：4月分会費、〇〇さん交通費）</td><td><span class="pill opt">任意</span></td></tr>
+            <tr><td>借方／貸方の科目と金額</td><td>左右に科目を選んで金額を入力</td><td><span class="pill req">必須</span></td></tr>
+            <tr><td>メモ</td><td>補足のメモ</td><td><span class="pill opt">任意</span></td></tr>
+          </tbody>
+        </table>
+
+        <h4>複合仕訳（1つの取引で科目が3つ以上）</h4>
+        <p>「会場費 8,000円と備品 2,000円を、預金からまとめて 10,000円払った」のように、<strong>借方や貸方が複数になる取引</strong>も入力できます。行を追加して、それぞれの科目・金額を入れるだけ。<strong>左右の合計が一致すれば登録できます</strong>（合わないとボタンが押せません＝間違い防止）。</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="material-symbols-rounded">dashboard</span>ダッシュボード（仕訳入力画面の上部）</h3>
+        <p>仕訳入力を開くと、上部に<strong>あいさつ・今日の日付・表示中の期間</strong>が出ます。その下のチップから、仕訳帳・試算表・損益計算書・貸借対照表へワンタップで移動できます。画面下には<strong>「直近の仕訳」</strong>が表示され、入力したばかりの内容をすぐ確認できます。</p>
+      </div>
+    </section>
+
+    <!-- CSV取込 -->
+    <section id="csv">
+      <div class="sec-head"><div class="sec-num">5</div><div><h2>CSV取込 ― 自動で仕訳をつくる</h2><div class="sub"><span class="menu"><span class="material-symbols-rounded">upload_file</span>CSV取込</span> ／ 大量の取引を一気に登録</div></div></div>
+      <div class="card">
+        <p class="lead">銀行（デビットカード）の利用履歴CSVを読み込ませると、<strong>1件ずつの仕訳を自動で作ってくれます</strong>。Amazonの購入履歴も一緒に入れると、商品名から科目を推測して補強します。</p>
+        <ol class="steps">
+          <li><span class="st">CSVを選ぶ</span><strong>デビットカード履歴CSV（必須）</strong>を「お金の動きの正本」として読み込みます。<strong>Amazon購入履歴CSV（任意）</strong>を足すと、商品名・科目の精度が上がります。</li>
+          <li><span class="st">決済科目と照合の許容日数を設定</span>引き落とし元の口座（例：普通預金）を選び、Amazon照合の日付のズレ許容（±3日が標準）を決めます。</li>
+          <li><span class="st">「解析して仕訳候補を作る」を押す</span>すぐ本登録はしません。<strong>レビュー表</strong>が出るので、科目・金額を1件ずつ確認・修正できます。</li>
+          <li><span class="st">確認して一括登録</span>問題なければまとめて登録。<strong>同じ日付・金額の既存仕訳は「重複かも」と検知</strong>してくれるので、二重計上を防げます。</li>
+        </ol>
+        <div class="note warn"><span class="material-symbols-rounded">fact_check</span><div><span class="nt">必ずレビューしてから登録</span>自動仕訳はあくまで「下書き」です。科目が正しいか、金額の符号（収入／支出）が合っているかを確認してから登録しましょう。</div></div>
+      </div>
+    </section>
+
+    <!-- 仕訳帳 -->
+    <section id="ledger">
+      <div class="sec-head"><div class="sec-num">6</div><div><h2>仕訳帳 ― 入力した記録の一覧</h2><div class="sub"><span class="menu"><span class="material-symbols-rounded">menu_book</span>仕訳帳</span> ／ 確認・修正・取消はここで</div></div></div>
+      <div class="card">
+        <p>登録したすべての仕訳が、日付順に並びます。あとから内容を直したいとき・消したいときは、ここから操作します。</p>
+        <ul class="clean">
+          <li><strong>修正</strong>：行を開いて、日付・科目・金額・摘要を編集できます。</li>
+          <li><strong>取消（逆仕訳）</strong>：すでに報告した仕訳をなかったことにしたいときは、<strong>反対の仕訳を自動で作って打ち消す</strong>方法があります。元の記録を残したまま訂正できるので、監査に強い直し方です。</li>
+          <li><strong>削除</strong>：間違って作った仕訳を消します。<strong>消した記録は「変更・削除履歴」に残る</strong>ので安心です。</li>
+        </ul>
+        <div class="note tip"><span class="material-symbols-rounded">history</span><div>「直すと履歴が消えそうで怖い」という心配は不要です。<strong>編集・削除はすべて履歴に記録</strong>されます（後述の<a class="inline" href="#manage">変更・削除履歴</a>）。</div></div>
+      </div>
+    </section>
+
+    <!-- 元帳・試算表 -->
+    <section id="books">
+      <div class="sec-head"><div class="sec-num">7</div><div><h2>総勘定元帳・試算表</h2><div class="sub">入力が正しいかを集計で確かめる</div></div></div>
+      <div class="card">
+        <h3><span class="material-symbols-rounded">view_list</span>総勘定元帳　<span class="menu"><span class="material-symbols-rounded">view_list</span>総勘定元帳</span></h3>
+        <p><strong>科目ごとに、お金の出入りと残高を時系列で並べたもの</strong>です。「現金は今いくら？」「交通費は年間でいくら使った？」を科目単位で追えます。仕訳帳が「日付順の全記録」なら、総勘定元帳は「科目ごとの通帳」のイメージです。</p>
+
+        <h3><span class="material-symbols-rounded">calculate</span>試算表　<span class="menu"><span class="material-symbols-rounded">calculate</span>試算表</span></h3>
+        <p>すべての科目の残高を1枚にまとめた表です。<strong>借方合計と貸方合計が一致していれば、入力に大きなミスはない</strong>という確認に使います。決算書を作る前のチェックポイントです。</p>
+        <div class="note good"><span class="material-symbols-rounded">balance</span><div>試算表の借方合計＝貸方合計、かつ左下の整合性ランプが緑なら、安心して決算書づくりに進めます。</div></div>
+      </div>
+    </section>
+
+    <!-- 財務諸表 -->
+    <section id="statements">
+      <div class="sec-head"><div class="sec-num">8</div><div><h2>財務諸表 ― 決算書を出す</h2><div class="sub">ボタンひとつで完成。報告・提出に使えます</div></div></div>
+      <div class="card">
+        <h3><span class="material-symbols-rounded">balance</span>貸借対照表（B/S）　<span class="menu"><span class="material-symbols-rounded">balance</span>貸借対照表</span></h3>
+        <p>ある時点で<strong>「何を持っていて（資産）／何を負っていて（負債）／正味いくらか（剰余金）」</strong>を示す表。<strong>資産 ＝ 負債 ＋ 剰余金</strong> が必ず成り立ちます（左右が釣り合う＝バランスシート）。</p>
+
+        <h3><span class="material-symbols-rounded">trending_up</span>損益計算書（P/L）　<span class="menu"><span class="material-symbols-rounded">trending_up</span>損益計算書</span></h3>
+        <p>1年間の<strong>収益（入ってきたお金）と費用（出ていったお金）、その差し引き</strong>を示す表。一般企業でいう損益計算書（P/L）そのもので、団体の活動でいくら剰余金が増減したかが分かります。</p>
+
+        <h3 id="monthly-trend"><span class="material-symbols-rounded">bar_chart</span>月次推移表　<span class="menu"><span class="material-symbols-rounded">bar_chart</span>月次推移表</span></h3>
+        <p><strong>勘定科目を縦、月を横に並べて、お金の動きを月ごとに見比べる表</strong>です。損益計算書が「1年間の合計」なのに対し、月次推移表は「4月はいくら、5月はいくら…」と<strong>月単位の増減</strong>が一覧できます。「会費はどの月に多く入る？」「この出費が増えたのはいつから？」といった<strong>季節のクセや異変</strong>に気づけます。</p>
+        <ul class="clean">
+          <li><strong>各月の数字</strong>＝その月の純増減（入りと出の差し引き）</li>
+          <li><strong>「期首」列</strong>＝年度はじめの残高、<strong>「合計」列</strong>＝期末の残高（収益・費用は当期の累計）</li>
+          <li>収益・費用・資産などの<strong>グループごとに小計</strong>が出て、収益−費用の<strong>「当期正味財産増減額」</strong>も月別に並びます</li>
+          <li>科目名の列は左に固定されるので、<strong>横にスクロール</strong>しても見失いません</li>
+        </ul>
+        <div class="note tip"><span class="material-symbols-rounded">table_view</span><div>右上の<span class="menu"><span class="material-symbols-rounded">download</span>Excel(CSV)</span>を押すと、表をそのまま<strong>Excelで開けるファイル</strong>に書き出せます。グラフ化したり、別の資料に貼り付けたいときに便利です。なお「合計」列の残高は<a class="inline" href="#books">試算表</a>と必ず一致します。</div></div>
+
+        <h3 id="budget"><span class="material-symbols-rounded">target</span>予実分析（予算実績対比）　<span class="menu"><span class="material-symbols-rounded">target</span>予実分析</span></h3>
+        <p>年度のはじめに立てた<strong>「予算」</strong>と、実際の<strong>「実績」</strong>を見比べる表です。収益・費用の科目ごとに予算額を入力すると、損益計算書の実績と並べて<strong>差異（予算とのズレ）と達成率（収益）／執行率（費用）</strong>がその場で計算されます。「会費は目標どおり集まった？」「イベント費は使いすぎ？」がひと目で分かります。</p>
+        <ul class="clean">
+          <li><strong>予算の入れ方</strong>＝表の「予算」欄に金額を打ち込み、最後に<strong>「予算を保存」</strong>を押すだけ</li>
+          <li><strong>差異の色</strong>＝<span style="color:var(--success)">緑＝有利</span>（収益は予算超え／費用は予算内）、<span style="color:var(--danger)">赤＝不利</span>。収益は「実績−予算」、費用は「予算−実績」で計算します</li>
+          <li><strong>対象年度の切り替え</strong>＝画面右上の<span class="menu">対象年度</span>プルダウン（または左下の「表示期間」）で選びます。<strong>過去年度の予実もそのまま振り返れます</strong></li>
+          <li>予算は年度ごとに別々に保存されます。締め済みの年度は予算が編集できなくなり、確定した記録として保護されます</li>
+        </ul>
+        <div class="note tip"><span class="material-symbols-rounded">savings</span><div>予算は<strong>年度ごと</strong>に持てるので、<strong>毎年の予算→実績の積み重ね</strong>をこの画面で振り返れます。来年度の予算を立てるときは、前年度の実績が良い目安になります。</div></div>
+
+        <div class="note tip"><span class="material-symbols-rounded">print</span><div>これらの画面は<strong>そのまま印刷・PDF化</strong>して、総会資料や行政への提出書類として使えます。表示期間を切り替えれば、各年度の決算書が作れます。</div></div>
+      </div>
+    </section>
+
+    <!-- イベント収支・監査 -->
+    <section id="events">
+      <div class="sec-head"><div class="sec-num">9</div><div><h2>イベント収支・監査資料</h2><div class="sub">団体会計ならではの便利な集計</div></div></div>
+      <div class="card">
+        <h3><span class="material-symbols-rounded">celebration</span>イベント収支　<span class="menu"><span class="material-symbols-rounded">celebration</span>イベント収支</span></h3>
+        <p>「春イベント」「忘年会」など、<strong>イベントごとの黒字・赤字</strong>を自動でまとめます。仕組みはシンプルで、<strong>収益科目と費用科目に同じ「中項目（カテゴリ）」を付けるだけ</strong>。たとえば「忘年会会費（収益）」と「忘年会会場費（費用）」に同じ中項目「忘年会」を設定すると、自動で1つのイベントとして集計され、<strong>収入・支出・差引</strong>が並びます。参加人数を入れれば一人あたりの金額も出せます。</p>
+        <div class="note tip"><span class="material-symbols-rounded">label</span><div>イベント集計を使うコツ＝<strong>勘定科目設定で「中項目」をそろえる</strong>こと。これだけで決算と同時にイベント別の収支報告が完成します。</div></div>
+
+        <h3><span class="material-symbols-rounded">monitoring</span>監査資料　<span class="menu"><span class="material-symbols-rounded">monitoring</span>監査資料</span></h3>
+        <p><strong>当期と前期を並べた比較表</strong>を作ります。「今年は会費収入が増えた／会場費が減った」など、<strong>前年との増減</strong>がひと目で分かるので、監査役への説明や総会資料に最適です。比較する2つの期間と監査日を選んで「比較表を生成」を押すだけです。</p>
+      </div>
+    </section>
+
+    <!-- 設定・管理 -->
+    <section id="manage">
+      <div class="sec-head"><div class="sec-num">10</div><div><h2>データ管理・履歴</h2><div class="sub">バックアップと、いつでも追える変更の記録</div></div></div>
+      <div class="card">
+        <h3><span class="material-symbols-rounded">database</span>データ管理　<span class="menu"><span class="material-symbols-rounded">database</span>データ管理</span></h3>
+        <p>会計データの<strong>バックアップ（書き出し）・復元（読み込み）</strong>などを行います。パソコンの買い替えや、担当者の引き継ぎのときに使います。</p>
+        <div class="note warn"><span class="material-symbols-rounded">backup</span><div><span class="nt">定期的にバックアップを</span>大事な決算前や、まとめて入力したあとは、必ず書き出して保管しておきましょう。万一のときに元に戻せます。</div></div>
+
+        <h3><span class="material-symbols-rounded">history</span>変更・削除履歴　<span class="menu"><span class="material-symbols-rounded">history</span>変更・削除履歴</span></h3>
+        <p>仕訳を<strong>いつ・どう編集したか／何を削除したか</strong>が、すべて記録されています。「この数字、誰がいつ直した？」を後から確認でき、<strong>会計の透明性</strong>を保てます。監査のときに頼れる機能です。</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="sec-head"><div class="sec-num">12</div><div><h2>困ったとき Q&amp;A</h2><div class="sub">よくあるつまずきポイント</div></div></div>
+      <div class="card" style="padding:18px">
+        <details class="qa"><summary><span class="material-symbols-rounded">expand_more</span><span class="q">左下のランプが「赤（NG）」になりました。どうすれば？</span></summary><div class="qa-body">ランプをクリックすると、どの項目がズレているか詳細が開きます。多くは「期首残高の入れ忘れ」か「複合仕訳の金額ミス」です。試算表で借方合計＝貸方合計になっているかも確認しましょう。</div></details>
+        <details class="qa"><summary><span class="material-symbols-rounded">expand_more</span><span class="q">借方・貸方が分かりません。</span></summary><div class="qa-body">仕訳入力の右上の<strong>「かんたん入力」をオン</strong>にしてください。「会費をもらった」などを選ぶだけで、借方・貸方は自動でセットされます。慣れてから手動入力に切り替えればOKです。</div></details>
+        <details class="qa"><summary><span class="material-symbols-rounded">expand_more</span><span class="q">決算書の数字が思った額と違います。</span></summary><div class="qa-body">まず左下の<strong>「表示期間」</strong>が正しい年度か確認してください。次に期首残高の入力漏れ、最後に試算表で全体の整合を確認します。</div></details>
+        <details class="qa"><summary><span class="material-symbols-rounded">expand_more</span><span class="q">間違えて登録した仕訳を消したい。履歴は残る？</span></summary><div class="qa-body"><a class="inline" href="#ledger">仕訳帳</a>から削除できます。削除内容は<strong>「変更・削除履歴」に必ず残る</strong>ので、後から追えます。すでに報告済みの仕訳は、削除より「取消（逆仕訳）」がおすすめです。</div></details>
+        <details class="qa"><summary><span class="material-symbols-rounded">expand_more</span><span class="q">イベントごとの収支を出したい。</span></summary><div class="qa-body"><a class="inline" href="#manage">勘定科目設定</a>で、収益と費用の科目に<strong>同じ「中項目（カテゴリ）」</strong>を付けてください。あとは<a class="inline" href="#events">イベント収支</a>が自動で集計します。</div></details>
+        <details class="qa"><summary><span class="material-symbols-rounded">expand_more</span><span class="q">月ごとのお金の動きを見たい／Excelに出したい。</span></summary><div class="qa-body"><a class="inline" href="#monthly-trend">月次推移表</a>を開くと、科目ごとに4月・5月…と月別の増減が並びます。右上の<strong>「Excel(CSV)」</strong>を押せばExcelで開けるファイルに書き出せるので、グラフ化や別資料への貼り付けもかんたんです。表示する年度は左下の「表示期間」で切り替えます。</div></details>
+        <details class="qa"><summary><span class="material-symbols-rounded">expand_more</span><span class="q">来年度の準備は？</span></summary><div class="qa-body"><a class="inline" href="#setup">会計期間設定</a>で次期を作成し、期首残高は前年度から<strong>「繰越」</strong>で引き継げます。科目はそのまま使い続けられます。</div></details>
+      </div>
+    </section>
+
+    <!-- 用語集 -->
+    <section id="glossary">
+      <div class="sec-head"><div class="sec-num">13</div><div><h2>用語集</h2><div class="sub">迷ったときの早見表</div></div></div>
+      <div class="card">
+        <table class="tbl">
+          <thead><tr><th>用語</th><th>かんたんに言うと</th></tr></thead>
+          <tbody>
+            <tr><td>仕訳（しわけ）</td><td>取引を借方（左）と貸方（右）に分けて書いた1件の記録</td></tr>
+            <tr><td>借方／貸方</td><td>仕訳の左／右。お金の行き先（借方）と出どころ・原因（貸方）</td></tr>
+            <tr><td>勘定科目</td><td>「現金」「会費収入」などお金につけるラベル。5区分のどれかに属する</td></tr>
+            <tr><td>資産／負債／剰余金</td><td>持っているもの／返す義務／残っている財産。貸借対照表をつくる</td></tr>
+            <tr><td>収益／費用</td><td>入ってきたお金／出ていったお金。損益計算書をつくる</td></tr>
+            <tr><td>複合仕訳</td><td>1つの取引で科目が3つ以上になる仕訳</td></tr>
+            <tr><td>試算表</td><td>全科目の残高を集めた表。借方=貸方の確認に使う</td></tr>
+            <tr><td>貸借対照表（B/S）</td><td>ある時点の財産の状態を示す決算書</td></tr>
+            <tr><td>損益計算書（P/L）</td><td>1年間の収支（剰余金の増減）を示す決算書。企業のP/Lと同じ</td></tr>
+            <tr><td>月次推移表</td><td>科目を縦・月を横に並べ、お金の動きを月ごとに見比べる表</td></tr>
+            <tr><td>期首残高</td><td>年度のはじめに持っていたお金。最初に入れる必要がある</td></tr>
+            <tr><td>逆仕訳（取消）</td><td>反対の仕訳を作って、元の仕訳を打ち消す訂正方法</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <span class="material-symbols-rounded">account_balance</span> Kaikei 会計管理 ― はじめてガイド<br>
+  わからないことは、この説明書を見ながらゆっくり進めれば大丈夫です。
+  <br><a class="backtop" href="#"><span class="material-symbols-rounded">arrow_upward</span> ページの先頭へ戻る</a>
+</footer>
+
+</body>
+</html>
