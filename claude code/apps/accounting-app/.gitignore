@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# データベース本体・バックアップ（ローカル運用データ）
+data/accounting.db
+data/backups/
+
+# PyInstaller ビルド成果物
+build/
+dist/
+*.manifest
+
+# OS
+.DS_Store
