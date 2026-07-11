@@ -4,11 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>お問い合わせ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-hover: #1557b0;
+      --primary-light: #e8f0fe;
+      --primary-ring: rgba(26, 115, 232, 0.15);
+      --bg: #f1f3f9;
+      --surface: #ffffff;
+      --border: #dadce0;
+      --text: #202124;
+      --text-muted: #5f6368;
+      --error: #d93025;
+      --error-bg: #fce8e6;
+      --error-border: #f5c6c2;
+      --success: #1e8e3e;
+      --success-bg: #e6f4ea;
+      --radius: 12px;
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-      background: #f5f5f5;
+      font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -16,112 +36,140 @@
       padding: 2rem 1rem;
     }
     .card {
-      background: #fff;
-      border: 1px solid #e5e5e5;
-      border-radius: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
       padding: 2rem;
       width: 100%;
       max-width: 560px;
+      box-shadow: 0 1px 3px rgba(60,64,67,0.08), 0 4px 12px rgba(60,64,67,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #1a73e8 0%, #7c4dff 100%);
     }
     h2 {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 500;
-      color: #111;
+      color: var(--text);
       margin-bottom: 0.25rem;
+      margin-top: 0.5rem;
     }
     .subtitle {
       font-size: 14px;
-      color: #666;
+      color: var(--text-muted);
       margin-bottom: 1.5rem;
     }
     label {
       display: block;
       font-size: 13px;
-      color: #555;
+      color: var(--text-muted);
       margin-bottom: 6px;
+      font-weight: 500;
     }
-    .required { color: #e53e3e; }
-    .field { margin-bottom: 1rem; }
+    .required { color: var(--error); }
+    .field { margin-bottom: 1.1rem; }
     input[type="text"],
     input[type="email"],
     textarea {
       width: 100%;
-      padding: 8px 12px;
+      padding: 10px 14px;
       font-size: 14px;
-      border: 1px solid #ddd;
+      border: 1.5px solid var(--border);
       border-radius: 8px;
       outline: none;
-      transition: border-color 0.15s;
+      transition: border-color 0.15s, box-shadow 0.15s;
       font-family: inherit;
+      color: var(--text);
+      background: var(--surface);
     }
-    input:focus, textarea:focus { border-color: #888; }
+    input:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-ring);
+    }
     textarea { resize: vertical; }
     .char-count {
       font-size: 12px;
-      color: #999;
+      color: var(--text-muted);
       text-align: right;
       margin-top: 4px;
     }
-    .char-count.over { color: #e53e3e; }
+    .char-count.over { color: var(--error); }
     .error-msg {
       display: none;
-      background: #fff5f5;
-      border: 1px solid #feb2b2;
+      background: var(--error-bg);
+      border: 1px solid var(--error-border);
       border-radius: 8px;
       padding: 10px 14px;
       font-size: 13px;
-      color: #c53030;
+      color: var(--error);
       margin-bottom: 1rem;
     }
     .btn-submit {
       width: 100%;
-      padding: 10px;
+      padding: 11px;
       font-size: 15px;
       cursor: pointer;
-      background: #fff;
-      border: 1px solid #ccc;
+      background: var(--primary);
+      color: #fff;
+      border: none;
       border-radius: 8px;
-      transition: background 0.15s;
+      transition: background 0.15s, box-shadow 0.15s;
       font-family: inherit;
+      font-weight: 500;
+      letter-spacing: 0.01em;
     }
-    .btn-submit:hover { background: #f5f5f5; }
-    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-submit:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 2px 8px rgba(26, 115, 232, 0.28);
+    }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
     .success-wrap {
       display: none;
       text-align: center;
       padding: 2rem 0;
     }
     .success-icon {
-      width: 48px; height: 48px;
+      width: 56px; height: 56px;
       border-radius: 50%;
-      background: #f0fff4;
+      background: var(--success-bg);
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 1rem;
     }
     .success-title {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 500;
-      color: #111;
+      color: var(--text);
       margin-bottom: 0.5rem;
     }
     .success-body {
       font-size: 14px;
-      color: #666;
+      color: var(--text-muted);
       margin-bottom: 1.5rem;
-      line-height: 1.6;
+      line-height: 1.65;
     }
     .btn-reset {
-      font-size: 13px;
+      font-size: 14px;
       cursor: pointer;
-      padding: 8px 20px;
-      background: #fff;
-      border: 1px solid #ccc;
+      padding: 10px 24px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: none;
       border-radius: 8px;
       font-family: inherit;
+      font-weight: 500;
+      transition: background 0.15s;
     }
-    .btn-reset:hover { background: #f5f5f5; }
+    .btn-reset:hover { background: #d2e3fc; }
   </style>
 </head>
 <body>
@@ -155,8 +203,8 @@
 
   <div id="success-msg" class="success-wrap">
     <div class="success-icon">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-        <path d="M5 11l4.5 4.5L17 7" stroke="#38a169" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <path d="M6 13l5.5 5.5L20 8" stroke="#1e8e3e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
     <p class="success-title">送信が完了しました</p>

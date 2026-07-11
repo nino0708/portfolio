@@ -31,6 +31,7 @@
     /* Header */
     header {
       border-bottom: 1px solid var(--border);
+      border-top: 3px solid var(--accent);
       padding: 0 2rem;
       height: 56px;
       display: flex;
@@ -405,6 +406,11 @@
       vertical-align: middle;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Stat card color accents (nth-child, no HTML changes needed) */
+    .stats .stat:nth-child(1) { box-shadow: inset 3px 0 0 #4285f4; }
+    .stats .stat:nth-child(2) { box-shadow: inset 3px 0 0 #34a853; }
+    .stats .stat:nth-child(3) { box-shadow: inset 3px 0 0 #9c27b0; }
 
     @media (max-width: 768px) {
       .stats { grid-template-columns: 1fr; }
