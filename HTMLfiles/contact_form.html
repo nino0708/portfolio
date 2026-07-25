@@ -4,11 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>お問い合わせ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --color-primary: #5C6BC0;
+      --color-primary-dark: #3949AB;
+      --color-secondary: #7E57C2;
+      --color-on-primary: #ffffff;
+      --color-bg: #ECEEF8;
+      --color-surface: #ffffff;
+      --color-border: #DDE0EF;
+      --color-border-focus: #5C6BC0;
+      --color-text: #1A1C2E;
+      --color-text-muted: #6B7280;
+      --color-error: #C62828;
+      --color-error-bg: #FFF5F5;
+      --color-error-border: #FFCDD2;
+      --color-success: #2E7D32;
+      --color-success-bg: #F1F8E9;
+      --radius-card: 16px;
+      --radius-input: 8px;
+      --radius-btn: 20px;
+      --font: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+      --shadow-card: 0 4px 24px rgba(92, 107, 192, 0.10), 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-      background: #f5f5f5;
+      font-family: var(--font);
+      background: var(--color-bg);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -16,152 +41,203 @@
       padding: 2rem 1rem;
     }
     .card {
-      background: #fff;
-      border: 1px solid #e5e5e5;
-      border-radius: 12px;
-      padding: 2rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
       width: 100%;
       max-width: 560px;
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
     }
-    h2 {
-      font-size: 18px;
-      font-weight: 500;
-      color: #111;
-      margin-bottom: 0.25rem;
+    .card-header {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
     }
-    .subtitle {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 1.5rem;
+    .card-header-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .card-header-icon svg { display: block; }
+    .card-header-title h2 {
+      font-size: 17px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+    .card-header-title .subtitle {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.78);
+    }
+    .card-body {
+      padding: 1.75rem 2rem 2rem;
     }
     label {
       display: block;
       font-size: 13px;
-      color: #555;
+      font-weight: 500;
+      color: var(--color-text-muted);
       margin-bottom: 6px;
     }
-    .required { color: #e53e3e; }
+    .required { color: var(--color-error); }
     .field { margin-bottom: 1rem; }
     input[type="text"],
     input[type="email"],
     textarea {
       width: 100%;
-      padding: 8px 12px;
+      padding: 9px 12px;
       font-size: 14px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-input);
       outline: none;
-      transition: border-color 0.15s;
-      font-family: inherit;
+      transition: border-color 0.18s, box-shadow 0.18s;
+      font-family: var(--font);
+      color: var(--color-text);
+      background: var(--color-surface);
     }
-    input:focus, textarea:focus { border-color: #888; }
+    input:focus, textarea:focus {
+      border-color: var(--color-border-focus);
+      box-shadow: 0 0 0 3px rgba(92, 107, 192, 0.12);
+    }
     textarea { resize: vertical; }
     .char-count {
       font-size: 12px;
-      color: #999;
+      color: var(--color-text-muted);
       text-align: right;
       margin-top: 4px;
     }
-    .char-count.over { color: #e53e3e; }
+    .char-count.over { color: var(--color-error); }
     .error-msg {
       display: none;
-      background: #fff5f5;
-      border: 1px solid #feb2b2;
+      background: var(--color-error-bg);
+      border: 1px solid var(--color-error-border);
       border-radius: 8px;
       padding: 10px 14px;
       font-size: 13px;
-      color: #c53030;
+      color: var(--color-error);
       margin-bottom: 1rem;
     }
     .btn-submit {
       width: 100%;
-      padding: 10px;
+      padding: 11px;
       font-size: 15px;
+      font-weight: 500;
       cursor: pointer;
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      transition: background 0.15s;
-      font-family: inherit;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      border: none;
+      border-radius: var(--radius-btn);
+      color: var(--color-on-primary);
+      transition: opacity 0.18s, transform 0.12s, box-shadow 0.18s;
+      font-family: var(--font);
+      letter-spacing: 0.02em;
+      box-shadow: 0 2px 8px rgba(92, 107, 192, 0.28);
     }
-    .btn-submit:hover { background: #f5f5f5; }
-    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-submit:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(92, 107, 192, 0.35);
+    }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
     .success-wrap {
       display: none;
       text-align: center;
-      padding: 2rem 0;
+      padding: 2.5rem 1rem;
     }
     .success-icon {
-      width: 48px; height: 48px;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
-      background: #f0fff4;
+      background: var(--color-success-bg);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 1rem;
+      margin: 0 auto 1.25rem;
     }
     .success-title {
-      font-size: 16px;
-      font-weight: 500;
-      color: #111;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--color-text);
       margin-bottom: 0.5rem;
     }
     .success-body {
       font-size: 14px;
-      color: #666;
-      margin-bottom: 1.5rem;
-      line-height: 1.6;
+      color: var(--color-text-muted);
+      margin-bottom: 1.75rem;
+      line-height: 1.7;
     }
     .btn-reset {
-      font-size: 13px;
+      font-size: 14px;
+      font-weight: 500;
       cursor: pointer;
-      padding: 8px 20px;
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-family: inherit;
+      padding: 9px 24px;
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-primary);
+      border-radius: var(--radius-btn);
+      color: var(--color-primary);
+      font-family: var(--font);
+      transition: background 0.15s;
     }
-    .btn-reset:hover { background: #f5f5f5; }
+    .btn-reset:hover { background: rgba(92, 107, 192, 0.07); }
   </style>
 </head>
 <body>
 <div class="card">
-  <h2>お問い合わせ</h2>
-  <p class="subtitle">ご質問・ご意見はこちらからお送りください。</p>
-
-  <div id="form-body">
-    <div class="field">
-      <label>お名前 <span class="required">*</span></label>
-      <input type="text" id="name" placeholder="山田 太郎">
-    </div>
-    <div class="field">
-      <label>メールアドレス <span class="required">*</span></label>
-      <input type="email" id="email" placeholder="taro@example.com">
-    </div>
-    <div class="field">
-      <label>件名</label>
-      <input type="text" id="subject" placeholder="お問い合わせの件名">
-    </div>
-    <div class="field" style="margin-bottom:1.5rem;">
-      <label>お問い合わせ内容 <span class="required">*</span></label>
-      <textarea id="message" rows="5" placeholder="ご質問・ご意見をご記入ください"></textarea>
-      <div id="char-count" class="char-count">0 / 500文字</div>
-    </div>
-
-    <div id="error-msg" class="error-msg"></div>
-
-    <button id="submit-btn" class="btn-submit" onclick="handleSubmit()">送信する</button>
-  </div>
-
-  <div id="success-msg" class="success-wrap">
-    <div class="success-icon">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-        <path d="M5 11l4.5 4.5L17 7" stroke="#38a169" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <div class="card-header">
+    <div class="card-header-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="rgba(255,255,255,0.92)"/>
       </svg>
     </div>
-    <p class="success-title">送信が完了しました</p>
-    <p class="success-body">お問い合わせありがとうございます。<br>内容を確認次第、ご連絡いたします。</p>
-    <button onclick="resetForm()" class="btn-reset">新しいお問い合わせ</button>
+    <div class="card-header-title">
+      <h2>お問い合わせ</h2>
+      <p class="subtitle">ご質問・ご意見はこちらからお送りください。</p>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div id="form-body">
+      <div class="field">
+        <label>お名前 <span class="required">*</span></label>
+        <input type="text" id="name" placeholder="山田 太郎">
+      </div>
+      <div class="field">
+        <label>メールアドレス <span class="required">*</span></label>
+        <input type="email" id="email" placeholder="taro@example.com">
+      </div>
+      <div class="field">
+        <label>件名</label>
+        <input type="text" id="subject" placeholder="お問い合わせの件名">
+      </div>
+      <div class="field" style="margin-bottom:1.5rem;">
+        <label>お問い合わせ内容 <span class="required">*</span></label>
+        <textarea id="message" rows="5" placeholder="ご質問・ご意見をご記入ください"></textarea>
+        <div id="char-count" class="char-count">0 / 500文字</div>
+      </div>
+
+      <div id="error-msg" class="error-msg"></div>
+
+      <button id="submit-btn" class="btn-submit" onclick="handleSubmit()">送信する</button>
+    </div>
+
+    <div id="success-msg" class="success-wrap">
+      <div class="success-icon">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <path d="M5 13l6 6L21 8" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <p class="success-title">送信が完了しました</p>
+      <p class="success-body">お問い合わせありがとうございます。<br>内容を確認次第、ご連絡いたします。</p>
+      <button onclick="resetForm()" class="btn-reset">新しいお問い合わせ</button>
+    </div>
   </div>
 </div>
 

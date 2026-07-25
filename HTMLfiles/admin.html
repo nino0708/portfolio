@@ -15,10 +15,13 @@
       --text-muted: #666;
       --text-dim: #444;
       --accent: #c8f55a;
+      --accent-cyan: #67e8f9;
+      --accent-amber: #fbbf24;
       --accent-dim: rgba(200, 245, 90, 0.12);
       --danger: #ff5f5f;
       --mono: 'IBM Plex Mono', monospace;
       --sans: 'Noto Sans JP', sans-serif;
+      --topbar-gradient: linear-gradient(90deg, #5C6BC0 0%, #7E57C2 50%, #c8f55a 100%);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -26,6 +29,17 @@
       color: var(--text);
       font-family: var(--sans);
       min-height: 100vh;
+    }
+    body::before {
+      content: '';
+      display: block;
+      height: 3px;
+      background: var(--topbar-gradient);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
     }
 
     /* Header */
@@ -37,7 +51,7 @@
       align-items: center;
       justify-content: space-between;
       position: sticky;
-      top: 0;
+      top: 3px;
       background: var(--bg);
       z-index: 100;
     }
@@ -449,11 +463,11 @@
       </div>
       <div class="stat">
         <div class="stat-label">Today</div>
-        <div class="stat-value" id="stat-today">—</div>
+        <div class="stat-value" style="color:var(--accent-cyan);" id="stat-today">—</div>
       </div>
       <div class="stat">
         <div class="stat-label">Last Updated</div>
-        <div class="stat-value" style="font-size:16px; padding-top:6px;" id="stat-updated">—</div>
+        <div class="stat-value" style="font-size:16px; padding-top:6px; color:var(--accent-amber);" id="stat-updated">—</div>
       </div>
     </div>
 
