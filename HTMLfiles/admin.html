@@ -393,6 +393,24 @@
       word-break: break-all;
     }
 
+    /* Gradient accent line at the very top of the sticky header */
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #4f7dff 0%, #7c4dff 50%, #06b6d4 100%);
+      z-index: 1;
+    }
+
+    /* Color-coded stat cards */
+    .stat--blue   { border-top: 3px solid #4f7dff; }
+    .stat--blue   .stat-value { color: #4f7dff; }
+    .stat--purple { border-top: 3px solid #7c4dff; }
+    .stat--purple .stat-value { color: #7c4dff; }
+    .stat--teal   { border-top: 3px solid #06b6d4; }
+    .stat--teal   .stat-value { color: #06b6d4; }
+
     /* Loading spinner */
     .spinner {
       display: inline-block;
@@ -443,15 +461,15 @@
 <div id="dashboard">
   <div class="container">
     <div class="stats">
-      <div class="stat">
+      <div class="stat stat--blue">
         <div class="stat-label">Total</div>
         <div class="stat-value" id="stat-total">—</div>
       </div>
-      <div class="stat">
+      <div class="stat stat--purple">
         <div class="stat-label">Today</div>
         <div class="stat-value" id="stat-today">—</div>
       </div>
-      <div class="stat">
+      <div class="stat stat--teal">
         <div class="stat-label">Last Updated</div>
         <div class="stat-value" style="font-size:16px; padding-top:6px;" id="stat-updated">—</div>
       </div>
