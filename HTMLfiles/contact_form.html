@@ -4,164 +4,283 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>お問い合わせ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
   <style>
+    :root {
+      --md-primary: #4F6AF5;
+      --md-primary-light: #E8ECFD;
+      --md-primary-dark: #3851D1;
+      --md-secondary: #7C5CBF;
+      --md-surface: #FFFFFF;
+      --md-surface-variant: #F7F7FB;
+      --md-on-surface: #1A1A2E;
+      --md-on-surface-variant: #5C5C72;
+      --md-outline: #C8C8D8;
+      --md-outline-variant: #E8E8F0;
+      --md-error: #BA1A1A;
+      --md-error-container: #FFDAD6;
+      --md-success: #1A7A3F;
+      --md-success-container: #D7F5E3;
+      --md-hero-start: #3851D1;
+      --md-hero-end: #7C5CBF;
+      --sans: 'Noto Sans JP', sans-serif;
+      --mono: 'Roboto Mono', monospace;
+      --radius-s: 8px;
+      --radius-m: 12px;
+      --radius-l: 16px;
+      --shadow-1: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+      --shadow-2: 0 4px 12px rgba(0,0,0,.10), 0 2px 4px rgba(0,0,0,.06);
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-      background: #f5f5f5;
+      font-family: var(--sans);
+      background: var(--md-surface-variant);
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 2rem 1rem;
+    }
+
+    /* Hero Header */
+    .hero {
+      width: 100%;
+      background: linear-gradient(135deg, var(--md-hero-start) 0%, var(--md-hero-end) 100%);
+      padding: 3rem 1.5rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 40%, rgba(255,255,255,.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 100px;
+      padding: 4px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,.9);
+      letter-spacing: .04em;
+      margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -.01em;
+      margin-bottom: .5rem;
+    }
+    .hero-subtitle {
+      font-size: 14px;
+      color: rgba(255,255,255,.75);
+      line-height: 1.6;
+    }
+
+    /* Card */
+    .card-wrap {
+      width: 100%;
+      max-width: 600px;
+      padding: 0 1.25rem 2.5rem;
+      margin-top: -3rem;
     }
     .card {
-      background: #fff;
-      border: 1px solid #e5e5e5;
-      border-radius: 12px;
+      background: var(--md-surface);
+      border: 1px solid var(--md-outline-variant);
+      border-radius: var(--radius-l);
       padding: 2rem;
-      width: 100%;
-      max-width: 560px;
+      box-shadow: var(--shadow-2);
     }
-    h2 {
-      font-size: 18px;
-      font-weight: 500;
-      color: #111;
-      margin-bottom: 0.25rem;
-    }
-    .subtitle {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 1.5rem;
-    }
+
+    /* Form fields */
+    .field { margin-bottom: 1rem; }
     label {
       display: block;
       font-size: 13px;
-      color: #555;
+      font-weight: 500;
+      color: var(--md-on-surface-variant);
       margin-bottom: 6px;
     }
-    .required { color: #e53e3e; }
-    .field { margin-bottom: 1rem; }
+    .required { color: var(--md-error); margin-left: 2px; }
+
     input[type="text"],
     input[type="email"],
     textarea {
       width: 100%;
-      padding: 8px 12px;
+      padding: 10px 14px;
       font-size: 14px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
+      font-family: var(--sans);
+      border: 1.5px solid var(--md-outline);
+      border-radius: var(--radius-s);
+      background: var(--md-surface-variant);
+      color: var(--md-on-surface);
       outline: none;
-      transition: border-color 0.15s;
-      font-family: inherit;
+      transition: border-color .18s, background .18s, box-shadow .18s;
     }
-    input:focus, textarea:focus { border-color: #888; }
-    textarea { resize: vertical; }
+    input:focus, textarea:focus {
+      border-color: var(--md-primary);
+      background: var(--md-surface);
+      box-shadow: 0 0 0 3px rgba(79,106,245,.15);
+    }
+    textarea { resize: vertical; min-height: 120px; }
+
     .char-count {
       font-size: 12px;
-      color: #999;
+      color: var(--md-on-surface-variant);
       text-align: right;
       margin-top: 4px;
+      font-family: var(--mono);
     }
-    .char-count.over { color: #e53e3e; }
+    .char-count.over { color: var(--md-error); }
+
+    /* Error banner */
     .error-msg {
       display: none;
-      background: #fff5f5;
-      border: 1px solid #feb2b2;
-      border-radius: 8px;
+      background: var(--md-error-container);
+      border: 1px solid rgba(186,26,26,.25);
+      border-radius: var(--radius-s);
       padding: 10px 14px;
       font-size: 13px;
-      color: #c53030;
+      color: var(--md-error);
       margin-bottom: 1rem;
     }
+
+    /* Submit button */
     .btn-submit {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       font-size: 15px;
+      font-weight: 500;
+      font-family: var(--sans);
       cursor: pointer;
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      transition: background 0.15s;
-      font-family: inherit;
+      background: linear-gradient(135deg, var(--md-primary) 0%, var(--md-secondary) 100%);
+      border: none;
+      border-radius: var(--radius-s);
+      color: #fff;
+      letter-spacing: .02em;
+      transition: opacity .18s, box-shadow .18s;
+      box-shadow: 0 2px 8px rgba(79,106,245,.35);
     }
-    .btn-submit:hover { background: #f5f5f5; }
-    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-submit:hover {
+      opacity: .92;
+      box-shadow: 0 4px 16px rgba(79,106,245,.45);
+    }
+    .btn-submit:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Success */
     .success-wrap {
       display: none;
       text-align: center;
       padding: 2rem 0;
     }
     .success-icon {
-      width: 48px; height: 48px;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
-      background: #f0fff4;
+      background: var(--md-success-container);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 1rem;
+      margin: 0 auto 1.25rem;
+    }
+    .success-icon .material-symbols-outlined {
+      font-size: 28px;
+      color: var(--md-success);
+      font-variation-settings: 'FILL' 1;
     }
     .success-title {
-      font-size: 16px;
-      font-weight: 500;
-      color: #111;
-      margin-bottom: 0.5rem;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--md-on-surface);
+      margin-bottom: .5rem;
     }
     .success-body {
       font-size: 14px;
-      color: #666;
-      margin-bottom: 1.5rem;
-      line-height: 1.6;
+      color: var(--md-on-surface-variant);
+      margin-bottom: 1.75rem;
+      line-height: 1.7;
     }
     .btn-reset {
       font-size: 13px;
+      font-weight: 500;
+      font-family: var(--sans);
       cursor: pointer;
-      padding: 8px 20px;
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-family: inherit;
+      padding: 9px 24px;
+      background: var(--md-surface);
+      border: 1.5px solid var(--md-outline);
+      border-radius: var(--radius-s);
+      color: var(--md-primary);
+      transition: background .15s, border-color .15s;
     }
-    .btn-reset:hover { background: #f5f5f5; }
+    .btn-reset:hover {
+      background: var(--md-primary-light);
+      border-color: var(--md-primary);
+    }
   </style>
 </head>
 <body>
-<div class="card">
-  <h2>お問い合わせ</h2>
-  <p class="subtitle">ご質問・ご意見はこちらからお送りください。</p>
 
-  <div id="form-body">
-    <div class="field">
-      <label>お名前 <span class="required">*</span></label>
-      <input type="text" id="name" placeholder="山田 太郎">
-    </div>
-    <div class="field">
-      <label>メールアドレス <span class="required">*</span></label>
-      <input type="email" id="email" placeholder="taro@example.com">
-    </div>
-    <div class="field">
-      <label>件名</label>
-      <input type="text" id="subject" placeholder="お問い合わせの件名">
-    </div>
-    <div class="field" style="margin-bottom:1.5rem;">
-      <label>お問い合わせ内容 <span class="required">*</span></label>
-      <textarea id="message" rows="5" placeholder="ご質問・ご意見をご記入ください"></textarea>
-      <div id="char-count" class="char-count">0 / 500文字</div>
-    </div>
-
-    <div id="error-msg" class="error-msg"></div>
-
-    <button id="submit-btn" class="btn-submit" onclick="handleSubmit()">送信する</button>
+<!-- Hero section -->
+<div class="hero">
+  <div class="hero-label">
+    <span class="material-symbols-outlined" style="font-size:14px;">mail</span>
+    Contact
   </div>
+  <h1 class="hero-title">お問い合わせ</h1>
+  <p class="hero-subtitle">ご質問・ご意見はこちらからお送りください。</p>
+</div>
 
-  <div id="success-msg" class="success-wrap">
-    <div class="success-icon">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-        <path d="M5 11l4.5 4.5L17 7" stroke="#38a169" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+<!-- Form card -->
+<div class="card-wrap">
+  <div class="card">
+
+    <div id="form-body">
+      <div class="field">
+        <label>お名前 <span class="required">*</span></label>
+        <input type="text" id="name" placeholder="山田 太郎">
+      </div>
+      <div class="field">
+        <label>メールアドレス <span class="required">*</span></label>
+        <input type="email" id="email" placeholder="taro@example.com">
+      </div>
+      <div class="field">
+        <label>件名</label>
+        <input type="text" id="subject" placeholder="お問い合わせの件名">
+      </div>
+      <div class="field" style="margin-bottom:1.5rem;">
+        <label>お問い合わせ内容 <span class="required">*</span></label>
+        <textarea id="message" rows="5" placeholder="ご質問・ご意見をご記入ください"></textarea>
+        <div id="char-count" class="char-count">0 / 500文字</div>
+      </div>
+
+      <div id="error-msg" class="error-msg"></div>
+
+      <button id="submit-btn" class="btn-submit" onclick="handleSubmit()">送信する</button>
     </div>
-    <p class="success-title">送信が完了しました</p>
-    <p class="success-body">お問い合わせありがとうございます。<br>内容を確認次第、ご連絡いたします。</p>
-    <button onclick="resetForm()" class="btn-reset">新しいお問い合わせ</button>
+
+    <div id="success-msg" class="success-wrap">
+      <div class="success-icon">
+        <span class="material-symbols-outlined">check_circle</span>
+      </div>
+      <p class="success-title">送信が完了しました</p>
+      <p class="success-body">お問い合わせありがとうございます。<br>内容を確認次第、ご連絡いたします。</p>
+      <button onclick="resetForm()" class="btn-reset">新しいお問い合わせ</button>
+    </div>
+
   </div>
 </div>
 
