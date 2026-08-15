@@ -17,6 +17,13 @@
       --accent: #c8f55a;
       --accent-dim: rgba(200, 245, 90, 0.12);
       --danger: #ff5f5f;
+      --stat-blue: #4285F4;
+      --stat-blue-dim: rgba(66, 133, 244, 0.14);
+      --stat-green: #34A853;
+      --stat-green-dim: rgba(52, 168, 83, 0.14);
+      --stat-amber: #FBBC04;
+      --stat-amber-dim: rgba(251, 188, 4, 0.12);
+      --gradient-header: linear-gradient(90deg, #4285F4, #7B4EA8, #c8f55a);
       --mono: 'IBM Plex Mono', monospace;
       --sans: 'Noto Sans JP', sans-serif;
     }
@@ -28,6 +35,15 @@
       min-height: 100vh;
     }
 
+    /* Topbar accent line */
+    .accent-bar {
+      height: 3px;
+      background: var(--gradient-header);
+      position: sticky;
+      top: 0;
+      z-index: 101;
+    }
+
     /* Header */
     header {
       border-bottom: 1px solid var(--border);
@@ -37,7 +53,7 @@
       align-items: center;
       justify-content: space-between;
       position: sticky;
-      top: 0;
+      top: 3px;
       background: var(--bg);
       z-index: 100;
     }
@@ -73,7 +89,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: calc(100vh - 56px);
+      min-height: calc(100vh - 59px);
       padding: 2rem;
     }
     .login-card {
@@ -162,7 +178,11 @@
     .stat {
       background: var(--surface);
       padding: 1.25rem 1.5rem;
+      border-left: 3px solid transparent;
     }
+    .stat:nth-child(1) { border-left-color: var(--stat-blue); }
+    .stat:nth-child(2) { border-left-color: var(--stat-green); }
+    .stat:nth-child(3) { border-left-color: var(--stat-amber); }
     .stat-label {
       font-family: var(--mono);
       font-size: 10px;
@@ -175,8 +195,10 @@
       font-family: var(--mono);
       font-size: 28px;
       font-weight: 500;
-      color: var(--accent);
     }
+    .stat:nth-child(1) .stat-value { color: var(--stat-blue); }
+    .stat:nth-child(2) .stat-value { color: var(--stat-green); }
+    .stat:nth-child(3) .stat-value { color: var(--stat-amber); font-size: 16px; padding-top: 6px; }
 
     /* Toolbar */
     .toolbar {
@@ -416,6 +438,8 @@
 </head>
 <body>
 
+<div class="accent-bar"></div>
+
 <header>
   <div class="logo">ADMIN / お問い合わせ管理</div>
   <div class="header-right">
@@ -453,7 +477,7 @@
       </div>
       <div class="stat">
         <div class="stat-label">Last Updated</div>
-        <div class="stat-value" style="font-size:16px; padding-top:6px;" id="stat-updated">—</div>
+        <div class="stat-value" id="stat-updated">—</div>
       </div>
     </div>
 
@@ -499,7 +523,7 @@
 </div>
 
 <script>
-  const API = "${api_endpoint}";
+  const API = '${api_endpoint}';
   const ADMIN_PASSWORD = 'admin1234'; // ← パスワードを変更してください
   let allData = [];
 
@@ -553,14 +577,14 @@
       return;
     }
     tbody.innerHTML = data.map(item => `
-<tr onclick="showDetail('$${item.id}')">
-  <td class="td-id">$${item.id ? item.id.substring(0, 8) + '...' : '—'}</td>
-  <td class="td-name">$${escape(item.name || '—')}</td>
-  <td class="td-email">$${escape(item.email || '—')}</td>
-  <td class="td-subject">$${escape(item.subject || '—')}</td>
-  <td class="td-message">$${escape(item.message || '—')}</td>
-  <td class="td-time">$${formatDate(item.timestamp)}</td>
-</tr>
+      <tr onclick="showDetail('${item.id}')">
+        <td class="td-id">${item.id ? item.id.substring(0, 8) + '...' : '—'}</td>
+        <td class="td-name">${escape(item.name || '—')}</td>
+        <td class="td-email">${escape(item.email || '—')}</td>
+        <td class="td-subject">${escape(item.subject || '—')}</td>
+        <td class="td-message">${escape(item.message || '—')}</td>
+        <td class="td-time">${formatDate(item.timestamp)}</td>
+      </tr>
     `).join('');
   }
 
@@ -581,27 +605,27 @@
     document.getElementById('modal-content').innerHTML = `
       <div class="detail-row">
         <div class="detail-label">ID</div>
-        <div class="detail-value mono">$${escape(item.id || '—')}</div>
+        <div class="detail-value mono">${escape(item.id || '—')}</div>
       </div>
       <div class="detail-row">
         <div class="detail-label">送信日時</div>
-        <div class="detail-value">$${formatDateFull(item.timestamp)}</div>
+        <div class="detail-value">${formatDateFull(item.timestamp)}</div>
       </div>
       <div class="detail-row">
         <div class="detail-label">お名前</div>
-        <div class="detail-value">$${escape(item.name || '—')}</div>
+        <div class="detail-value">${escape(item.name || '—')}</div>
       </div>
       <div class="detail-row">
         <div class="detail-label">メールアドレス</div>
-        <div class="detail-value mono">$${escape(item.email || '—')}</div>
+        <div class="detail-value mono">${escape(item.email || '—')}</div>
       </div>
       <div class="detail-row">
         <div class="detail-label">件名</div>
-        <div class="detail-value">$${escape(item.subject || '件名なし')}</div>
+        <div class="detail-value">${escape(item.subject || '件名なし')}</div>
       </div>
       <div class="detail-row">
         <div class="detail-label">お問い合わせ内容</div>
-        <div class="detail-message">$${escape(item.message || '—')}</div>
+        <div class="detail-message">${escape(item.message || '—')}</div>
       </div>
     `;
     document.getElementById('modal').classList.add('open');
