@@ -1,0 +1,444 @@
+/* Tempus — Material Design 3 / 緑基調。
+   クリーンな土台（余白・細く淡いボーダー）を保ちつつ、色味とホーム感を足す。 */
+:root {
+  --primary: #1f6f4a;
+  --on-primary: #ffffff;
+  --primary-container: #a7f0c6;
+  --on-primary-container: #00210f;
+  --secondary: #4e6355;
+  --tertiary: #3b6470;
+  --surface: #f6faf7;
+  --surface-container: #ecf1ee;
+  --surface-container-high: #e5ebe7;
+  --on-surface: #171d19;
+  --on-surface-variant: #414942;
+  --outline: #717972;
+  --outline-variant: #c0c9c1;
+  --error: #ba1a1a;
+  --warn: #8a5300;
+  --shadow: 0 1px 2px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.04);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --font: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --primary: #8bd5aa;
+    --on-primary: #003920;
+    --primary-container: #00522f;
+    --on-primary-container: #a7f0c6;
+    --secondary: #b5ccbb;
+    --tertiary: #a3cddb;
+    --surface: #0f1512;
+    --surface-container: #1b211d;
+    --surface-container-high: #252b27;
+    --on-surface: #dfe4e0;
+    --on-surface-variant: #c0c9c1;
+    --outline: #8a938b;
+    --outline-variant: #414942;
+    --error: #ffb4ab;
+    --warn: #ffb95c;
+    --shadow: 0 1px 2px rgba(0,0,0,.4);
+  }
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--surface);
+  color: var(--on-surface);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100%;
+}
+
+/* 奥行きの層。写真ではなくベクターで作る:
+   画像だと高解像度で数MBになり、通信とバンドルを食う割に、拡大すると滲む。
+   多層の放射グラデーションなら数KBで、どの画面密度でも破綻しない。 */
+.bg-decor {
+  position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background:
+    radial-gradient(60rem 40rem at 12% -8%,  color-mix(in srgb, var(--primary)  22%, transparent) 0%, transparent 60%),
+    radial-gradient(48rem 36rem at 92% 6%,   color-mix(in srgb, var(--tertiary) 20%, transparent) 0%, transparent 62%),
+    radial-gradient(52rem 40rem at 78% 92%,  color-mix(in srgb, var(--primary)  14%, transparent) 0%, transparent 66%),
+    radial-gradient(40rem 30rem at 4% 78%,   color-mix(in srgb, var(--secondary) 16%, transparent) 0%, transparent 64%);
+}
+/* きめ細かい粒子。のっぺりした面に触感を足して、板に見えるのを防ぐ */
+.bg-decor::after {
+  content: ''; position: absolute; inset: 0; opacity: .5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+}
+button { font: inherit; cursor: pointer; }
+input, textarea { font: inherit; }
+
+.app { max-width: 880px; margin: 0 auto; padding: 0 16px 96px; }
+/* グリッド/フレックスの子は既定が min-width:auto で、長いタイトルがカラムを
+   押し広げて横スクロールを起こす。ここを止めないと狭い画面で右端が切れる。 */
+.slot > *, .task-row > * { min-width: 0; }
+.slot-title, .task-title, .banner { overflow-wrap: anywhere; }
+
+/* ホーム感を出すヒーロー */
+.hero {
+  margin: 16px 0 20px;
+  padding: 22px 20px;
+  border-radius: 24px;
+  background:
+    radial-gradient(28rem 18rem at 88% -20%, rgba(255,255,255,.30) 0%, transparent 60%),
+    linear-gradient(135deg, var(--primary) 0%, var(--tertiary) 100%);
+  color: var(--on-primary);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.28),
+    0 18px 40px -22px color-mix(in srgb, var(--primary) 85%, black);
+}
+.hero h1 { margin: 0 0 4px; font-size: 22px; letter-spacing: .02em; }
+.hero p { margin: 0; opacity: .9; font-size: 13px; }
+.hero-stats { display: flex; gap: 20px; margin-top: 16px; }
+.hero-stat b { display: block; font-size: 24px; line-height: 1.1; }
+.hero-stat span { font-size: 11px; opacity: .85; }
+
+.card {
+  position: relative;
+  background: color-mix(in srgb, var(--surface-container) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(1.15);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 70%, transparent);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 18px;
+  /* 上端の細い明るい線＋足元の柔らかい影で、面ではなく板として浮かせる */
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 45%, transparent),
+    0 1px 2px rgba(0,0,0,.05),
+    0 10px 26px -14px rgba(0,0,0,.28);
+}
+.card h2 {
+  margin: 0 0 12px; font-size: 14px; font-weight: 600;
+  color: var(--on-surface-variant); letter-spacing: .04em;
+  display: flex; align-items: center; gap: 8px;
+}
+.card h2::before {
+  content: ''; width: 3px; height: 14px; border-radius: 2px; background: var(--primary);
+}
+
+/* 常時1行入力欄 — 起票コストを潰す最重要UI。全画面で下部固定 */
+.capture {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--outline-variant);
+}
+.capture-inner { max-width: 880px; margin: 0 auto; display: flex; gap: 8px; }
+.capture input {
+  flex: 1; padding: 13px 16px; border-radius: 999px;
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container-high); color: var(--on-surface);
+}
+.capture input:focus { outline: 2px solid var(--primary); outline-offset: -1px; }
+.capture button {
+  padding: 0 20px; border-radius: 999px; border: none;
+  background: var(--primary); color: var(--on-primary); font-weight: 600;
+}
+.capture-hint { max-width: 880px; margin: 6px auto 0; font-size: 11px; color: var(--on-surface-variant); }
+
+/* 時間割 */
+.timeline { display: flex; flex-direction: column; gap: 6px; }
+.slot {
+  display: grid; grid-template-columns: 62px minmax(0, 1fr) auto; align-items: center;
+  gap: 12px; padding: 11px 13px; border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 65%, transparent);
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 35%, transparent), 0 1px 2px rgba(0,0,0,.04);
+}
+.slot.event { background: color-mix(in srgb, var(--tertiary) 12%, var(--surface)); }
+.slot.task { background: color-mix(in srgb, var(--primary) 10%, var(--surface)); }
+.slot.proposal { border-style: dashed; background: transparent; }
+.slot-time { font-variant-numeric: tabular-nums; font-size: 12px; color: var(--on-surface-variant); white-space: nowrap; }
+.slot .btn, .slot .badge, .task-row .badge { white-space: nowrap; flex-shrink: 0; }
+.slot-title { font-size: 14px; }
+.slot-meta { font-size: 11px; color: var(--on-surface-variant); }
+
+/* 時間割グリッド（6:00〜24:00・15分刻み・ドラッグ&ドロップの受け皿） */
+.timeline-scroll {
+  max-height: 480px; overflow-y: auto; border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 65%, transparent);
+}
+.timeline-grid { position: relative; }
+.timeline-hour { position: absolute; left: 0; right: 0; height: 0; }
+.timeline-hour-label {
+  position: absolute; left: 8px; top: -7px; font-size: 11px;
+  color: var(--on-surface-variant); font-variant-numeric: tabular-nums;
+  background: var(--surface); padding: 0 4px;
+}
+.timeline-hour-line {
+  position: absolute; left: 58px; right: 0; top: 0;
+  border-top: 1px solid color-mix(in srgb, var(--outline-variant) 55%, transparent);
+}
+.timeline-block {
+  position: absolute; left: 62px; right: 6px; min-height: 28px;
+  border-radius: var(--radius-sm); padding: 4px 8px; overflow: hidden;
+  display: flex; flex-direction: column; gap: 2px;
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 55%, transparent);
+}
+.timeline-block.event { background: color-mix(in srgb, var(--tertiary) 14%, var(--surface)); }
+.timeline-block.task { background: color-mix(in srgb, var(--primary) 12%, var(--surface)); }
+.timeline-block.task.done { opacity: .55; }
+.timeline-block-head { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.timeline-remove {
+  border: none; background: transparent; color: var(--on-surface-variant);
+  font-size: 15px; line-height: 1; cursor: pointer; padding: 2px 4px;
+}
+.timeline-resize-handle {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 8px;
+  cursor: ns-resize; touch-action: none;
+}
+
+/* 「やること」のドラッグハンドル */
+.task-drag-handle {
+  cursor: grab; touch-action: none; color: var(--on-surface-variant);
+  padding: 2px 4px; user-select: none; flex-shrink: 0;
+}
+.task-drag-handle:active { cursor: grabbing; }
+
+/* ドラッグ中に指/カーソルへ追従する簡易プレビュー */
+.drag-ghost {
+  position: fixed; z-index: 50; transform: translate(-50%, -120%);
+  pointer-events: none; max-width: 220px;
+  padding: 6px 10px; border-radius: var(--radius-sm); font-size: 13px;
+  background: var(--primary); color: var(--on-primary); box-shadow: 0 4px 14px rgba(0,0,0,.2);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.drag-ghost.over { outline: 2px solid var(--on-primary); }
+
+.task-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 4px; border-bottom: 1px solid var(--outline-variant);
+}
+.task-row:last-child, .task-item:last-child .task-row { border-bottom: none; }
+.task-title { flex: 1; font-size: 14px; }
+.task-title.done { text-decoration: line-through; opacity: .5; }
+
+.badge {
+  font-size: 10px; padding: 2px 7px; border-radius: 999px;
+  border: 1px solid var(--outline-variant); color: var(--on-surface-variant);
+  white-space: nowrap;
+}
+.badge.inferred { border-style: dashed; }
+.badge.high { background: color-mix(in srgb, var(--error) 15%, transparent); color: var(--error); border-color: transparent; }
+.badge.lead {
+  border-color: transparent; font-weight: 600;
+  background: color-mix(in srgb, var(--warn) 18%, transparent); color: var(--warn);
+}
+.badge.lead.hard {
+  background: color-mix(in srgb, var(--error) 16%, transparent); color: var(--error);
+}
+.lead-note { font-size: 11px; color: var(--warn); margin-top: 2px; }
+.lead-note.hard { color: var(--error); }
+
+.badge.line { background: color-mix(in srgb, var(--primary) 18%, transparent); color: var(--on-primary-container); border-color: transparent; }
+
+.btn {
+  padding: 7px 14px; border-radius: 999px; border: 1px solid var(--outline);
+  background: transparent; color: var(--on-surface); font-size: 13px;
+}
+.btn.filled { background: var(--primary); color: var(--on-primary); border-color: transparent; font-weight: 600; }
+.btn.tonal { background: var(--primary-container); color: var(--on-primary-container); border-color: transparent; }
+.btn:disabled { opacity: .45; cursor: default; }
+
+.banner {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+  padding: 10px 14px; border-radius: var(--radius-sm); font-size: 13px;
+  margin-bottom: 12px; border: 1px solid var(--outline-variant);
+}
+.banner.warn { background: color-mix(in srgb, var(--warn) 14%, transparent); border-color: transparent; }
+.banner.info { background: var(--surface-container-high); }
+
+.empty { padding: 20px 4px; color: var(--on-surface-variant); font-size: 13px; text-align: center; }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.spacer { flex: 1; }
+
+.signin { display: grid; place-items: center; min-height: 100vh; padding: 24px; text-align: center; }
+.signin h1 { font-size: 30px; margin: 0 0 6px; }
+.signin p { color: var(--on-surface-variant); font-size: 14px; margin: 0 0 24px; }
+
+/* ---- カレンダー（週/月） ---- */
+.cal-head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.cal-label { font-size: 14px; min-width: 9em; text-align: center; }
+.cal-head .btn { padding: 6px 12px; }
+
+.seg { display: inline-flex; border: 1px solid var(--outline-variant); border-radius: 999px; overflow: hidden; }
+.seg button {
+  border: none; background: transparent; color: var(--on-surface-variant);
+  padding: 6px 14px; font-size: 13px;
+}
+.seg button.on { background: var(--primary); color: var(--on-primary); font-weight: 600; }
+
+.cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.cal-dow {
+  font-size: 11px; text-align: center; padding: 4px 0;
+  color: var(--on-surface-variant); letter-spacing: .08em;
+}
+.cal-dow.sun { color: var(--error); }
+.cal-dow.sat { color: var(--tertiary); }
+
+.cal-cell {
+  min-height: 84px; padding: 5px 5px 6px; border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 55%, transparent);
+  background: color-mix(in srgb, var(--surface) 62%, transparent);
+  display: flex; flex-direction: column; gap: 3px; overflow: hidden;
+}
+.cal-grid.week .cal-cell { min-height: 150px; }
+.cal-cell.out { opacity: .38; }
+.cal-cell.today {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary),
+              0 6px 18px -12px color-mix(in srgb, var(--primary) 80%, black);
+}
+
+.cal-date { font-size: 12px; font-variant-numeric: tabular-nums; color: var(--on-surface-variant); }
+.cal-date.sun { color: var(--error); }
+.cal-date.sat { color: var(--tertiary); }
+.cal-cell.today .cal-date { color: var(--primary); font-weight: 700; }
+
+.cal-item {
+  font-size: 10.5px; line-height: 1.3; padding: 2px 5px; border-radius: 5px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cal-item.event { background: color-mix(in srgb, var(--tertiary) 22%, transparent); }
+.cal-item.task  { background: color-mix(in srgb, var(--primary) 20%, transparent); }
+.cal-item.due   { background: color-mix(in srgb, var(--error) 16%, transparent); color: var(--error); font-weight: 600; }
+.cal-item.window {
+  background: transparent;
+  border: 1px dashed color-mix(in srgb, var(--primary) 55%, transparent);
+  color: var(--primary);
+}
+.cal-time { opacity: .65; margin-right: 3px; font-variant-numeric: tabular-nums; }
+.cal-more { font-size: 10px; color: var(--on-surface-variant); padding-left: 4px; }
+
+.cal-dow-inline { display: none; }
+
+/* 狭い画面。7列に横並べすると1マスが50px程度になり、予定名が「Clo…」で切れて読めない。
+   月表示はマスを詰めて残し、週表示は1日1行の縦リストに組み替える。 */
+@media (max-width: 560px) {
+  .cal-grid.month .cal-cell { min-height: 60px; padding: 4px 3px; }
+  .cal-grid.month .cal-item { font-size: 9.5px; padding: 1px 3px; }
+  .cal-grid.month .cal-time { display: none; }
+
+  .cal-grid.week { grid-template-columns: 1fr; gap: 6px; }
+  .cal-grid.week .cal-dow { display: none; }
+  .cal-grid.week .cal-cell { min-height: 0; padding: 8px 10px; }
+  .cal-grid.week .cal-date { font-size: 13px; font-weight: 600; }
+  .cal-grid.week .cal-dow-inline { display: inline; font-weight: 400; opacity: .7; margin-left: 2px; }
+  .cal-grid.week .cal-item { font-size: 12px; padding: 3px 7px; white-space: normal; }
+  .cal-grid.week .cal-cell.out { display: none; }
+}
+
+/* ---- 定期作業の登録フォーム ---- */
+.rec-form {
+  margin-top: 12px; padding: 14px; border-radius: var(--radius-sm);
+  border: 1px dashed var(--outline-variant);
+  background: color-mix(in srgb, var(--surface) 55%, transparent);
+}
+.rec-title, .rec-checklist {
+  width: 100%; padding: 10px 12px; border-radius: var(--radius-sm);
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container-high); color: var(--on-surface);
+}
+.rec-checklist { margin-top: 10px; resize: vertical; font-size: 13px; line-height: 1.6; }
+.rec-form input[type="number"] {
+  padding: 6px 8px; border-radius: 8px;
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container-high); color: var(--on-surface);
+}
+
+/* ---- Claude の講評 ---- */
+.review-list { display: flex; flex-direction: column; gap: 8px; }
+.review-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 10px 12px; border-radius: var(--radius-sm); font-size: 13.5px; line-height: 1.6;
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 55%, transparent);
+  background: color-mix(in srgb, var(--surface) 62%, transparent);
+}
+.review-item .badge { flex-shrink: 0; margin-top: 1px; }
+/* テキスト側を伸ばさないと、折り返した2行目が字下げされて見える */
+.review-item > span:last-child { flex: 1; min-width: 0; text-align: left; }
+.review-item.overload { border-left: 3px solid var(--warn); }
+.review-item.deadline { border-left: 3px solid var(--error); }
+.review-item.grouping,
+.review-item.order    { border-left: 3px solid var(--tertiary); }
+.review-item.ok       { border-left: 3px solid var(--primary); }
+
+/* ---- タスクの詳細（行を開いた中身） ---- */
+/* タイトルは見た目そのままで開閉も兼ねる。行の中で一番広い当たり判定にする */
+.task-open {
+  flex: 1; min-width: 0; padding: 0; border: none; background: none;
+  color: inherit; font: inherit; text-align: left; cursor: pointer;
+}
+.badge.disclose { cursor: pointer; padding: 2px 6px; font-size: 9px; }
+/* 中身がある行だけ塗る。全部同じ見た目だと、開くまで空かどうか分からない */
+.badge.disclose.has {
+  border-color: transparent; font-weight: 600;
+  background: color-mix(in srgb, var(--primary) 16%, transparent);
+  color: var(--on-primary-container);
+}
+.task-item:has(.task-detail) { background: color-mix(in srgb, var(--primary) 4%, transparent); }
+
+.task-detail {
+  padding: 4px 4px 14px 34px;   /* 34px = チェックボックスの幅ぶん。タイトルと頭を揃える */
+  display: flex; flex-direction: column; gap: 10px;
+}
+.detail-block {
+  padding: 10px 12px; border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 55%, transparent);
+  background: color-mix(in srgb, var(--surface) 62%, transparent);
+}
+.detail-label {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 600; color: var(--on-surface-variant);
+  margin-bottom: 6px;
+}
+.detail-text {
+  font-size: 13.5px; line-height: 1.7;
+  white-space: pre-wrap; overflow-wrap: anywhere;   /* 投稿文の改行をそのまま出す */
+}
+.detail-text.selectable { user-select: text; }
+.detail-url {
+  display: block; margin-top: 6px; font-size: 11.5px;
+  color: var(--primary); overflow-wrap: anywhere;
+}
+.detail-check {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 13.5px; line-height: 1.6; padding: 3px 0;
+}
+.detail-check .done { text-decoration: line-through; opacity: .5; }
+.detail-empty { font-size: 12.5px; color: var(--on-surface-variant); padding: 2px; }
+.detail-meta { font-size: 11px; color: var(--on-surface-variant); }
+.detail-meta.warn { color: var(--warn); margin-top: 6px; }
+
+.detail-block.clip { border-left: 3px solid var(--tertiary); }
+.detail-block.clip.posted { opacity: .55; }
+
+.detail-window {
+  display: flex; gap: 16px; flex-wrap: wrap;
+}
+.detail-window label {
+  display: flex; flex-direction: column; gap: 3px;
+  font-size: 11px; color: var(--on-surface-variant);
+}
+.detail-window input[type="date"] {
+  font-size: 13px; padding: 4px 6px; border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 70%, transparent);
+  background: var(--surface);
+}
+.detail-window label.overdue { color: var(--error); font-weight: 600; }
+.detail-window input[type="date"].overdue {
+  border-color: var(--error);
+  background: color-mix(in srgb, var(--error) 10%, var(--surface));
+  color: var(--error);
+}
+
+.task-slot-candidates {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 8px 12px 12px 34px;
+}
