@@ -45,6 +45,7 @@
   --elev-3: 0 4px 8px 3px rgba(60,64,67,.12), 0 1px 3px rgba(60,64,67,.22);
 
   --radius:   12px;
+  --radius-md:14px;
   --radius-lg:16px;
   --radius-sm: 8px;
 
@@ -152,6 +153,11 @@ body {
 #sidebar nav a[data-page="events"]  { --ico-bg:#fce4ec; --ico-fg:#d81b60; }
 #sidebar nav a[data-page="accounts"]{ --ico-bg:#fce8f1; --ico-fg:#c5277f; }
 #sidebar nav a[data-page="periods"] { --ico-bg:#fef7e0; --ico-fg:#b06000; }
+#sidebar nav a[data-page="csvimport"]{ --ico-bg:#e8f5e9; --ico-fg:#2e7d32; }
+#sidebar nav a[data-page="monthly"] { --ico-bg:#e3f2fd; --ico-fg:#1565c0; }
+#sidebar nav a[data-page="budget"]  { --ico-bg:#fff3e0; --ico-fg:#e65100; }
+#sidebar nav a[data-page="ss"]      { --ico-bg:#f3e5f5; --ico-fg:#7b1fa2; }
+#sidebar nav a[data-page="opening"] { --ico-bg:#e0f2f1; --ico-fg:#00695c; }
 #sidebar nav a[data-page="data"]    { --ico-bg:#eef0f3; --ico-fg:#5f6368; }
 #sidebar nav a[data-page="deletion"]{ --ico-bg:#fde8e8; --ico-fg:#c0392b; }
 
@@ -875,6 +881,60 @@ tr.pl-subtotal.neg td.amount { color: var(--danger); }
   padding: 48px 24px; text-align: center; color: var(--text-muted);
 }
 .empty-state .material-symbols-rounded { font-size: 44px; color: var(--text-disabled); }
+
+/* ============================================================
+   ページ共通 — ローディング・エラー状態
+   ============================================================ */
+.page-loading {
+  text-align: center; padding: 48px 24px; color: var(--text-disabled);
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.page-loading::before {
+  content: ''; width: 32px; height: 32px; border-radius: 50%;
+  border: 3px solid var(--border-strong); border-top-color: var(--primary);
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.page-error {
+  padding: 20px 24px; color: var(--danger); background: var(--danger-bg);
+  border-radius: var(--radius-sm); border: 1px solid rgba(217,48,37,.2);
+  font-weight: 600;
+}
+
+/* ============================================================
+   貸借対照表 (B/S) レイアウト補助クラス
+   ============================================================ */
+.bs-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+}
+@media (max-width: 860px) { .bs-layout { grid-template-columns: 1fr; } }
+
+.bs-section-h3 {
+  font-size: 15px; font-weight: 700; letter-spacing: -.01em;
+  margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border);
+  color: var(--text);
+}
+
+.bs-cat-row td {
+  background: var(--surface-1);
+  padding: 5px 8px 3px 16px; font-weight: 600; font-size: 13px; color: var(--text-muted);
+}
+
+.bs-label-head td {
+  font-weight: 700; padding: 6px 0 4px; font-size: 14px; color: var(--text);
+}
+
+.bs-mismatch {
+  margin-top: 16px; padding: 12px 16px; background: var(--danger-bg);
+  border-radius: var(--radius-sm); color: var(--danger);
+  border: 1px solid rgba(217,48,37,.2); font-weight: 600;
+}
+
+/* B/S stat rowに使う accent カラー */
+.stat-card.bs-assets  { --accent: #1a73e8; }
+.stat-card.bs-liab    { --accent: #d93025; }
+.stat-card.bs-equity  { --accent: #8430ce; }
+.stat-card.bs-balance { --accent: #188038; }
 
 /* トースト通知 */
 #toast {
