@@ -231,11 +231,24 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
+    .search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-wrap .search-ico {
+      position: absolute;
+      left: 9px;
+      font-size: 15px;
+      color: var(--text-muted);
+      pointer-events: none;
+      user-select: none;
+    }
     .search-input {
       background: var(--surface);
       border: 1px solid var(--border-light);
       border-radius: 2px;
-      padding: 7px 12px;
+      padding: 7px 12px 7px 30px;
       font-size: 13px;
       color: var(--text);
       font-family: var(--mono);
@@ -504,8 +517,11 @@
         <span class="section-title">INQUIRIES</span>
       </div>
       <div style="display:flex; gap:0.75rem; align-items:center;">
-        <input type="text" class="search-input" id="search" placeholder="名前・メールで検索..." oninput="filterTable()">
-        <button class="btn-refresh" onclick="loadData()">↻ REFRESH</button>
+        <div class="search-wrap">
+          <span class="material-symbols-outlined search-ico">search</span>
+          <input type="text" class="search-input" id="search" placeholder="名前・メールで検索..." oninput="filterTable()">
+        </div>
+        <button class="btn-refresh" onclick="loadData()"><span class="material-symbols-outlined" style="font-size:13px;vertical-align:-2px;">refresh</span> REFRESH</button>
       </div>
     </div>
 
