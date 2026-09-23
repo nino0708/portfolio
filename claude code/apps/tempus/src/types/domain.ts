@@ -50,6 +50,7 @@ export interface Task {
   startedAt: string | null;       // 実績計測の開始時刻。裏でタイマーは回さない
   completedAt: string | null;
   source: TaskSource;
+  driveDocUrl: string | null;     // 思考ログのGoogleドキュメント。null = まだ作っていない（drive-syncが作る）
   createdAt: string;
   updatedAt: string;
 }

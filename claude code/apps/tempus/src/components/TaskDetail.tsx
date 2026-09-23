@@ -85,6 +85,15 @@ export function TaskDetail({
 
       {empty && <div className="detail-empty">詳細は入っていない</div>}
 
+      {/* 考えたことはタスクの外（Drive）に書き残す。タスクを消してもドキュメントは残る */}
+      <div className="row" style={{ marginTop: 8 }}>
+        {task.driveDocUrl ? (
+          <a className="btn tonal" href={task.driveDocUrl} target="_blank" rel="noreferrer">思考ログを開く</a>
+        ) : (
+          <span className="detail-meta">思考ログのドキュメントを準備中</span>
+        )}
+      </div>
+
       <div className="detail-meta">
         起票: {SOURCE_LABEL[task.source]}
         {task.dueAt && ` ／ 期限 ${task.dueAt.slice(0, 10)} ${fmtTime(task.dueAt, tz)}`}

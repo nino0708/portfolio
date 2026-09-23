@@ -17,6 +17,7 @@ import {
 } from './lib/tasks';
 import { listClips, setClipPosted } from './lib/clips';
 import { listChecklistItems, setChecklistDone } from './lib/checklist';
+import { syncDrive } from './lib/drive';
 import { priorityScore } from './lib/plan';
 import * as offline from './lib/offline';
 import { fetchPlanReview, loadCachedReview, CLAUDE_REVIEW_ENABLED, type ReviewNote } from './lib/review';
@@ -111,6 +112,32 @@ export default function App() {
   }, [session]);
 
   useEffect(() => { void reload(); }, [reload]);
+
+  // 思考ログ（Driveのドキュメント）。一覧が変わるたびに少し待ってから揃える。
+  // 作った物があれば読み直す（読み直し後の同期は作る物が無いので、そこで止まる）。
+  // 許可が無い時の案内は1回だけ出す — 毎回出すと他の通知が埋もれる。
+  const driveSyncing = useRef(false);
+  const driveNoticeShown = useRef(false);
+  useEffect(() => {
+    if (!session) return;
+    const timer = window.setTimeout(() => {
+      if (driveSyncing.current) return;
+      driveSyncing.current = true;
+      void syncDrive()
+        .then(async (r) => {
+          if (!r.ok && !driveNoticeShown.current) {
+            driveNoticeShown.current = true;
+            setNotice(r.needsReconnect
+              ? '思考ログをDriveに作るには、ログインし直してDriveの許可を出して'
+              : `思考ログのドキュメントを作れなかった: ${r.error ?? '不明なエラー'}`);
+          }
+          if ((r.docsCreated ?? 0) > 0) await reload();
+        })
+        .catch(() => { /* 通信失敗は次の変更か cron で取り返す */ })
+        .finally(() => { driveSyncing.current = false; });
+    }, 3000);
+    return () => window.clearTimeout(timer);
+  }, [session, openTasks, dayTasks, reload]);
 
   // グリッド上のどこにドロップしたかを判定する。scrollTopを足すのは、
   // グリッド自体が縦スクロールする（6:00〜24:00を全部表示すると長すぎる）ため。

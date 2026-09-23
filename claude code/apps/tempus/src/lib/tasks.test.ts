@@ -48,4 +48,13 @@ describe('rowToTask', () => {
   it('window_start が無ければ null になる', () => {
     expect(rowToTask(baseRow).windowStart).toBeNull();
   });
+
+  it('drive_doc_url をそのまま driveDocUrl に写す', () => {
+    const url = 'https://docs.google.com/document/d/abc/edit';
+    expect(rowToTask({ ...baseRow, drive_doc_url: url }).driveDocUrl).toBe(url);
+  });
+
+  it('drive_doc_url が無ければ null になる（まだドキュメントを作っていない）', () => {
+    expect(rowToTask(baseRow).driveDocUrl).toBeNull();
+  });
 });

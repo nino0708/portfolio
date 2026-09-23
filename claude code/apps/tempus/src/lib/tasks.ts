@@ -23,6 +23,7 @@ export function rowToTask(r: Row): Task {
     startedAt: (r.started_at as string) ?? null,
     completedAt: (r.completed_at as string) ?? null,
     source: r.source as TaskSource,
+    driveDocUrl: (r.drive_doc_url as string) ?? null,
     createdAt: r.created_at as string,
     updatedAt: r.updated_at as string,
   };

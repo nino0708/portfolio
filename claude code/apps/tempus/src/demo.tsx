@@ -23,7 +23,7 @@ const task = (id: string, title: string, o: Partial<Task> = {}): Task => ({
   status: 'todo', importance: 'mid', dueAt: null,
   scheduledStart: null, scheduledEnd: null, windowStart: null,
   estimateMin: 30, estimateIsInferred: true, actualMin: null,
-  startedAt: null, completedAt: null, source: 'app',
+  startedAt: null, completedAt: null, source: 'app', driveDocUrl: null,
   createdAt: iso(8), updatedAt: iso(8), ...o,
 });
 
