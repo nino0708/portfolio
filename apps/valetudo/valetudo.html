@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valetudo — 体調管理</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ===== Material Design 3 — Teal / Amber scheme (light) ===== */
+  :root {
+    --primary: #006b66;
+    --on-primary: #e1fffb;
+    --primary-container: #a9f2ea;
+    --on-primary-container: #00201e;
+    --secondary: #4c607e;
+    --secondary-container: #d7e3ff;
+    --on-secondary-container: #00142c;
+    --tertiary: #8e5000;
+    --tertiary-container: #ffddb6;
+    --on-tertiary-container: #341a00;
+    --error: #924a45;
+    --error-container: #ffdad6;
+    --on-error-container: #410002;
+    --ok: #2e6b34;
+    --ok-container: #c3f0c1;
+
+    --background: #f8faf8;
+    --surface: #f8faf8;
+    --surface-container-lowest: #ffffff;
+    --surface-container-low: #f2f4f3;
+    --surface-container: #eceeed;
+    --surface-container-high: #e6e9e7;
+    --surface-container-highest: #e1e3e1;
+    --on-surface: #303332;
+    --on-surface-variant: #5c605f;
+    --outline: #787b7a;
+    --outline-variant: #d3d8d6;
+    --shadow: rgba(0,0,0,0.10);
+
+    --r-xs: 8px; --r-sm: 12px; --r-md: 16px; --r-lg: 24px; --r-full: 999px;
+    --mono: 'Roboto Mono', ui-monospace, monospace;
+    --sans: 'Noto Sans JP', 'Roboto', -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--background);
+    color: var(--on-surface);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 64px;
+  }
+  button { font-family: var(--sans); cursor: pointer; }
+  input, textarea, select { font-family: var(--sans); font-size: 15px; color: var(--on-surface); }
+
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+
+  /* ---- App bar ---- */
+  .appbar {
+    background: linear-gradient(135deg, #00524f 0%, #1f827c 55%, #3aa39a 100%);
+    color: #eafffb;
+    padding: 18px 0 20px;
+  }
+  .appbar .wrap { display: flex; align-items: center; gap: 14px; }
+  .brand-mark {
+    width: 44px; height: 44px; border-radius: 14px;
+    background: rgba(255,255,255,0.16);
+    display: grid; place-items: center; flex: none;
+  }
+  .brand-mark svg { width: 30px; height: 30px; }
+  .brand-name { font-size: 20px; font-weight: 700; letter-spacing: 0.06em; line-height: 1.2; }
+  .brand-sub { font-size: 12px; opacity: 0.85; letter-spacing: 0.04em; }
+  .appbar .today { margin-left: auto; text-align: right; font-size: 12px; opacity: 0.9; }
+  .appbar .today .d { font-family: var(--mono); font-size: 17px; font-weight: 500; letter-spacing: 0.02em; }
+
+  /* ---- Tabs ---- */
+  .tabs {
+    background: var(--surface-container-low);
+    border-bottom: 1px solid var(--outline-variant);
+    position: sticky; top: 0; z-index: 20;
+  }
+  .tabs .wrap { display: flex; gap: 4px; overflow-x: auto; }
+  .tab {
+    appearance: none; border: none; background: none;
+    padding: 13px 16px 11px; font-size: 14px; font-weight: 500;
+    color: var(--on-surface-variant); border-bottom: 3px solid transparent;
+    white-space: nowrap; display: flex; align-items: center; gap: 7px;
+  }
+  .tab .ic { font-size: 16px; }
+  .tab:hover { color: var(--on-surface); background: rgba(0,107,102,0.05); }
+  .tab.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 700; }
+
+  .page { display: none; padding-top: 20px; }
+  .page.active { display: block; }
+
+  /* ---- Card ---- */
+  .card {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--r-md);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .card > h2 {
+    margin: 0 0 4px; font-size: 15px; font-weight: 700; letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card > h2 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); flex: none; }
+  .card .hint { color: var(--on-surface-variant); font-size: 12.5px; margin: 0 0 14px; }
+
+  /* ---- Cat hero ---- */
+  .cathero {
+    background: linear-gradient(140deg, #eafaf7 0%, #f6f2e6 100%);
+    border: 1px solid #cfe7e2;
+    border-radius: var(--r-lg);
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  }
+  .cat-stage { width: 190px; flex: none; display: grid; place-items: center; }
+  .cat-stage svg { width: 100%; height: auto; }
+  .cat-talk { flex: 1; min-width: 240px; }
+  .bubble {
+    position: relative;
+    background: #fff; border: 1px solid var(--outline-variant);
+    border-radius: 18px; padding: 14px 18px;
+    font-size: 15.5px; font-weight: 500; line-height: 1.65;
+    box-shadow: 0 2px 10px var(--shadow);
+  }
+  .bubble::before {
+    content: ''; position: absolute; left: -9px; top: 26px;
+    width: 16px; height: 16px; background: #fff;
+    border-left: 1px solid var(--outline-variant); border-bottom: 1px solid var(--outline-variant);
+    transform: rotate(45deg);
+  }
+  .bubble .sub { display: block; margin-top: 6px; font-size: 13px; font-weight: 400; color: var(--on-surface-variant); }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .chip-info {
+    background: rgba(255,255,255,0.75); border: 1px solid #cfe7e2; color: #114f4b;
+    border-radius: var(--r-full); padding: 4px 12px; font-size: 12.5px; font-weight: 500;
+  }
+  .chip-info b { font-family: var(--mono); font-weight: 500; font-size: 13.5px; }
+
+  /* ---- Score picker ---- */
+  .scorerow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .scorebtn {
+    appearance: none; background: var(--surface-container-low);
+    border: 1.5px solid var(--outline-variant); border-radius: var(--r-md);
+    padding: 12px 4px 10px; text-align: center; transition: all .12s ease;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .scorebtn .face { font-size: 26px; line-height: 1; }
+  .scorebtn .lb { font-size: 12px; font-weight: 500; color: var(--on-surface-variant); }
+  .scorebtn:hover { border-color: var(--primary); background: #fff; }
+  .scorebtn.on { background: var(--primary-container); border-color: var(--primary); }
+  .scorebtn.on .lb { color: var(--on-primary-container); font-weight: 700; }
+
+  /* ---- Field ---- */
+  .field { margin-top: 18px; }
+  .field > label, .flabel {
+    display: block; font-size: 13px; font-weight: 700; color: var(--on-surface-variant);
+    letter-spacing: 0.02em; margin-bottom: 8px;
+  }
+  .flabel .opt { font-weight: 400; opacity: 0.8; }
+  .textin, textarea.textin {
+    width: 100%; padding: 11px 14px;
+    border: 1.5px solid var(--outline-variant); border-radius: var(--r-sm);
+    background: var(--surface-container-lowest); outline: none;
+  }
+  .textin:focus { border-color: var(--primary); }
+  textarea.textin { resize: vertical; min-height: 74px; line-height: 1.7; }
+
+  .stepper { display: flex; align-items: center; gap: 10px; }
+  .stepper button {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1.5px solid var(--outline-variant); background: var(--surface-container-lowest);
+    font-size: 20px; color: var(--primary); line-height: 1;
+  }
+  .stepper button:hover { background: var(--primary-container); border-color: var(--primary); }
+  .stepper input { width: 88px; text-align: center; font-family: var(--mono); font-size: 18px; font-weight: 500; }
+  .stepper .unit { font-size: 13px; color: var(--on-surface-variant); }
+
+  /* ---- Chips ---- */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    appearance: none; background: var(--surface-container-lowest);
+    border: 1.5px solid var(--outline-variant); border-radius: var(--r-full);
+    padding: 7px 14px; font-size: 13.5px; color: var(--on-surface-variant);
+    display: inline-flex; align-items: center; gap: 6px; transition: all .12s ease;
+  }
+  .chip:hover { border-color: var(--on-surface-variant); }
+  .chip.on { background: var(--tertiary-container); border-color: #d9a45a; color: var(--on-tertiary-container); font-weight: 700; }
+  .chip.good.on { background: var(--ok-container); border-color: #77b97a; color: #10380f; }
+  .chip.load.on { background: #ffe0e0; border-color: #e0a09b; color: #4d1512; }
+  .chip .x { opacity: 0.5; font-size: 15px; }
+  .chip .x:hover { opacity: 1; }
+
+  /* ---- Buttons ---- */
+  .btn {
+    appearance: none; border: none; border-radius: var(--r-full);
+    padding: 13px 26px; font-size: 15px; font-weight: 700; letter-spacing: 0.02em;
+    background: var(--primary); color: var(--on-primary);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn:hover { filter: brightness(1.12); }
+  .btn:disabled { background: var(--surface-container-highest); color: var(--outline); cursor: default; filter: none; }
+  .btn.tonal { background: var(--primary-container); color: var(--on-primary-container); }
+  .btn.outline { background: transparent; color: var(--primary); border: 1.5px solid var(--outline-variant); }
+  .btn.outline:hover { background: var(--surface-container-low); filter: none; }
+  .btn.danger { background: var(--error-container); color: var(--on-error-container); }
+  .btn.sm { padding: 8px 16px; font-size: 13px; font-weight: 500; }
+  .btnrow { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .saverow { margin-top: 22px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .saverow .note { font-size: 12.5px; color: var(--on-surface-variant); }
+
+  /* ---- Stat cards ---- */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .stat {
+    background: var(--surface-container-lowest); border: 1px solid var(--outline-variant);
+    border-left: 4px solid var(--primary); border-radius: var(--r-sm); padding: 13px 16px;
+  }
+  .stat .k { font-size: 12px; color: var(--on-surface-variant); font-weight: 500; }
+  .stat .v { font-family: var(--mono); font-size: 24px; font-weight: 500; letter-spacing: -0.01em; }
+  .stat .v small { font-size: 13px; font-family: var(--sans); color: var(--on-surface-variant); margin-left: 2px; }
+  .stat.t2 { border-left-color: var(--secondary); }
+  .stat.t3 { border-left-color: #d9a45a; }
+  .stat.t4 { border-left-color: #77b97a; }
+
+  /* ---- Calendar ---- */
+  .calhead { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .calhead .m { font-family: var(--mono); font-size: 18px; font-weight: 500; min-width: 130px; text-align: center; }
+  .cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .cal .dow { text-align: center; font-size: 11.5px; font-weight: 700; color: var(--on-surface-variant); padding-bottom: 4px; }
+  .cal .dow.sat { color: #4c607e; } .cal .dow.sun { color: #924a45; }
+  .cell {
+    aspect-ratio: 1 / 1; border-radius: var(--r-sm); border: 1px solid var(--outline-variant);
+    background: var(--surface-container-lowest); padding: 5px 6px; text-align: left;
+    display: flex; flex-direction: column; gap: 2px; min-height: 56px;
+  }
+  .cell.empty { border: none; background: none; }
+  .cell .n { font-family: var(--mono); font-size: 12px; color: var(--on-surface-variant); }
+  .cell .f { font-size: 17px; line-height: 1; margin-top: auto; }
+  .cell .tag { font-size: 9.5px; color: var(--on-surface-variant); line-height: 1.2; overflow: hidden; }
+  .cell.s5 { background: #d6f7ee; border-color: #8fd9c8; }
+  .cell.s4 { background: #e6faf2; border-color: #aee3d3; }
+  .cell.s3 { background: #fdf6e3; border-color: #e8d4a6; }
+  .cell.s2 { background: #ffeede; border-color: #e8bd8c; }
+  .cell.s1 { background: #ffe2de; border-color: #e0a09b; }
+  .cell.today { outline: 2.5px solid var(--primary); outline-offset: 1px; }
+  .cell:hover { filter: brightness(0.97); }
+
+  /* ---- Charts ---- */
+  .chartbox { width: 100%; overflow: hidden; }
+  .chartbox svg { width: 100%; height: auto; display: block; }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--on-surface-variant); margin-top: 8px; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+
+  .barlist { display: flex; flex-direction: column; gap: 9px; }
+  .barrow { display: grid; grid-template-columns: 116px 1fr 54px; align-items: center; gap: 10px; font-size: 13px; }
+  .bartrack { background: var(--surface-container); border-radius: var(--r-full); height: 14px; overflow: hidden; }
+  .barfill { height: 100%; border-radius: var(--r-full); background: linear-gradient(90deg, #1f827c, #3aa39a); }
+  .barfill.warm { background: linear-gradient(90deg, #c9761c, #e8a556); }
+  .barrow .num { font-family: var(--mono); text-align: right; color: var(--on-surface-variant); }
+
+  table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  table.tbl th, table.tbl td { padding: 9px 10px; border-bottom: 1px solid var(--outline-variant); text-align: left; }
+  table.tbl th { font-size: 12px; color: var(--on-surface-variant); font-weight: 700; }
+  table.tbl td.n { font-family: var(--mono); text-align: right; }
+  table.tbl tr:last-child td { border-bottom: none; }
+
+  .empty-note { color: var(--on-surface-variant); font-size: 13.5px; padding: 18px 0; text-align: center; }
+
+  .callout {
+    background: var(--surface-container-low); border-left: 4px solid var(--secondary);
+    border-radius: var(--r-xs); padding: 12px 16px; font-size: 13.5px; margin-top: 12px;
+  }
+  .callout.warn { border-left-color: #c9761c; background: #fff8ee; }
+
+  /* ---- Toast ---- */
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px);
+    background: #0b3b38; color: #eafffb; padding: 12px 22px; border-radius: var(--r-full);
+    font-size: 14px; font-weight: 500; box-shadow: 0 6px 22px rgba(0,0,0,0.22);
+    opacity: 0; pointer-events: none; transition: all .22s ease; z-index: 60;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  .footer { text-align: center; color: var(--on-surface-variant); font-size: 12px; padding: 26px 0 10px; }
+
+  @media (max-width: 560px) {
+    .scorerow { grid-template-columns: repeat(5, 1fr); gap: 5px; }
+    .scorebtn { padding: 9px 2px 8px; }
+    .scorebtn .face { font-size: 21px; }
+    .scorebtn .lb { font-size: 10.5px; }
+    .cat-stage { width: 130px; }
+    .barrow { grid-template-columns: 92px 1fr 46px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="appbar">
+  <div class="wrap">
+    <div class="brand-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#eafffb" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12h3.2l1.6-4.4 3 9.4 2.2-6 1.5 3.4h3.5"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">VALETUDO</div>
+      <div class="brand-sub">ラテン語で「体調」— 毎日の記録帳</div>
+    </div>
+    <div class="today">
+      <div id="todayLabel" class="d">—</div>
+      <div id="todayDow">—</div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="wrap">
+    <button class="tab active" data-page="today"><span class="ic">🐾</span>きょう</button>
+    <button class="tab" data-page="calendar"><span class="ic">📅</span>カレンダー</button>
+    <button class="tab" data-page="analysis"><span class="ic">📈</span>分析</button>
+    <button class="tab" data-page="data"><span class="ic">💾</span>データ</button>
+  </div>
+</nav>
+
+<!-- ============ きょう ============ -->
+<main class="wrap">
+<section id="page-today" class="page active">
+
+  <div class="cathero">
+    <div class="cat-stage" id="catStage"></div>
+    <div class="cat-talk">
+      <div class="bubble">
+        <span id="catLine">…</span>
+        <span class="sub" id="catSub"></span>
+      </div>
+      <div class="cat-meta" id="catMeta"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>体調報告</h2>
+    <p class="hint" id="formDateHint">今日ぶんを記録します。日付を変えれば過去の日もあとから書けます。</p>
+
+    <div class="field" style="margin-top:0">
+      <label for="entryDate">日付</label>
+      <input type="date" id="entryDate" class="textin" style="max-width:220px">
+    </div>
+
+    <div class="field">
+      <span class="flabel">体調は？ <span class="opt">（必須）</span></span>
+      <div class="scorerow" id="scoreRow"></div>
+    </div>
+
+    <div class="field">
+      <span class="flabel">気分は？ <span class="opt">（任意）</span></span>
+      <div class="chips" id="moodRow"></div>
+    </div>
+
+    <div class="field">
+      <label for="sleepInput">睡眠時間</label>
+      <div class="stepper">
+        <button type="button" id="sleepMinus" aria-label="減らす">−</button>
+        <input type="number" id="sleepInput" class="textin" step="0.5" min="0" max="24" placeholder="—">
+        <button type="button" id="sleepPlus" aria-label="増やす">＋</button>
+        <span class="unit">時間</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="flabel">気になる症状 <span class="opt">（あるものだけ）</span></span>
+      <div class="chips" id="symptomRow"></div>
+      <div class="btnrow" style="margin-top:10px">
+        <input type="text" id="newSymptom" class="textin" placeholder="症状を追加（例：耳鳴り）" style="max-width:230px">
+        <button type="button" class="btn outline sm" id="addSymptomBtn">追加</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="flabel">今日の生活習慣</span>
+      <div class="chips" id="habitRow"></div>
+    </div>
+
+    <div class="field">
+      <label for="memoInput">ひとことメモ</label>
+      <textarea id="memoInput" class="textin" placeholder="今日あったこと・気づいたこと（例：夕方から頭が重い。会議が続いた日）"></textarea>
+    </div>
+
+    <div class="saverow">
+      <button class="btn" id="saveBtn">🐾 この日の体調を記録する</button>
+      <button class="btn outline sm" id="deleteBtn" style="display:none">この日の記録を削除</button>
+      <span class="note" id="saveNote"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>直近7日</h2>
+    <p class="hint">記録した日だけ並びます。空いている日は日付を選べばあとから書けます。</p>
+    <div id="recentList"></div>
+  </div>
+
+</section>
+
+<!-- ============ カレンダー ============ -->
+<section id="page-calendar" class="page">
+  <div class="card">
+    <div class="calhead">
+      <button class="btn outline sm" id="prevMonth">◀ 前の月</button>
+      <div class="m" id="calMonthLabel">—</div>
+      <button class="btn outline sm" id="nextMonth">次の月 ▶</button>
+      <button class="btn tonal sm" id="thisMonth" style="margin-left:auto">今月</button>
+    </div>
+    <div class="cal" id="calGrid"></div>
+    <div class="legend">
+      <span><i style="background:#d6f7ee"></i>絶好調</span>
+      <span><i style="background:#e6faf2"></i>good</span>
+      <span><i style="background:#fdf6e3"></i>ふつう</span>
+      <span><i style="background:#ffeede"></i>いまいち</span>
+      <span><i style="background:#ffe2de"></i>つらい</span>
+      <span><i style="background:#fff;border:1px solid #d3d8d6"></i>未記録</span>
+    </div>
+    <div class="callout" id="calSummary"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>この月の記録</h2>
+    <div id="monthList"></div>
+  </div>
+</section>
+
+<!-- ============ 分析 ============ -->
+<section id="page-analysis" class="page">
+  <div class="stats" id="statCards"></div>
+
+  <div class="card">
+    <h2><span class="dot"></span>体調の推移（直近30日）</h2>
+    <p class="hint">縦は体調スコア（1=つらい 〜 5=絶好調）。点が無い日は未記録。</p>
+    <div class="chartbox" id="scoreChart"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>睡眠時間（直近14日）</h2>
+    <div class="chartbox" id="sleepChart"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>よく出ている症状</h2>
+    <p class="hint">記録した日のうち、その症状が出た日の割合。</p>
+    <div id="symptomStats"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>生活習慣と体調の関係</h2>
+    <p class="hint">その習慣が「あった日」と「なかった日」で、体調スコアの平均を比べています。差が大きいものほど効いているかもしれません（あくまで目安）。</p>
+    <div id="habitStats"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>曜日ごとの平均</h2>
+    <div id="dowStats"></div>
+  </div>
+</section>
+
+<!-- ============ データ ============ -->
+<section id="page-data" class="page">
+  <div class="card">
+    <h2><span class="dot"></span>猫の設定</h2>
+    <p class="hint">名前を変えられます。記録した日数だけ、この子は育ちます。</p>
+    <div class="btnrow">
+      <input type="text" id="catNameInput" class="textin" style="max-width:220px" maxlength="12">
+      <button class="btn outline sm" id="saveCatName">保存</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>書き出し</h2>
+    <p class="hint">データはこのブラウザの中に保存されています。大事な記録なので、ときどき書き出してバックアップしてください。</p>
+    <div class="btnrow">
+      <button class="btn tonal" id="exportJson">JSONで書き出す（バックアップ）</button>
+      <button class="btn outline" id="exportCsv">CSVで書き出す（Excel用）</button>
+      <button class="btn outline" id="exportHtml">HTMLで書き出す（開けば読める）</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>レポート用テキスト</h2>
+    <p class="hint">期間を選ぶとMarkdownのサマリーを作ります。あとでメール配信や共有に回すとき、そのまま貼れます。</p>
+    <div class="btnrow" style="margin-bottom:12px">
+      <select id="reportRange" class="textin" style="max-width:170px">
+        <option value="7">直近7日</option>
+        <option value="30" selected>直近30日</option>
+        <option value="90">直近90日</option>
+        <option value="month">今月</option>
+      </select>
+      <button class="btn" id="makeReport">レポートを作る</button>
+      <button class="btn outline sm" id="copyReport">コピー</button>
+    </div>
+    <textarea id="reportOut" class="textin" style="min-height:220px; font-family:var(--mono); font-size:12.5px" placeholder="ここにレポートが出ます"></textarea>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>読み込み・消去</h2>
+    <p class="hint">JSONバックアップから復元します。取り込む前に、いまのデータは自動でバックアップされます。</p>
+    <div class="btnrow">
+      <input type="file" id="importFile" accept="application/json,.json" style="font-size:13px">
+      <button class="btn danger sm" id="wipeBtn">すべての記録を消す</button>
+    </div>
+    <div class="callout" id="storageNote"></div>
+  </div>
+</section>
+</main>
+
+<div class="footer">Valetudo — 記録はこの端末のブラウザ内にだけ保存されます</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  // ===================== 定数 =====================
+  var STORAGE_KEY = 'valetudo.v1';
+
+  var SCORES = [
+    { v: 5, face: '😸', label: '絶好調' },
+    { v: 4, face: '🙂', label: 'good' },
+    { v: 3, face: '😐', label: 'ふつう' },
+    { v: 2, face: '😕', label: 'いまいち' },
+    { v: 1, face: '🤒', label: 'つらい' }
+  ];
+
+  var MOODS = ['ごきげん', 'おだやか', 'ふつう', 'もやもや', 'イライラ', '落ち込み', '不安'];
+
+  var DEFAULT_SYMPTOMS = [
+    '頭痛', 'だるさ', '眠気', '肩こり', '腰痛', '胃の不調', '腹痛',
+    'のどの痛み', '鼻水', 'せき', '発熱', 'めまい', '目の疲れ', '動悸', '気分の落ち込み'
+  ];
+
+  // kind: good = 体にプラス / load = 負荷になりうるもの
+  var HABITS = [
+    { id: 'meal',     label: '3食ちゃんと食べた', kind: 'good' },
+    { id: 'exercise', label: '運動した',          kind: 'good' },
+    { id: 'bath',     label: '湯船に入った',      kind: 'good' },
+    { id: 'water',    label: '水をよく飲んだ',    kind: 'good' },
+    { id: 'outside',  label: '外に出た',          kind: 'good' },
+    { id: 'alcohol',  label: 'お酒',              kind: 'load' },
+    { id: 'caffeine', label: 'カフェイン多め',    kind: 'load' },
+    { id: 'latenight',label: '夜ふかし',          kind: 'load' },
+    { id: 'overwork', label: '働きすぎ',          kind: 'load' },
+    { id: 'meds',     label: '薬を飲んだ',        kind: 'load' }
+  ];
+
+  var DOW_JA = ['日', '月', '火', '水', '木', '金', '土'];
+
+  // ===================== 状態 =====================
+  var state = null;
+  var storageOK = true;
+  var draft = null;          // 編集中の1日ぶん
+  var calCursor = null;      // カレンダー表示中の月（Date）
+
+  function blankEntry(date) {
+    return { date: date, score: null, mood: '', sleep: null, symptoms: [], habits: [], memo: '' };
+  }
+
+  function defaultState() {
+    return {
+      version: 1,
+      cat: { name: 'ウァレ', born: todayKey() },
+      entries: {},
+      customSymptoms: [],
+      createdAt: new Date().toISOString()
+    };
+  }
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return defaultState();
+      var o = JSON.parse(raw);
+      if (!o || typeof o !== 'object' || !o.entries) return defaultState();
+      if (!o.cat) o.cat = { name: 'ウァレ', born: todayKey() };
+      if (!o.customSymptoms) o.customSymptoms = [];
+      return o;
+    } catch (e) {
+      return defaultState();
+    }
+  }
+
+  function save() {
+    if (!storageOK) return;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {
+      storageOK = false;
+      toast('保存できませんでした。JSONで書き出して残してください');
+    }
+  }
+
+  // ===================== 小道具 =====================
+  function $(id) { return document.getElementById(id); }
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text !== undefined && text !== null) n.textContent = text;
+    return n;
+  }
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+  function dateKey(d) { return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+  function todayKey() { return dateKey(new Date()); }
+  function parseKey(k) {
+    var p = k.split('-');
+    return new Date(+p[0], +p[1] - 1, +p[2]);
+  }
+  function shiftKey(k, days) {
+    var d = parseKey(k);
+    d.setDate(d.getDate() + days);
+    return dateKey(d);
+  }
+  function fmtJa(k) {
+    var d = parseKey(k);
+    return (d.getMonth() + 1) + '月' + d.getDate() + '日(' + DOW_JA[d.getDay()] + ')';
+  }
+  function round1(n) { return Math.round(n * 10) / 10; }
+  function scoreMeta(v) {
+    for (var i = 0; i < SCORES.length; i++) if (SCORES[i].v === v) return SCORES[i];
+    return { v: null, face: '·', label: '未記録' };
+  }
+  function habitById(id) {
+    for (var i = 0; i < HABITS.length; i++) if (HABITS[i].id === id) return HABITS[i];
+    return null;
+  }
+  function sortedKeys() {
+    return Object.keys(state.entries).sort();
+  }
+
+  // ===================== 猫 =====================
+  // expression: happy / content / normal / worried / sick / curious、accessory: zzz / blanket
+  function catSvg(expr, level, accessory) {
+    var scale = level === 0 ? 0.86 : (level === 1 ? 0.95 : 1.04);
+    var fur = '#f4e3c8', fur2 = '#e6d1af', ink = '#3b3128';
+
+    var eyes;
+    if (expr === 'happy') {
+      eyes = '<path d="M74 84 q8 -9 16 0" stroke="' + ink + '" stroke-width="4" fill="none" stroke-linecap="round"/>' +
+             '<path d="M110 84 q8 -9 16 0" stroke="' + ink + '" stroke-width="4" fill="none" stroke-linecap="round"/>';
+    } else if (expr === 'sleepy' || expr === 'sick') {
+      eyes = '<path d="M73 86 q9 6 18 0" stroke="' + ink + '" stroke-width="3.6" fill="none" stroke-linecap="round"/>' +
+             '<path d="M109 86 q9 6 18 0" stroke="' + ink + '" stroke-width="3.6" fill="none" stroke-linecap="round"/>';
+    } else if (expr === 'worried') {
+      eyes = '<ellipse cx="82" cy="87" rx="5" ry="6" fill="' + ink + '"/>' +
+             '<ellipse cx="118" cy="87" rx="5" ry="6" fill="' + ink + '"/>' +
+             '<path d="M74 74 l14 5" stroke="' + ink + '" stroke-width="3" stroke-linecap="round"/>' +
+             '<path d="M126 74 l-14 5" stroke="' + ink + '" stroke-width="3" stroke-linecap="round"/>';
+    } else if (expr === 'curious') {
+      eyes = '<ellipse cx="82" cy="85" rx="6.5" ry="7.5" fill="' + ink + '"/>' +
+             '<ellipse cx="118" cy="85" rx="6.5" ry="7.5" fill="' + ink + '"/>' +
+             '<circle cx="84.4" cy="82.4" r="2.2" fill="#fff"/><circle cx="120.4" cy="82.4" r="2.2" fill="#fff"/>';
+    } else {
+      eyes = '<ellipse cx="82" cy="86" rx="6" ry="7" fill="' + ink + '"/>' +
+             '<ellipse cx="118" cy="86" rx="6" ry="7" fill="' + ink + '"/>' +
+             '<circle cx="84.2" cy="83.6" r="2" fill="#fff"/><circle cx="120.2" cy="83.6" r="2" fill="#fff"/>';
+    }
+
+    var mouth;
+    if (expr === 'happy' || expr === 'content') {
+      mouth = '<path d="M92 103 q8 8 16 0" stroke="' + ink + '" stroke-width="3.2" fill="none" stroke-linecap="round"/>';
+    } else if (expr === 'worried' || expr === 'sick') {
+      mouth = '<path d="M92 106 q8 -7 16 0" stroke="' + ink + '" stroke-width="3.2" fill="none" stroke-linecap="round"/>';
+    } else {
+      mouth = '<path d="M93 103 q7 5 14 0" stroke="' + ink + '" stroke-width="3" fill="none" stroke-linecap="round"/>';
+    }
+
+    var blush = (expr === 'happy')
+      ? '<ellipse cx="68" cy="97" rx="8" ry="5" fill="#f6b3a4" opacity="0.55"/>' +
+        '<ellipse cx="132" cy="97" rx="8" ry="5" fill="#f6b3a4" opacity="0.55"/>'
+      : '';
+
+    var tail = (expr === 'happy' || expr === 'content')
+      ? '<path d="M148 152 q26 -6 20 -34" stroke="' + fur2 + '" stroke-width="11" fill="none" stroke-linecap="round"/>'
+      : '<path d="M148 154 q28 4 30 -12" stroke="' + fur2 + '" stroke-width="11" fill="none" stroke-linecap="round"/>';
+
+    var extra = '';
+    if (accessory === 'zzz') {
+      extra = '<text x="146" y="52" font-size="16" fill="#7aa8a4" font-family="Roboto, sans-serif">z</text>' +
+              '<text x="158" y="38" font-size="21" fill="#5b938e" font-family="Roboto, sans-serif">z</text>';
+    } else if (accessory === 'blanket') {
+      extra = '<path d="M52 150 q48 -20 96 0 v14 q-48 12 -96 0 z" fill="#cfe0f5" stroke="#a9c2e2" stroke-width="2"/>' +
+              '<rect x="86" y="46" width="28" height="9" rx="4.5" fill="#e8b3ad"/>';
+    }
+
+    return '<svg viewBox="0 0 200 180" role="img" aria-label="猫">' +
+      '<ellipse cx="100" cy="168" rx="58" ry="7" fill="#000" opacity="0.07"/>' +
+      '<g transform="translate(100,110) scale(' + scale + ') translate(-100,-110)">' +
+        tail +
+        '<ellipse cx="100" cy="140" rx="46" ry="34" fill="' + fur + '"/>' +
+        '<path d="M66 62 l-4 -30 26 15 z" fill="' + fur + '" stroke="' + fur2 + '" stroke-width="2"/>' +
+        '<path d="M134 62 l4 -30 -26 15 z" fill="' + fur + '" stroke="' + fur2 + '" stroke-width="2"/>' +
+        '<path d="M70 52 l-2 -17 15 9 z" fill="#f0b7ab"/>' +
+        '<path d="M130 52 l2 -17 -15 9 z" fill="#f0b7ab"/>' +
+        '<ellipse cx="100" cy="88" rx="44" ry="39" fill="' + fur + '"/>' +
+        eyes + blush +
+        '<path d="M100 95 l-5 5 h10 z" fill="#d98f86"/>' +
+        mouth +
+        '<path d="M56 88 h-18 M56 96 h-17 M144 88 h18 M144 96 h17" stroke="' + fur2 + '" stroke-width="2" stroke-linecap="round"/>' +
+        '<path d="M74 128 q26 12 52 0" stroke="#2e8c86" stroke-width="7" fill="none" stroke-linecap="round"/>' +
+        '<circle cx="100" cy="134" r="6" fill="#e08a2e"/>' +
+        extra +
+      '</g></svg>';
+  }
+
+  function streakDays() {
+    var n = 0, k = todayKey();
+    if (!state.entries[k]) k = shiftKey(k, -1);   // 今日まだ書いてなくても昨日までの連続は生かす
+    while (state.entries[k]) { n++; k = shiftKey(k, -1); }
+    return n;
+  }
+
+  function catLevel() {
+    var c = Object.keys(state.entries).length;
+    return c < 7 ? 0 : (c < 30 ? 1 : 2);
+  }
+
+  function catStageName() {
+    var l = catLevel();
+    return l === 0 ? '子猫' : (l === 1 ? '相棒' : 'ぬし');
+  }
+
+  function catReaction() {
+    var today = state.entries[todayKey()];
+    var name = state.cat.name || 'ウァレ';
+    var streak = streakDays();
+    var expr = 'normal', accessory = '', line = '', sub = '';
+
+    if (!today || today.score === null) {
+      expr = 'curious';
+      line = 'おかえり。今日の調子はどう？';
+      sub = streak > 0 ? (streak + '日つづけて記録できてるよ。今日も書いていこ。') : 'ひとつ選ぶだけでいいよ。';
+      return { expr: expr, accessory: accessory, line: line, sub: sub };
+    }
+
+    var s = today.score;
+    if (s === 5) { expr = 'happy'; line = 'いい日だね！その調子で、いい感じ。'; }
+    else if (s === 4) { expr = 'content'; line = '今日はまずまずみたいだね。'; }
+    else if (s === 3) { expr = 'normal'; line = 'ふつうの日。ふつうが一番むずかしいのにね。'; }
+    else if (s === 2) { expr = 'worried'; line = 'ちょっとしんどそう。無理しないで。'; }
+    else { expr = 'sick'; accessory = 'blanket'; line = 'つらいんだね…。今日はもう休もう。'; }
+
+    // 睡眠不足はまぶたに出る
+    if (today.sleep !== null && today.sleep !== undefined && today.sleep > 0 && today.sleep < 5.5) {
+      if (expr === 'happy' || expr === 'content') expr = 'sleepy';
+      if (!accessory) accessory = 'zzz';
+    }
+
+    // ひとことコメントは「気づき」を優先で上書き
+    var notes = [];
+    var lowRun = 0, k = todayKey();
+    while (state.entries[k] && state.entries[k].score !== null && state.entries[k].score <= 2) { lowRun++; k = shiftKey(k, -1); }
+    if (lowRun >= 3) notes.push(lowRun + '日つづけて調子が上がってないよ。そろそろ病院も考えてみて。');
+    if (today.sleep !== null && today.sleep !== undefined && today.sleep > 0 && today.sleep < 5.5) notes.push('睡眠' + round1(today.sleep) + '時間は短いよ。今日は早めに寝よう。');
+    if (today.symptoms && today.symptoms.length >= 3) notes.push('症状が' + today.symptoms.length + '個も出てる。がんばりすぎかも。');
+    if (streak === 7) notes.push('7日連続で記録できた！えらい。');
+    else if (streak > 0 && streak % 30 === 0) notes.push(streak + '日連続。もうすっかり習慣だね。');
+    if (s >= 4 && today.habits && today.habits.indexOf('exercise') >= 0) notes.push('運動した日は調子いいみたいだね。');
+
+    sub = notes.length ? notes[0] : (name + 'は今日の記録を受けとったよ。');
+    return { expr: expr, accessory: accessory, line: line, sub: sub };
+  }
+
+  function renderCat() {
+    var r = catReaction();
+    $('catStage').innerHTML = catSvg(r.expr, catLevel(), r.accessory);
+    $('catLine').textContent = r.line;
+    $('catSub').textContent = r.sub;
+
+    var meta = $('catMeta');
+    meta.innerHTML = '';
+    var name = state.cat.name || 'ウァレ';
+    var total = Object.keys(state.entries).length;
+    var items = [
+      name + '（' + catStageName() + '）',
+      '記録 <b>' + total + '</b> 日',
+      '連続 <b>' + streakDays() + '</b> 日'
+    ];
+    var avg = averageScore(sortedKeys().slice(-30));
+    if (avg !== null) items.push('直近30日の平均 <b>' + round1(avg) + '</b>');
+    items.forEach(function (t) {
+      var c = el('span', 'chip-info');
+      c.innerHTML = t;
+      meta.appendChild(c);
+    });
+  }
+
+  // ===================== 集計 =====================
+  function averageScore(keys) {
+    var sum = 0, n = 0;
+    keys.forEach(function (k) {
+      var e = state.entries[k];
+      if (e && typeof e.score === 'number') { sum += e.score; n++; }
+    });
+    return n ? sum / n : null;
+  }
+
+  function keysInLastDays(days) {
+    var out = [], k = todayKey();
+    for (var i = 0; i < days; i++) { out.unshift(k); k = shiftKey(k, -1); }
+    return out;
+  }
+
+  // ===================== フォーム =====================
+  function loadDraft(key) {
+    var e = state.entries[key];
+    draft = e ? JSON.parse(JSON.stringify(e)) : blankEntry(key);
+    if (!draft.symptoms) draft.symptoms = [];
+    if (!draft.habits) draft.habits = [];
+    renderForm();
+  }
+
+  // チップ操作からの再描画。入力中の睡眠・メモを拾ってから描き直す
+  function refresh() { syncInputs(); renderForm(); }
+
+  function renderForm() {
+    $('entryDate').value = draft.date;
+
+    var isToday = draft.date === todayKey();
+    var exists = !!state.entries[draft.date];
+    $('formDateHint').textContent = isToday
+      ? '今日ぶんを記録します。日付を変えれば過去の日もあとから書けます。'
+      : fmtJa(draft.date) + ' の記録を' + (exists ? '編集' : '追加') + 'します。';
+    $('deleteBtn').style.display = exists ? '' : 'none';
+    $('saveNote').textContent = exists ? '（保存済みの日を上書きします）' : '';
+
+    // スコア
+    var row = $('scoreRow');
+    row.innerHTML = '';
+    SCORES.forEach(function (s) {
+      var b = el('button', 'scorebtn' + (draft.score === s.v ? ' on' : ''));
+      b.type = 'button';
+      b.appendChild(el('span', 'face', s.face));
+      b.appendChild(el('span', 'lb', s.label));
+      b.onclick = function () { draft.score = (draft.score === s.v ? null : s.v); refresh(); };
+      row.appendChild(b);
+    });
+
+    // 気分
+    var mr = $('moodRow');
+    mr.innerHTML = '';
+    MOODS.forEach(function (m) {
+      var b = el('button', 'chip' + (draft.mood === m ? ' on' : ''), m);
+      b.type = 'button';
+      b.onclick = function () { draft.mood = (draft.mood === m ? '' : m); refresh(); };
+      mr.appendChild(b);
+    });
+
+    // 睡眠
+    $('sleepInput').value = (draft.sleep === null || draft.sleep === undefined) ? '' : draft.sleep;
+
+    // 症状
+    var sr = $('symptomRow');
+    sr.innerHTML = '';
+    allSymptoms().forEach(function (s) {
+      var on = draft.symptoms.indexOf(s) >= 0;
+      var b = el('button', 'chip' + (on ? ' on' : ''), s);
+      b.type = 'button';
+      b.onclick = function () {
+        if (on) draft.symptoms.splice(draft.symptoms.indexOf(s), 1);
+        else draft.symptoms.push(s);
+        refresh();
+      };
+      if (state.customSymptoms.indexOf(s) >= 0) {
+        var x = el('span', 'x', '×');
+        x.title = 'この症状タグを消す';
+        x.onclick = function (ev) {
+          ev.stopPropagation();
+          state.customSymptoms.splice(state.customSymptoms.indexOf(s), 1);
+          save(); refresh();
+        };
+        b.appendChild(x);
+      }
+      sr.appendChild(b);
+    });
+
+    // 習慣
+    var hr = $('habitRow');
+    hr.innerHTML = '';
+    HABITS.forEach(function (h) {
+      var on = draft.habits.indexOf(h.id) >= 0;
+      var b = el('button', 'chip ' + h.kind + (on ? ' on' : ''), h.label);
+      b.type = 'button';
+      b.onclick = function () {
+        if (on) draft.habits.splice(draft.habits.indexOf(h.id), 1);
+        else draft.habits.push(h.id);
+        refresh();
+      };
+      hr.appendChild(b);
+    });
+
+    $('memoInput').value = draft.memo || '';
+  }
+
+  function allSymptoms() {
+    return DEFAULT_SYMPTOMS.concat(state.customSymptoms);
+  }
+
+  // 入力欄の中身は draft に即反映する（チップ操作で再描画されても消えないように）
+  function syncInputs() {
+    var v = $('sleepInput').value.trim();
+    var n = v === '' ? null : Math.max(0, Math.min(24, parseFloat(v)));
+    draft.sleep = (n !== null && isNaN(n)) ? null : n;
+    draft.memo = $('memoInput').value;
+  }
+
+  function commitDraft() {
+    syncInputs();
+    if (draft.score === null) { toast('体調だけは選んでね'); return; }
+    draft.memo = draft.memo.trim();
+    draft.updatedAt = new Date().toISOString();
+    state.entries[draft.date] = JSON.parse(JSON.stringify(draft));
+    save();
+    renderAll();
+    toast(fmtJa(draft.date) + ' の体調を記録しました');
+  }
+
+  // ===================== 直近リスト =====================
+  function entryLine(k) {
+    var e = state.entries[k];
+    var box = el('div');
+    box.style.cssText = 'display:flex; gap:12px; padding:11px 0; border-bottom:1px solid var(--outline-variant); align-items:flex-start';
+
+    var f = el('div', null, scoreMeta(e.score).face);
+    f.style.cssText = 'font-size:22px; line-height:1.2; flex:none; width:30px; text-align:center';
+    box.appendChild(f);
+
+    var body = el('div');
+    body.style.flex = '1';
+    var head = el('div');
+    head.style.cssText = 'display:flex; gap:10px; align-items:baseline; flex-wrap:wrap';
+    var d = el('b', null, fmtJa(k));
+    d.style.fontSize = '13.5px';
+    head.appendChild(d);
+    var tags = [scoreMeta(e.score).label];
+    if (e.mood) tags.push(e.mood);
+    if (e.sleep !== null && e.sleep !== undefined) tags.push('睡眠 ' + round1(e.sleep) + 'h');
+    var t = el('span', null, tags.join(' ／ '));
+    t.style.cssText = 'font-size:12.5px; color:var(--on-surface-variant)';
+    head.appendChild(t);
+    body.appendChild(head);
+
+    if ((e.symptoms && e.symptoms.length) || (e.habits && e.habits.length)) {
+      var chips = el('div');
+      chips.style.cssText = 'display:flex; gap:6px; flex-wrap:wrap; margin-top:5px';
+      (e.symptoms || []).forEach(function (s) {
+        var c = el('span', null, s);
+        c.style.cssText = 'font-size:11.5px; background:#ffe9e6; color:#4d1512; border-radius:999px; padding:2px 9px';
+        chips.appendChild(c);
+      });
+      (e.habits || []).forEach(function (id) {
+        var h = habitById(id); if (!h) return;
+        var c = el('span', null, h.label);
+        c.style.cssText = 'font-size:11.5px; border-radius:999px; padding:2px 9px; ' +
+          (h.kind === 'good' ? 'background:#e2f5e1; color:#10380f' : 'background:#fdf0dd; color:#4a3010');
+        chips.appendChild(c);
+      });
+      body.appendChild(chips);
+    }
+
+    if (e.memo) {
+      var m = el('div', null, e.memo);
+      m.style.cssText = 'font-size:13px; color:var(--on-surface-variant); margin-top:5px; white-space:pre-wrap';
+      body.appendChild(m);
+    }
+    box.appendChild(body);
+
+    var edit = el('button', 'btn outline sm', '編集');
+    edit.onclick = function () { switchPage('today'); loadDraft(k); window.scrollTo(0, 0); };
+    edit.style.flex = 'none';
+    box.appendChild(edit);
+    return box;
+  }
+
+  function renderRecent() {
+    var host = $('recentList');
+    host.innerHTML = '';
+    var keys = keysInLastDays(7).filter(function (k) { return !!state.entries[k]; }).reverse();
+    if (!keys.length) {
+      host.appendChild(el('div', 'empty-note', 'まだ記録がありません。上のフォームから今日の体調を入れてみてください。'));
+      return;
+    }
+    keys.forEach(function (k) { host.appendChild(entryLine(k)); });
+  }
+
+  // ===================== カレンダー =====================
+  function renderCalendar() {
+    var y = calCursor.getFullYear(), m = calCursor.getMonth();
+    $('calMonthLabel').textContent = y + '年' + (m + 1) + '月';
+
+    var grid = $('calGrid');
+    grid.innerHTML = '';
+    DOW_JA.forEach(function (d, i) {
+      grid.appendChild(el('div', 'dow' + (i === 0 ? ' sun' : (i === 6 ? ' sat' : '')), d));
+    });
+
+    var first = new Date(y, m, 1);
+    var lastDay = new Date(y, m + 1, 0).getDate();
+    for (var i = 0; i < first.getDay(); i++) grid.appendChild(el('div', 'cell empty'));
+
+    var monthKeys = [];
+    for (var day = 1; day <= lastDay; day++) {
+      var k = y + '-' + pad2(m + 1) + '-' + pad2(day);
+      var e = state.entries[k];
+      if (e) monthKeys.push(k);
+      var cell = el('button', 'cell' + (e && e.score ? ' s' + e.score : '') + (k === todayKey() ? ' today' : ''));
+      cell.type = 'button';
+      cell.appendChild(el('div', 'n', String(day)));
+      if (e) {
+        if (e.symptoms && e.symptoms.length) cell.appendChild(el('div', 'tag', e.symptoms[0]));
+        cell.appendChild(el('div', 'f', scoreMeta(e.score).face));
+      }
+      (function (key) {
+        cell.onclick = function () { switchPage('today'); loadDraft(key); window.scrollTo(0, 0); };
+      })(k);
+      grid.appendChild(cell);
+    }
+
+    var avg = averageScore(monthKeys);
+    $('calSummary').innerHTML = 'この月の記録 <b>' + monthKeys.length + '</b> 日 ／ ' +
+      (avg === null ? '平均 —' : '平均スコア <b>' + round1(avg) + '</b>') +
+      ' ／ 未記録 ' + (lastDay - monthKeys.length) + ' 日' +
+      '<br><span style="font-size:12.5px; color:var(--on-surface-variant)">日付をクリックすると、その日の記録を書けます。</span>';
+
+    var list = $('monthList');
+    list.innerHTML = '';
+    if (!monthKeys.length) list.appendChild(el('div', 'empty-note', 'この月の記録はまだありません。'));
+    else monthKeys.reverse().forEach(function (k) { list.appendChild(entryLine(k)); });
+  }
+
+  // ===================== 分析 =====================
+  function renderStats() {
+    var keys = sortedKeys();
+    var host = $('statCards');
+    host.innerHTML = '';
+
+    var last30 = keysInLastDays(30);
+    var avg30 = averageScore(last30);
+    var recorded30 = last30.filter(function (k) { return !!state.entries[k]; }).length;
+
+    var sleepVals = last30.map(function (k) { return state.entries[k]; })
+      .filter(function (e) { return e && typeof e.sleep === 'number'; })
+      .map(function (e) { return e.sleep; });
+    var avgSleep = sleepVals.length ? sleepVals.reduce(function (a, b) { return a + b; }, 0) / sleepVals.length : null;
+
+    var badDays = last30.filter(function (k) {
+      var e = state.entries[k];
+      return e && e.score !== null && e.score <= 2;
+    }).length;
+
+    var cards = [
+      { k: '記録した日（累計）', v: keys.length, u: '日', c: '' },
+      { k: '直近30日の平均スコア', v: avg30 === null ? '—' : round1(avg30), u: '', c: 't2' },
+      { k: '直近30日の記録率', v: Math.round(recorded30 / 30 * 100), u: '%', c: 't4' },
+      { k: '平均睡眠（30日）', v: avgSleep === null ? '—' : round1(avgSleep), u: 'h', c: 't3' },
+      { k: 'しんどい日（30日）', v: badDays, u: '日', c: 't3' },
+      { k: '連続記録', v: streakDays(), u: '日', c: '' }
+    ];
+    cards.forEach(function (c) {
+      var box = el('div', 'stat ' + c.c);
+      box.appendChild(el('div', 'k', c.k));
+      var v = el('div', 'v', String(c.v));
+      if (c.u) { var s = el('small', null, c.u); v.appendChild(s); }
+      box.appendChild(v);
+      host.appendChild(box);
+    });
+  }
+
+  function renderScoreChart() {
+    var keys = keysInLastDays(30);
+    var W = 720, H = 220, padL = 34, padR = 12, padT = 14, padB = 26;
+    var iw = W - padL - padR, ih = H - padT - padB;
+    var x = function (i) { return padL + (keys.length === 1 ? iw / 2 : iw * i / (keys.length - 1)); };
+    var y = function (v) { return padT + ih * (5 - v) / 4; };
+
+    var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" style="height:220px">';
+    for (var v = 1; v <= 5; v++) {
+      svg += '<line x1="' + padL + '" y1="' + y(v) + '" x2="' + (W - padR) + '" y2="' + y(v) + '" stroke="#e1e3e1" stroke-width="1"/>';
+      svg += '<text x="' + (padL - 8) + '" y="' + (y(v) + 4) + '" text-anchor="end" font-size="11" fill="#5c605f" font-family="Roboto Mono, monospace">' + v + '</text>';
+    }
+
+    // 連続している区間ごとに線を引く（未記録で切る）
+    var seg = [];
+    keys.forEach(function (k, i) {
+      var e = state.entries[k];
+      if (e && typeof e.score === 'number') seg.push({ i: i, v: e.score });
+      else { svg += drawSeg(seg, x, y); seg = []; }
+    });
+    svg += drawSeg(seg, x, y);
+
+    keys.forEach(function (k, i) {
+      var e = state.entries[k];
+      if (!e || typeof e.score !== 'number') return;
+      svg += '<circle cx="' + x(i) + '" cy="' + y(e.score) + '" r="4" fill="#006b66"/>';
+      if (e.symptoms && e.symptoms.length) {
+        svg += '<circle cx="' + x(i) + '" cy="' + y(e.score) + '" r="8" fill="none" stroke="#e08a2e" stroke-width="2"/>';
+      }
+    });
+
+    keys.forEach(function (k, i) {
+      if (i % 6 !== 0 && i !== keys.length - 1) return;
+      var d = parseKey(k);
+      svg += '<text x="' + x(i) + '" y="' + (H - 7) + '" text-anchor="middle" font-size="10.5" fill="#5c605f" font-family="Roboto Mono, monospace">' +
+        (d.getMonth() + 1) + '/' + d.getDate() + '</text>';
+    });
+    svg += '</svg>';
+    $('scoreChart').innerHTML = svg;
+  }
+
+  function drawSeg(seg, x, y) {
+    if (seg.length < 2) return '';
+    var pts = seg.map(function (p) { return x(p.i) + ',' + y(p.v); }).join(' ');
+    return '<polyline points="' + pts + '" fill="none" stroke="#1f827c" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>';
+  }
+
+  function renderSleepChart() {
+    var keys = keysInLastDays(14);
+    var W = 720, H = 200, padL = 34, padR = 12, padT = 14, padB = 26;
+    var iw = W - padL - padR, ih = H - padT - padB;
+    var maxH = 10;
+    keys.forEach(function (k) {
+      var e = state.entries[k];
+      if (e && typeof e.sleep === 'number' && e.sleep > maxH) maxH = Math.ceil(e.sleep);
+    });
+    var bw = iw / keys.length;
+    var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" style="height:200px">';
+    for (var g = 0; g <= maxH; g += 2) {
+      var gy = padT + ih * (1 - g / maxH);
+      svg += '<line x1="' + padL + '" y1="' + gy + '" x2="' + (W - padR) + '" y2="' + gy + '" stroke="#e1e3e1"/>';
+      svg += '<text x="' + (padL - 8) + '" y="' + (gy + 4) + '" text-anchor="end" font-size="11" fill="#5c605f" font-family="Roboto Mono, monospace">' + g + '</text>';
+    }
+    // 7時間の目安ライン
+    var ty = padT + ih * (1 - 7 / maxH);
+    svg += '<line x1="' + padL + '" y1="' + ty + '" x2="' + (W - padR) + '" y2="' + ty + '" stroke="#e08a2e" stroke-width="1.5" stroke-dasharray="5 4"/>';
+
+    keys.forEach(function (k, i) {
+      var e = state.entries[k];
+      var bx = padL + bw * i + bw * 0.18;
+      var w = bw * 0.64;
+      if (e && typeof e.sleep === 'number') {
+        var h = ih * Math.min(e.sleep, maxH) / maxH;
+        var color = e.sleep < 5.5 ? '#c9761c' : '#1f827c';
+        svg += '<rect x="' + bx + '" y="' + (padT + ih - h) + '" width="' + w + '" height="' + h + '" rx="4" fill="' + color + '"/>';
+      } else {
+        svg += '<rect x="' + bx + '" y="' + (padT + ih - 4) + '" width="' + w + '" height="4" rx="2" fill="#e1e3e1"/>';
+      }
+      var d = parseKey(k);
+      svg += '<text x="' + (bx + w / 2) + '" y="' + (H - 7) + '" text-anchor="middle" font-size="10" fill="#5c605f" font-family="Roboto Mono, monospace">' + (d.getMonth() + 1) + '/' + d.getDate() + '</text>';
+    });
+    svg += '</svg>';
+    $('sleepChart').innerHTML = svg;
+    $('sleepChart').insertAdjacentHTML('beforeend',
+      '<div class="legend"><span><i style="background:#1f827c"></i>5.5時間以上</span><span><i style="background:#c9761c"></i>5.5時間未満</span><span><i style="background:#e08a2e"></i>点線 = 7時間の目安</span></div>');
+  }
+
+  function renderSymptomStats() {
+    var keys = sortedKeys();
+    var host = $('symptomStats');
+    host.innerHTML = '';
+    if (!keys.length) { host.appendChild(el('div', 'empty-note', 'まだデータがありません。')); return; }
+
+    var count = {};
+    keys.forEach(function (k) {
+      (state.entries[k].symptoms || []).forEach(function (s) { count[s] = (count[s] || 0) + 1; });
+    });
+    var rows = Object.keys(count).map(function (s) { return { s: s, n: count[s] }; })
+      .sort(function (a, b) { return b.n - a.n; }).slice(0, 10);
+    if (!rows.length) { host.appendChild(el('div', 'empty-note', '記録した日に症状はありませんでした。いいことです。')); return; }
+
+    var list = el('div', 'barlist');
+    rows.forEach(function (r) {
+      var pct = Math.round(r.n / keys.length * 100);
+      var row = el('div', 'barrow');
+      row.appendChild(el('div', null, r.s));
+      var track = el('div', 'bartrack');
+      var fill = el('div', 'barfill warm');
+      fill.style.width = Math.max(pct, 2) + '%';
+      track.appendChild(fill);
+      row.appendChild(track);
+      row.appendChild(el('div', 'num', r.n + '日'));
+      list.appendChild(row);
+    });
+    host.appendChild(list);
+    host.appendChild(el('div', 'callout', '母数は記録した ' + keys.length + ' 日です。'));
+  }
+
+  function renderHabitStats() {
+    var host = $('habitStats');
+    host.innerHTML = '';
+    var keys = sortedKeys().filter(function (k) { return typeof state.entries[k].score === 'number'; });
+    if (keys.length < 5) {
+      host.appendChild(el('div', 'empty-note', '記録が5日ぶん貯まると、ここに比較が出ます（いま ' + keys.length + ' 日）。'));
+      return;
+    }
+
+    var rows = [];
+    HABITS.forEach(function (h) {
+      var withK = [], withoutK = [];
+      keys.forEach(function (k) {
+        ((state.entries[k].habits || []).indexOf(h.id) >= 0 ? withK : withoutK).push(k);
+      });
+      if (withK.length < 2 || withoutK.length < 2) return;
+      var a = averageScore(withK), b = averageScore(withoutK);
+      rows.push({ label: h.label, kind: h.kind, on: a, off: b, diff: a - b, nOn: withK.length });
+    });
+    if (!rows.length) {
+      host.appendChild(el('div', 'empty-note', '比較できる習慣がまだありません。チェックを付けた日が増えると出ます。'));
+      return;
+    }
+    rows.sort(function (a, b) { return Math.abs(b.diff) - Math.abs(a.diff); });
+
+    var tbl = el('table', 'tbl');
+    tbl.innerHTML = '<tr><th>習慣</th><th style="text-align:right">あった日</th><th style="text-align:right">なかった日</th><th style="text-align:right">差</th></tr>';
+    rows.forEach(function (r) {
+      var tr = el('tr');
+      var td1 = el('td', null, r.label + '（' + r.nOn + '日）');
+      tr.appendChild(td1);
+      tr.appendChild(el('td', 'n', round1(r.on)));
+      tr.appendChild(el('td', 'n', round1(r.off)));
+      var d = el('td', 'n', (r.diff > 0 ? '+' : '') + round1(r.diff));
+      d.style.color = r.diff > 0.3 ? '#2e6b34' : (r.diff < -0.3 ? '#924a45' : 'var(--on-surface-variant)');
+      d.style.fontWeight = '500';
+      tr.appendChild(d);
+      tbl.appendChild(tr);
+    });
+    host.appendChild(tbl);
+
+    var top = rows[0];
+    if (Math.abs(top.diff) >= 0.4) {
+      var msg = top.diff > 0
+        ? '「' + top.label + '」がある日は、ない日より平均で ' + round1(top.diff) + ' 高いです。'
+        : '「' + top.label + '」がある日は、ない日より平均で ' + round1(Math.abs(top.diff)) + ' 低いです。';
+      host.appendChild(el('div', 'callout warn', msg + ' 相関であって原因とは限りませんが、意識してみる価値はありそうです。'));
+    }
+  }
+
+  function renderDowStats() {
+    var host = $('dowStats');
+    host.innerHTML = '';
+    var buckets = [[], [], [], [], [], [], []];
+    sortedKeys().forEach(function (k) {
+      var e = state.entries[k];
+      if (typeof e.score === 'number') buckets[parseKey(k).getDay()].push(e.score);
+    });
+    var any = buckets.some(function (b) { return b.length > 0; });
+    if (!any) { host.appendChild(el('div', 'empty-note', 'まだデータがありません。')); return; }
+
+    var list = el('div', 'barlist');
+    for (var i = 1; i <= 7; i++) {
+      var d = i % 7;                                    // 月曜はじまり
+      var b = buckets[d];
+      var avg = b.length ? b.reduce(function (x, y) { return x + y; }, 0) / b.length : null;
+      var row = el('div', 'barrow');
+      row.appendChild(el('div', null, DOW_JA[d] + '曜日' + (b.length ? '（' + b.length + '日）' : '')));
+      var track = el('div', 'bartrack');
+      var fill = el('div', 'barfill');
+      fill.style.width = (avg === null ? 0 : (avg - 1) / 4 * 100) + '%';
+      track.appendChild(fill);
+      row.appendChild(track);
+      row.appendChild(el('div', 'num', avg === null ? '—' : round1(avg)));
+      list.appendChild(row);
+    }
+    host.appendChild(list);
+  }
+
+  // ===================== 書き出し =====================
+  function download(filename, text, mime) {
+    var blob = new Blob([text], { type: (mime || 'text/plain') + ';charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  function stamp() {
+    var d = new Date();
+    return d.getFullYear() + pad2(d.getMonth() + 1) + pad2(d.getDate()) + '_' + pad2(d.getHours()) + pad2(d.getMinutes());
+  }
+
+  function csvCell(v) {
+    var s = (v === null || v === undefined) ? '' : String(v);
+    return '"' + s.replace(/"/g, '""') + '"';
+  }
+
+  function buildCsv() {
+    var head = ['日付', '曜日', '体調スコア', '体調', '気分', '睡眠時間', '症状', '生活習慣', 'メモ'];
+    var lines = [head.map(csvCell).join(',')];
+    sortedKeys().forEach(function (k) {
+      var e = state.entries[k];
+      lines.push([
+        k,
+        DOW_JA[parseKey(k).getDay()],
+        e.score === null ? '' : e.score,
+        scoreMeta(e.score).label,
+        e.mood || '',
+        (e.sleep === null || e.sleep === undefined) ? '' : e.sleep,
+        (e.symptoms || []).join(' / '),
+        (e.habits || []).map(function (id) { var h = habitById(id); return h ? h.label : id; }).join(' / '),
+        e.memo || ''
+      ].map(csvCell).join(','));
+    });
+    return '﻿' + lines.join('\r\n');
+  }
+
+  function buildBackupHtml() {
+    var rows = sortedKeys().reverse().map(function (k) {
+      var e = state.entries[k];
+      return '<tr><td>' + k + '(' + DOW_JA[parseKey(k).getDay()] + ')</td><td>' + scoreMeta(e.score).face + ' ' + scoreMeta(e.score).label +
+        '</td><td>' + (e.mood || '') + '</td><td>' + ((e.sleep === null || e.sleep === undefined) ? '' : round1(e.sleep) + 'h') +
+        '</td><td>' + esc((e.symptoms || []).join('、')) + '</td><td>' + esc((e.habits || []).map(function (id) { var h = habitById(id); return h ? h.label : id; }).join('、')) +
+        '</td><td>' + esc(e.memo || '') + '</td></tr>';
+    }).join('');
+
+    var json = JSON.stringify(state).replace(/</g, '\\u003c');
+    return '<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8">' +
+      '<title>Valetudo バックアップ ' + stamp() + '</title><style>' +
+      'body{font-family:-apple-system,"Hiragino Sans",sans-serif;background:#f8faf8;color:#303332;margin:0;padding:28px}' +
+      'h1{font-size:19px}table{border-collapse:collapse;width:100%;background:#fff;font-size:13px}' +
+      'th,td{border:1px solid #d3d8d6;padding:7px 9px;text-align:left;vertical-align:top}th{background:#eceeed}' +
+      'p.note{font-size:12.5px;color:#5c605f}</style></head><body>' +
+      '<h1>Valetudo 体調記録バックアップ</h1>' +
+      '<p class="note">書き出し日時：' + new Date().toLocaleString('ja-JP') + ' ／ 記録 ' + Object.keys(state.entries).length + ' 日ぶん<br>' +
+      'このファイルには元データ(JSON)も埋め込まれています。Valetudo の「読み込み」で復元するには、下のJSONを .json として保存してください。</p>' +
+      '<table><tr><th>日付</th><th>体調</th><th>気分</th><th>睡眠</th><th>症状</th><th>生活習慣</th><th>メモ</th></tr>' + rows + '</table>' +
+      '<h2 style="font-size:15px;margin-top:26px">元データ (JSON)</h2>' +
+      '<textarea style="width:100%;height:180px;font-family:monospace;font-size:11px">' + esc(JSON.stringify(state)) + '</textarea>' +
+      '<script type="application/json" id="valetudo-data">' + json + '<\/script>' +
+      '</body></html>';
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function buildReport(range) {
+    var keys;
+    var title;
+    if (range === 'month') {
+      var now = new Date();
+      var pre = now.getFullYear() + '-' + pad2(now.getMonth() + 1);
+      keys = sortedKeys().filter(function (k) { return k.indexOf(pre) === 0; });
+      title = now.getFullYear() + '年' + (now.getMonth() + 1) + '月';
+    } else {
+      var n = parseInt(range, 10);
+      var span = keysInLastDays(n);
+      keys = span.filter(function (k) { return !!state.entries[k]; });
+      title = '直近' + n + '日（' + span[0] + ' 〜 ' + span[span.length - 1] + '）';
+    }
+
+    var L = [];
+    L.push('# Valetudo 体調レポート — ' + title);
+    L.push('');
+    if (!keys.length) {
+      L.push('この期間の記録はありません。');
+      return L.join('\n');
+    }
+
+    var avg = averageScore(keys);
+    var sleeps = keys.map(function (k) { return state.entries[k].sleep; }).filter(function (v) { return typeof v === 'number'; });
+    var avgSleep = sleeps.length ? sleeps.reduce(function (a, b) { return a + b; }, 0) / sleeps.length : null;
+    var bad = keys.filter(function (k) { return state.entries[k].score <= 2; });
+
+    L.push('- 記録日数: **' + keys.length + '日**');
+    L.push('- 平均体調スコア: **' + (avg === null ? '—' : round1(avg)) + '** / 5');
+    L.push('- 平均睡眠: **' + (avgSleep === null ? '—' : round1(avgSleep) + '時間') + '**');
+    L.push('- しんどい日(スコア2以下): **' + bad.length + '日**' + (bad.length ? '（' + bad.map(fmtJa).join('、') + '）' : ''));
+    L.push('- 連続記録: **' + streakDays() + '日**');
+    L.push('');
+
+    var count = {};
+    keys.forEach(function (k) {
+      (state.entries[k].symptoms || []).forEach(function (s) { count[s] = (count[s] || 0) + 1; });
+    });
+    var sym = Object.keys(count).map(function (s) { return { s: s, n: count[s] }; }).sort(function (a, b) { return b.n - a.n; });
+    L.push('## よく出た症状');
+    if (!sym.length) L.push('- なし');
+    else sym.slice(0, 8).forEach(function (r) {
+      L.push('- ' + r.s + ': ' + r.n + '日（' + Math.round(r.n / keys.length * 100) + '%）');
+    });
+    L.push('');
+
+    L.push('## 日別');
+    L.push('');
+    L.push('| 日付 | 体調 | 睡眠 | 気分 | 症状 | メモ |');
+    L.push('|---|---|---|---|---|---|');
+    keys.slice().reverse().forEach(function (k) {
+      var e = state.entries[k];
+      L.push('| ' + k + '(' + DOW_JA[parseKey(k).getDay()] + ') | ' + e.score + ' ' + scoreMeta(e.score).label +
+        ' | ' + ((e.sleep === null || e.sleep === undefined) ? '—' : round1(e.sleep) + 'h') +
+        ' | ' + (e.mood || '—') +
+        ' | ' + ((e.symptoms || []).join('、') || '—') +
+        ' | ' + ((e.memo || '—').replace(/\|/g, '/').replace(/\n/g, ' ')) + ' |');
+    });
+    L.push('');
+    L.push('_Valetudo で ' + new Date().toLocaleString('ja-JP') + ' に作成_');
+    return L.join('\n');
+  }
+
+  // ===================== 画面制御 =====================
+  function switchPage(name) {
+    var tabs = document.querySelectorAll('.tab');
+    for (var i = 0; i < tabs.length; i++) {
+      tabs[i].classList.toggle('active', tabs[i].getAttribute('data-page') === name);
+    }
+    var pages = document.querySelectorAll('.page');
+    for (var j = 0; j < pages.length; j++) {
+      pages[j].classList.toggle('active', pages[j].id === 'page-' + name);
+    }
+    if (name === 'calendar') renderCalendar();
+    if (name === 'analysis') { renderStats(); renderScoreChart(); renderSleepChart(); renderSymptomStats(); renderHabitStats(); renderDowStats(); }
+  }
+
+  var toastTimerId = null;
+  function toast(msg) {
+    var t = $('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimerId);
+    toastTimerId = setTimeout(function () { t.classList.remove('show'); }, 2600);
+  }
+
+  function renderAll() {
+    renderCat();
+    renderForm();
+    renderRecent();
+    if ($('page-calendar').classList.contains('active')) renderCalendar();
+    if ($('page-analysis').classList.contains('active')) {
+      renderStats(); renderScoreChart(); renderSleepChart(); renderSymptomStats(); renderHabitStats(); renderDowStats();
+    }
+    $('catNameInput').value = state.cat.name || '';
+  }
+
+  // ===================== デモデータ（#demo で見た目確認用・保存しない） =====================
+  function seedDemo() {
+    var syms = ['頭痛', 'だるさ', '肩こり', '眠気', '目の疲れ'];
+    var hab = ['meal', 'exercise', 'bath', 'water', 'alcohol', 'caffeine', 'latenight', 'overwork'];
+    var memos = ['会議が続いた日。夕方から頭が重い', 'よく寝たら復活した', '在宅で運動ゼロ', '外を歩いたら気分が上がった', ''];
+    for (var i = 39; i >= 0; i--) {
+      if (i % 7 === 3) continue;                     // ときどき記録もれ
+      var k = shiftKey(todayKey(), -i);
+      var seed = (i * 37) % 11;
+      var score = 1 + (seed % 5);
+      var e = blankEntry(k);
+      e.score = score;
+      e.mood = MOODS[seed % MOODS.length];
+      e.sleep = 4.5 + ((seed * 3) % 8) * 0.5;
+      e.symptoms = score <= 3 ? syms.slice(0, 1 + (seed % 3)) : (seed % 4 === 0 ? [syms[seed % syms.length]] : []);
+      e.habits = hab.filter(function (h, hi) { return (seed + hi) % 3 === 0; });
+      e.memo = memos[seed % memos.length];
+      state.entries[k] = e;
+    }
+  }
+
+  // ===================== 起動 =====================
+  function init() {
+    try {
+      localStorage.setItem('valetudo.probe', '1');
+      localStorage.removeItem('valetudo.probe');
+    } catch (e) { storageOK = false; }
+
+    state = load();
+    // #demo でサンプル表示（保存しない）。#demo/analysis のようにタブも指定できる
+    var hash = location.hash.replace('#', '').split('/');
+    if (hash[0] === 'demo') { storageOK = false; seedDemo(); }
+
+    var now = new Date();
+    $('todayLabel').textContent = (now.getMonth() + 1) + '/' + now.getDate();
+    $('todayDow').textContent = now.getFullYear() + '年 ' + DOW_JA[now.getDay()] + '曜日';
+
+    calCursor = new Date(now.getFullYear(), now.getMonth(), 1);
+    loadDraft(todayKey());
+    renderAll();
+    if (hash[1]) switchPage(hash[1]);
+
+    $('storageNote').innerHTML = storageOK
+      ? 'データは <b>このブラウザ内（localStorage）</b> に保存されています。ブラウザの設定でサイトデータを消すと記録も消えるので、月に一度はJSONで書き出しておくのがおすすめです。'
+      : '<b style="color:#924a45">このブラウザでは保存が使えません。</b>入力した内容はページを閉じると消えます（デモ表示中の場合もこの表示になります）。';
+
+    // タブ
+    var tabs = document.querySelectorAll('.tab');
+    for (var i = 0; i < tabs.length; i++) {
+      (function (t) { t.onclick = function () { switchPage(t.getAttribute('data-page')); }; })(tabs[i]);
+    }
+
+    // フォーム
+    $('entryDate').onchange = function () {
+      var v = $('entryDate').value;
+      if (!v) { $('entryDate').value = draft.date; return; }
+      loadDraft(v);
+    };
+    $('sleepInput').oninput = syncInputs;
+    $('memoInput').oninput = syncInputs;
+    $('sleepMinus').onclick = function () {
+      var v = parseFloat($('sleepInput').value);
+      if (isNaN(v)) v = 7;
+      $('sleepInput').value = Math.max(0, round1(v - 0.5));
+      syncInputs();
+    };
+    $('sleepPlus').onclick = function () {
+      var v = parseFloat($('sleepInput').value);
+      if (isNaN(v)) v = 7;
+      $('sleepInput').value = Math.min(24, round1(v + 0.5));
+      syncInputs();
+    };
+    $('addSymptomBtn').onclick = function () {
+      var v = $('newSymptom').value.trim();
+      if (!v) return;
+      if (allSymptoms().indexOf(v) >= 0) { toast('その症状はもうあります'); return; }
+      state.customSymptoms.push(v);
+      draft.symptoms.push(v);
+      $('newSymptom').value = '';
+      save(); refresh();
+    };
+    $('newSymptom').onkeydown = function (ev) { if (ev.key === 'Enter') { ev.preventDefault(); $('addSymptomBtn').click(); } };
+    $('saveBtn').onclick = commitDraft;
+    $('deleteBtn').onclick = function () {
+      if (!confirm(fmtJa(draft.date) + ' の記録を削除します。よろしいですか？')) return;
+      delete state.entries[draft.date];
+      save();
+      loadDraft(draft.date);
+      renderAll();
+      toast('削除しました');
+    };
+
+    // カレンダー
+    $('prevMonth').onclick = function () { calCursor.setMonth(calCursor.getMonth() - 1); renderCalendar(); };
+    $('nextMonth').onclick = function () { calCursor.setMonth(calCursor.getMonth() + 1); renderCalendar(); };
+    $('thisMonth').onclick = function () { var n = new Date(); calCursor = new Date(n.getFullYear(), n.getMonth(), 1); renderCalendar(); };
+
+    // データ
+    $('saveCatName').onclick = function () {
+      var v = $('catNameInput').value.trim();
+      if (!v) { toast('名前を入れてね'); return; }
+      state.cat.name = v; save(); renderCat(); toast('名前を「' + v + '」にしました');
+    };
+    $('exportJson').onclick = function () { download('valetudo_backup_' + stamp() + '.json', JSON.stringify(state, null, 2), 'application/json'); toast('JSONを書き出しました'); };
+    $('exportCsv').onclick = function () { download('valetudo_' + stamp() + '.csv', buildCsv(), 'text/csv'); toast('CSVを書き出しました'); };
+    $('exportHtml').onclick = function () { download('valetudo_' + stamp() + '.html', buildBackupHtml(), 'text/html'); toast('HTMLを書き出しました'); };
+    $('makeReport').onclick = function () { $('reportOut').value = buildReport($('reportRange').value); toast('レポートを作りました'); };
+    $('copyReport').onclick = function () {
+      var t = $('reportOut');
+      if (!t.value) { toast('先にレポートを作ってね'); return; }
+      t.select();
+      try { document.execCommand('copy'); toast('コピーしました'); } catch (e) { toast('コピーできませんでした。手動で選択してください'); }
+    };
+    $('importFile').onchange = function (ev) {
+      var f = ev.target.files && ev.target.files[0];
+      if (!f) return;
+      var r = new FileReader();
+      r.onload = function () {
+        try {
+          var o = JSON.parse(r.result);
+          if (!o || !o.entries) throw new Error('形式が違います');
+          if (Object.keys(state.entries).length) {
+            download('valetudo_取り込み前_' + stamp() + '.json', JSON.stringify(state, null, 2), 'application/json');
+          }
+          if (!confirm('いまの記録を、読み込んだファイルの内容で置きかえます。（取り込み前のバックアップは自動で書き出しました）よろしいですか？')) return;
+          state = o;
+          if (!state.cat) state.cat = { name: 'ウァレ', born: todayKey() };
+          if (!state.customSymptoms) state.customSymptoms = [];
+          save();
+          loadDraft(todayKey());
+          renderAll();
+          toast('読み込みました（' + Object.keys(state.entries).length + '日ぶん）');
+        } catch (e) {
+          toast('読み込めませんでした：' + e.message);
+        }
+        ev.target.value = '';
+      };
+      r.readAsText(f);
+    };
+    $('wipeBtn').onclick = function () {
+      if (!confirm('すべての記録を消します。取り消せません。よろしいですか？')) return;
+      if (Object.keys(state.entries).length) {
+        download('valetudo_消去前_' + stamp() + '.json', JSON.stringify(state, null, 2), 'application/json');
+      }
+      var name = state.cat.name;
+      state = defaultState();
+      state.cat.name = name;
+      save();
+      loadDraft(todayKey());
+      renderAll();
+      toast('消去しました（念のため消去前のバックアップを書き出しました）');
+    };
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>

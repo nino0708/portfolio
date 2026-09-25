@@ -1,0 +1,22 @@
+{
+  "tasks": [
+    {
+      "id": "setup-1",
+      "title": "Friday のLINE通知設定 (.envファイルを作成)",
+      "priority": "high",
+      "category": "today",
+      "dueDate": null,
+      "completed": false,
+      "createdAt": "2026-06-03T00:00:00.000Z"
+    },
+    {
+      "id": "setup-2",
+      "title": "npm install を実行してスケジューラーを起動する",
+      "priority": "medium",
+      "category": "upcoming",
+      "dueDate": "2026-06-05",
+      "completed": false,
+      "createdAt": "2026-06-03T00:00:00.000Z"
+    }
+  ]
+}

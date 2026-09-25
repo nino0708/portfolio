@@ -1,0 +1,829 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  AWS実行環境 メインインフラ構成
+  VPC / Subnets / IGW / NAT / ALB / EC2(ASG) / RDS Multi-AZ /
+  CloudWatch / SNS / CloudTrail / S3 / AWS Backup
+
+# ============================================================
+# Parameters
+# ============================================================
+Parameters:
+  ProjectName:
+    Type: String
+    Default: aws-training-kadai1
+    Description: リソース名のプレフィックス
+
+  VpcCidr:
+    Type: String
+    Default: 10.0.0.0/16
+
+  PublicSubnet1Cidr:
+    Type: String
+    Default: 10.0.1.0/24
+
+  PublicSubnet2Cidr:
+    Type: String
+    Default: 10.0.2.0/24
+
+  PrivateSubnet1Cidr:
+    Type: String
+    Default: 10.0.3.0/24
+
+  PrivateSubnet2Cidr:
+    Type: String
+    Default: 10.0.4.0/24
+
+  EC2InstanceType:
+    Type: String
+    Default: t3.micro
+    AllowedValues: [t3.micro, t3.small, t3.medium]
+
+  EC2KeyPairName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: EC2接続用キーペア名
+
+  AMIID:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64
+    Description: Amazon Linux 2023 (x86_64)
+
+  DBInstanceClass:
+    Type: String
+    Default: db.t3.micro
+    AllowedValues: [db.t3.micro, db.t3.small, db.t3.medium]
+
+  DBName:
+    Type: String
+    Default: trainingdb
+
+  DBUsername:
+    Type: String
+    Default: admin
+
+  DBPassword:
+    Type: String
+    NoEcho: true
+    MinLength: 8
+    Description: RDSマスターパスワード（8文字以上）
+
+  AdminEmail1SSMPath:
+    Type: String
+    Default: /training/admin/email1
+    Description: 管理者メール1のSSMパラメータパス
+
+  AdminEmail2SSMPath:
+    Type: String
+    Default: /training/admin/email2
+    Description: 管理者メール2のSSMパラメータパス
+
+  ASGMinSize:
+    Type: Number
+    Default: 2
+
+  ASGMaxSize:
+    Type: Number
+    Default: 2
+
+  ASGDesiredSize:
+    Type: Number
+    Default: 2
+
+  CPUScaleOutThreshold:
+    Type: Number
+    Default: 50
+    Description: Auto Scalingスケールアウト閾値（CPU%）
+
+# ============================================================
+# Resources
+# ============================================================
+Resources:
+
+  # ----------------------------------------------------------
+  # VPC
+  # ----------------------------------------------------------
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCidr
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-vpc
+
+  # ----------------------------------------------------------
+  # Internet Gateway
+  # ----------------------------------------------------------
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-igw
+
+  VPCGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  # ----------------------------------------------------------
+  # Public Subnets
+  # ----------------------------------------------------------
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref PublicSubnet1Cidr
+      AvailabilityZone: !Select [0, !GetAZs '']
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-public-subnet-1
+
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref PublicSubnet2Cidr
+      AvailabilityZone: !Select [1, !GetAZs '']
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-public-subnet-2
+
+  # ----------------------------------------------------------
+  # Private Subnets
+  # ----------------------------------------------------------
+  PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref PrivateSubnet1Cidr
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-private-subnet-1
+
+  PrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref PrivateSubnet2Cidr
+      AvailabilityZone: !Select [1, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-private-subnet-2
+
+
+  # ----------------------------------------------------------
+  # NAT Gateway (AZ1)
+  # ----------------------------------------------------------
+  NatGatewayEIP:
+    Type: AWS::EC2::EIP
+    DependsOn: VPCGatewayAttachment
+    Properties:
+      Domain: vpc
+
+  NatGateway:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt NatGatewayEIP.AllocationId
+      SubnetId: !Ref PublicSubnet1
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-nat-gw
+
+  # ----------------------------------------------------------
+  # Route Tables
+  # ----------------------------------------------------------
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-public-rtb
+
+  PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: VPCGatewayAttachment
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  PublicSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet1
+      RouteTableId: !Ref PublicRouteTable
+
+  PublicSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet2
+      RouteTableId: !Ref PublicRouteTable
+
+  PrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-private-rtb
+
+  PrivateRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref NatGateway
+
+  PrivateSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet1
+      RouteTableId: !Ref PrivateRouteTable
+
+  PrivateSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet2
+      RouteTableId: !Ref PrivateRouteTable
+
+
+  # ----------------------------------------------------------
+  # Security Groups
+  # ----------------------------------------------------------
+  ALBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: ALB - Allow HTTP and HTTPS from internet
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-alb-sg
+
+  EC2SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: EC2 - Allow HTTP from ALB only
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          SourceSecurityGroupId: !Ref ALBSecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-ec2-sg
+
+  RDSSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: RDS - Allow MySQL from EC2 only
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          SourceSecurityGroupId: !Ref EC2SecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-rds-sg
+
+  # ----------------------------------------------------------
+  # ALB (Application Load Balancer)
+  # ----------------------------------------------------------
+  ALB:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: !Sub ${ProjectName}-alb
+      Scheme: internet-facing
+      Type: application
+      Subnets:
+        - !Ref PublicSubnet1
+        - !Ref PublicSubnet2
+      SecurityGroups:
+        - !Ref ALBSecurityGroup
+
+  ALBTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: !Sub ${ProjectName}-tg
+      Port: 80
+      Protocol: HTTP
+      VpcId: !Ref VPC
+      TargetType: instance
+      HealthCheckPath: /
+      HealthCheckIntervalSeconds: 30
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 3
+
+  ALBListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref ALB
+      Port: 80
+      Protocol: HTTP
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref ALBTargetGroup
+
+  # ----------------------------------------------------------
+  # IAM Role for EC2 (SSM Session Manager + CloudWatch Agent)
+  # ----------------------------------------------------------
+  EC2InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${ProjectName}-ec2-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+        - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+
+  EC2InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      InstanceProfileName: !Sub ${ProjectName}-ec2-profile
+      Roles:
+        - !Ref EC2InstanceRole
+
+  # ----------------------------------------------------------
+  # Launch Template
+  # ----------------------------------------------------------
+  EC2LaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: !Sub ${ProjectName}-lt
+      LaunchTemplateData:
+        ImageId: !Ref AMIID
+        InstanceType: !Ref EC2InstanceType
+        KeyName: !Ref EC2KeyPairName
+        IamInstanceProfile:
+          Arn: !GetAtt EC2InstanceProfile.Arn
+        SecurityGroupIds:
+          - !Ref EC2SecurityGroup
+        UserData:
+          Fn::Base64: !Sub |
+            #!/bin/bash
+            dnf update -y
+            dnf install -y httpd
+            systemctl start httpd
+            systemctl enable httpd
+            echo "<br><br><h1>Hello from $(hostname)</h1>" > /var/www/html/index.html
+
+  # ----------------------------------------------------------
+  # Auto Scaling Group
+  # ----------------------------------------------------------
+  AutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      AutoScalingGroupName: !Sub ${ProjectName}-asg
+      LaunchTemplate:
+        LaunchTemplateId: !Ref EC2LaunchTemplate
+        Version: !GetAtt EC2LaunchTemplate.LatestVersionNumber
+      MinSize: !Ref ASGMinSize
+      MaxSize: !Ref ASGMaxSize
+      DesiredCapacity: !Ref ASGDesiredSize
+      VPCZoneIdentifier:
+        - !Ref PrivateSubnet1
+        - !Ref PrivateSubnet2
+      TargetGroupARNs:
+        - !Ref ALBTargetGroup
+      HealthCheckType: ELB
+      HealthCheckGracePeriod: 300
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-ec2
+          PropagateAtLaunch: true
+
+  # CPU使用率ベースのスケールアウトポリシー
+  ScaleOutPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AutoScalingGroupName: !Ref AutoScalingGroup
+      PolicyType: TargetTrackingScaling
+      TargetTrackingConfiguration:
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ASGAverageCPUUtilization
+        TargetValue: !Ref CPUScaleOutThreshold
+
+  # ----------------------------------------------------------
+  # RDS Subnet Group
+  # ----------------------------------------------------------
+  DBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: RDS Multi-AZ subnet group
+      SubnetIds:
+        - !Ref PrivateSubnet1
+        - !Ref PrivateSubnet2
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-db-subnet-group
+
+  # ----------------------------------------------------------
+  # RDS Multi-AZ (MySQL)
+  # ----------------------------------------------------------
+  RDSInstance:
+    Type: AWS::RDS::DBInstance
+    DeletionPolicy: Delete
+    Properties:
+      DBInstanceIdentifier: !Sub ${ProjectName}-rds
+      DBInstanceClass: !Ref DBInstanceClass
+      Engine: mysql
+      EngineVersion: '8.0'
+      MasterUsername: !Ref DBUsername
+      MasterUserPassword: !Ref DBPassword
+      DBName: !Ref DBName
+      MultiAZ: true
+      StorageType: gp3
+      AllocatedStorage: '20'
+      StorageEncrypted: true
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      VPCSecurityGroups:
+        - !Ref RDSSecurityGroup
+      BackupRetentionPeriod: 0
+      DeletionProtection: false
+      EnableCloudwatchLogsExports:
+        - error
+        - slowquery
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-rds
+
+  # ----------------------------------------------------------
+  # SNS Topic (アラーム通知)
+  # ----------------------------------------------------------
+  AlarmSNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub ${ProjectName}-alarms
+      Subscription:
+        - Protocol: email
+          Endpoint: '{{resolve:ssm:/training/admin/email1}}'
+        - Protocol: email
+          Endpoint: '{{resolve:ssm:/training/admin/email2}}'
+
+  # ----------------------------------------------------------
+  # CloudWatch Alarms
+  # ----------------------------------------------------------
+  EC2CPUAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub ${ProjectName}-ec2-cpu-high
+      AlarmDescription: EC2 CPU使用率が50%超過
+      MetricName: CPUUtilization
+      Namespace: AWS/EC2
+      Statistic: Average
+      Period: 300
+      EvaluationPeriods: 2
+      Threshold: 50
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: AutoScalingGroupName
+          Value: !Ref AutoScalingGroup
+      AlarmActions:
+        - !Ref AlarmSNSTopic
+      OKActions:
+        - !Ref AlarmSNSTopic
+
+  ALBUnhealthyHostAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub ${ProjectName}-alb-unhealthy-host
+      AlarmDescription: ALBのUnhealthyHostが1台以上
+      MetricName: UnHealthyHostCount
+      Namespace: AWS/ApplicationELB
+      Statistic: Average
+      Period: 60
+      EvaluationPeriods: 2
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      Dimensions:
+        - Name: LoadBalancer
+          Value: !GetAtt ALB.LoadBalancerFullName
+        - Name: TargetGroup
+          Value: !GetAtt ALBTargetGroup.TargetGroupFullName
+      AlarmActions:
+        - !Ref AlarmSNSTopic
+      OKActions:
+        - !Ref AlarmSNSTopic
+
+  RDSCPUAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub ${ProjectName}-rds-cpu-high
+      AlarmDescription: RDS CPU使用率が80%超過
+      MetricName: CPUUtilization
+      Namespace: AWS/RDS
+      Statistic: Average
+      Period: 300
+      EvaluationPeriods: 2
+      Threshold: 80
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: DBInstanceIdentifier
+          Value: !Ref RDSInstance
+      AlarmActions:
+        - !Ref AlarmSNSTopic
+      OKActions:
+        - !Ref AlarmSNSTopic
+
+  RDSFreeStorageAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub ${ProjectName}-rds-storage-low
+      AlarmDescription: RDS空き容量が2GB未満
+      MetricName: FreeStorageSpace
+      Namespace: AWS/RDS
+      Statistic: Average
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 2000000000
+      ComparisonOperator: LessThanThreshold
+      Dimensions:
+        - Name: DBInstanceIdentifier
+          Value: !Ref RDSInstance
+      AlarmActions:
+        - !Ref AlarmSNSTopic
+
+  # ----------------------------------------------------------
+  # S3バケット削除用 Lambda（スタック削除時にオブジェクトを空にする）
+  # ----------------------------------------------------------
+  BucketCleanupLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${ProjectName}-bucket-cleanup-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: S3DeleteObjects
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:ListBucket
+                  - s3:ListBucketVersions
+                  - s3:DeleteObject
+                  - s3:DeleteObjectVersion
+                Resource:
+                  - !Sub arn:aws:s3:::${ProjectName}-cloudtrail-${AWS::AccountId}
+                  - !Sub arn:aws:s3:::${ProjectName}-cloudtrail-${AWS::AccountId}/*
+                  - !Sub arn:aws:s3:::${ProjectName}-app-${AWS::AccountId}
+                  - !Sub arn:aws:s3:::${ProjectName}-app-${AWS::AccountId}/*
+
+  BucketCleanupLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub ${ProjectName}-bucket-cleanup
+      Runtime: python3.12
+      Handler: index.handler
+      Role: !GetAtt BucketCleanupLambdaRole.Arn
+      Timeout: 300
+      Code:
+        ZipFile: |
+          import boto3
+          import cfnresponse
+
+          def handler(event, context):
+              bucket_name = event['ResourceProperties']['BucketName']
+              if event['RequestType'] == 'Delete':
+                  try:
+                      s3 = boto3.resource('s3')
+                      bucket = s3.Bucket(bucket_name)
+                      # 通常オブジェクトとバージョン管理オブジェクトの両方を削除
+                      bucket.object_versions.delete()
+                      bucket.objects.delete()
+                      cfnresponse.send(event, context, cfnresponse.SUCCESS, {})
+                  except Exception as e:
+                      print(f"Error: {e}")
+                      cfnresponse.send(event, context, cfnresponse.FAILED, {'Error': str(e)})
+              else:
+                  cfnresponse.send(event, context, cfnresponse.SUCCESS, {})
+
+  # ----------------------------------------------------------
+  # S3 Bucket (CloudTrail ログ保存)
+  # ----------------------------------------------------------
+  CloudTrailBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${ProjectName}-cloudtrail-${AWS::AccountId}
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      LifecycleConfiguration:
+        Rules:
+          - Id: DeleteOldLogs
+            Status: Enabled
+            ExpirationInDays: 7
+
+  CloudTrailBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref CloudTrailBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AWSCloudTrailAclCheck
+            Effect: Allow
+            Principal:
+              Service: cloudtrail.amazonaws.com
+            Action: s3:GetBucketAcl
+            Resource: !GetAtt CloudTrailBucket.Arn
+          - Sid: AWSCloudTrailWrite
+            Effect: Allow
+            Principal:
+              Service: cloudtrail.amazonaws.com
+            Action: s3:PutObject
+            Resource: !Sub ${CloudTrailBucket.Arn}/AWSLogs/${AWS::AccountId}/*
+            Condition:
+              StringEquals:
+                s3:x-amz-acl: bucket-owner-full-control
+
+  # CloudTrail バケット削除時にオブジェクトを空にするトリガー
+  CloudTrailBucketCleanup:
+    Type: AWS::CloudFormation::CustomResource
+    DependsOn: CloudTrailBucket
+    Properties:
+      ServiceToken: !GetAtt BucketCleanupLambda.Arn
+      BucketName: !Ref CloudTrailBucket
+
+  # ----------------------------------------------------------
+  # CloudTrail
+  # ----------------------------------------------------------
+  CloudTrail:
+    Type: AWS::CloudTrail::Trail
+    DependsOn: CloudTrailBucketPolicy
+    Properties:
+      TrailName: !Sub ${ProjectName}-trail
+      S3BucketName: !Ref CloudTrailBucket
+      IsLogging: true
+      IsMultiRegionTrail: false
+      IncludeGlobalServiceEvents: true
+      EnableLogFileValidation: true
+
+  # ----------------------------------------------------------
+  # S3 Bucket (汎用 / アプリ用)
+  # ----------------------------------------------------------
+  AppS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${ProjectName}-app-${AWS::AccountId}
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  # アプリ用バケット削除時にオブジェクトを空にするトリガー
+  AppS3BucketCleanup:
+    Type: AWS::CloudFormation::CustomResource
+    DependsOn: AppS3Bucket
+    Properties:
+      ServiceToken: !GetAtt BucketCleanupLambda.Arn
+      BucketName: !Ref AppS3Bucket
+
+  # ----------------------------------------------------------
+  # AWS Backup
+  # ----------------------------------------------------------
+  BackupVault:
+    Type: AWS::Backup::BackupVault
+    Properties:
+      BackupVaultName: !Sub ${ProjectName}-vault
+
+  BackupRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${ProjectName}-backup-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: backup.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForBackup
+        - arn:aws:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForRestores
+
+  # ----------------------------------------------------------
+  # EventBridge Rule（CloudFormationスタック操作の監視）
+  # ----------------------------------------------------------
+  CloudFormationEventRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: !Sub ${ProjectName}-cfn-stack-changes
+      Description: CloudFormationスタックの作成・削除を検知してSNS通知
+      State: ENABLED
+      EventPattern:
+        source:
+          - aws.cloudformation
+        detail-type:
+          - CloudFormation Stack Status Change
+        detail:
+          status-details:
+            status:
+              - CREATE_COMPLETE
+              - CREATE_FAILED
+              - DELETE_COMPLETE
+              - DELETE_FAILED
+              - ROLLBACK_COMPLETE
+      Targets:
+        - Id: AlarmSNSTarget
+          Arn: !Ref AlarmSNSTopic
+          InputTransformer:
+            InputPathsMap:
+              stackName: '$.detail.stack-id'
+              status: '$.detail.status-details.status'
+              time: '$.time'
+              account: '$.account'
+            InputTemplate: |
+              "CloudFormationスタック変更通知"
+              "アカウント: <account>"
+              "時刻: <time>"
+              "スタック: <stackName>"
+              "ステータス: <status>"
+
+  # EventBridgeからSNSへのパブリッシュ許可
+  SNSTopicPolicyForEventBridge:
+    Type: AWS::SNS::TopicPolicy
+    Properties:
+      Topics:
+        - !Ref AlarmSNSTopic
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowEventBridgePublish
+            Effect: Allow
+            Principal:
+              Service: events.amazonaws.com
+            Action: sns:Publish
+            Resource: !Ref AlarmSNSTopic
+
+
+# ============================================================
+# Outputs
+# ============================================================
+Outputs:
+  VPCID:
+    Description: VPC ID
+    Value: !Ref VPC
+    Export:
+      Name: !Sub ${ProjectName}-vpc-id
+
+  ALBDNSName:
+    Description: ALB DNS名（アクセスURL）
+    Value: !GetAtt ALB.DNSName
+
+  RDSEndpoint:
+    Description: RDSエンドポイント
+    Value: !GetAtt RDSInstance.Endpoint.Address
+
+  AppS3BucketName:
+    Description: アプリ用S3バケット名
+    Value: !Ref AppS3Bucket
+
+  CloudTrailBucketName:
+    Description: CloudTrailログ保存S3バケット名
+    Value: !Ref CloudTrailBucket
+
+  SNSTopicARN:
+    Description: アラーム通知SNS Topic ARN
+    Value: !Ref AlarmSNSTopic

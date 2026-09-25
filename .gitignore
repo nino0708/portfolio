@@ -59,3 +59,6 @@ dist-sql/
 # Claude Code のローカル設定
 .claude/settings.local.json
 .mcp.json
+
+# Supabase CLI の一時ファイル
+supabase/.temp/

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Archivo+Black&family=Noto+Sans+JP:wght@500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#0B0C0E;          /* 基調 near-black */
+    --ink2:#101216;
+    --line:#23262C;         /* 細線 */
+    --line2:#30343B;
+    --paper:#ECEAE3;        /* 温白(純白を避ける) */
+    --muted:#8A8F98;
+    --accent:#FB4D27;       /* 朱色 / vermilion */
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1500px;height:500px}
+  body{
+    font-family:"Archivo","Noto Sans JP",sans-serif;
+    background:var(--ink);
+    color:var(--paper);
+    overflow:hidden;
+    position:relative;
+  }
+  /* 紙質感: ごく薄いグレイン + 周辺減光。グラデのテカリは出さない */
+  .grain{position:absolute;inset:0;opacity:.05;mix-blend-mode:overlay;pointer-events:none}
+  .vignette{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(120% 140% at 70% 30%, transparent 55%, rgba(0,0,0,.55) 100%);}
+  /* 右側の構造グリッド(細線) */
+  .grid{position:absolute;top:0;right:0;bottom:0;width:560px;opacity:.5;
+    background:
+      linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0/93.4px 100%,
+      linear-gradient(0deg, var(--line) 1px, transparent 1px) 0 0/100% 100px;
+    -webkit-mask:linear-gradient(90deg, transparent, #000 45%);
+            mask:linear-gradient(90deg, transparent, #000 45%);}
+
+  .frame{position:absolute;inset:26px;border:1px solid var(--line2);pointer-events:none}
+  /* レジストレーションマーク(印刷物っぽい角の十字) */
+  .tick{position:absolute;width:16px;height:16px;pointer-events:none}
+  .tick::before,.tick::after{content:"";position:absolute;background:var(--line2)}
+  .tick::before{left:7px;top:0;width:1px;height:16px}
+  .tick::after{top:7px;left:0;height:1px;width:16px}
+  .tl{left:18px;top:18px}.tr{right:18px;top:18px}.bl{left:18px;bottom:18px}.br{right:18px;bottom:18px}
+
+  .stage{position:absolute;inset:0;padding:64px 86px}
+
+  /* キッカー */
+  .kicker{display:flex;align-items:center;gap:14px;
+    font-family:"Space Mono",monospace;font-size:16px;letter-spacing:.42em;
+    color:var(--muted);text-transform:uppercase}
+  .kicker .sq{width:9px;height:9px;background:var(--accent);transform:translateY(-1px)}
+  .kicker b{color:var(--paper);font-weight:700;letter-spacing:.42em}
+
+  /* ロゴタイプ */
+  .lockup{display:flex;align-items:flex-end;gap:26px;margin-top:30px}
+  .bar{width:9px;height:118px;background:var(--accent);margin-bottom:8px;
+    box-shadow:0 0 0 0 transparent}
+  .word{display:flex;align-items:flex-end;gap:18px;line-height:.84}
+  .en{font-family:"Archivo Black",sans-serif;font-size:138px;letter-spacing:-.035em;
+    color:var(--paper)}
+  .en .dot{color:var(--accent)}
+  .jp{font-family:"Noto Sans JP",sans-serif;font-weight:900;font-size:96px;
+    letter-spacing:.02em;color:var(--paper);transform:translateY(-6px)}
+
+  /* タグライン */
+  .tag{margin-top:34px;display:flex;align-items:center;gap:20px}
+  .tag .en2{font-family:"Space Mono",monospace;font-weight:700;font-size:20px;
+    letter-spacing:.34em;color:var(--accent);text-transform:uppercase}
+  .tag .sep{width:46px;height:1px;background:var(--line2)}
+  .tag .jp2{font-family:"Noto Sans JP",sans-serif;font-weight:500;font-size:21px;
+    letter-spacing:.14em;color:#C9CCD2}
+
+  /* 右下メタ */
+  .meta{position:absolute;right:86px;bottom:60px;text-align:right;
+    font-family:"Space Mono",monospace;font-size:14px;letter-spacing:.18em;color:var(--muted)}
+  .meta .h{color:var(--paper);font-weight:700}
+  .meta .row{margin-top:8px}
+
+  /* 右側: バーコード + スキャンタグ(せどりモチーフ) */
+  .scan{position:absolute;right:96px;top:74px;text-align:right}
+  .scan .lbl{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.34em;
+    color:var(--muted);text-transform:uppercase;margin-bottom:12px}
+  .scan svg{display:block;margin-left:auto}
+  .scan .code{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.5em;
+    color:#A7ABB2;margin-top:10px}
+
+  /* 背面のゴーストモノグラム */
+  .ghost{position:absolute;right:30px;bottom:-60px;font-family:"Archivo Black",sans-serif;
+    font-size:430px;line-height:1;color:#fff;opacity:.028;letter-spacing:-.04em;
+    pointer-events:none;user-select:none}
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="ghost">F</div>
+
+  <!-- せどり: スキャン/バーコード -->
+  <div class="scan">
+    <div class="lbl">scan &amp; resell</div>
+    <svg width="300" height="92" viewBox="0 0 300 92" fill="none">
+      <!-- 手で太さを散らしたバーコード(規則的すぎる自動生成感を避ける) -->
+      <g fill="#D9DBDF">
+        <rect x="0"   y="0" width="4" height="92"/>
+        <rect x="8"   y="0" width="2" height="92"/>
+        <rect x="14"  y="0" width="6" height="92"/>
+        <rect x="24"  y="0" width="2" height="92"/>
+        <rect x="30"  y="0" width="3" height="92"/>
+        <rect x="38"  y="0" width="8" height="92"/>
+        <rect x="50"  y="0" width="2" height="92"/>
+        <rect x="56"  y="0" width="4" height="92"/>
+        <rect x="64"  y="0" width="2" height="92"/>
+        <rect x="70"  y="0" width="5" height="92"/>
+        <rect x="80"  y="0" width="3" height="92"/>
+        <rect x="88"  y="0" width="7" height="92"/>
+        <rect x="100" y="0" width="2" height="92"/>
+        <rect x="106" y="0" width="3" height="92"/>
+        <rect x="114" y="0" width="4" height="92"/>
+        <rect x="122" y="0" width="2" height="92"/>
+        <rect x="128" y="0" width="6" height="92"/>
+        <rect x="139" y="0" width="3" height="92"/>
+        <rect x="146" y="0" width="2" height="92"/>
+        <rect x="152" y="0" width="5" height="92"/>
+        <rect x="162" y="0" width="2" height="92"/>
+        <rect x="168" y="0" width="8" height="92"/>
+        <rect x="180" y="0" width="2" height="92"/>
+        <rect x="186" y="0" width="3" height="92"/>
+        <rect x="193" y="0" width="4" height="92"/>
+        <rect x="201" y="0" width="2" height="92"/>
+        <rect x="207" y="0" width="6" height="92"/>
+        <rect x="218" y="0" width="3" height="92"/>
+        <rect x="225" y="0" width="2" height="92"/>
+      </g>
+      <!-- 朱のアクセントバー -->
+      <rect x="233" y="0" width="9" height="92" fill="#FB4D27"/>
+      <g fill="#D9DBDF">
+        <rect x="248" y="0" width="2" height="92"/>
+        <rect x="254" y="0" width="5" height="92"/>
+        <rect x="263" y="0" width="2" height="92"/>
+        <rect x="269" y="0" width="3" height="92"/>
+        <rect x="276" y="0" width="7" height="92"/>
+        <rect x="288" y="0" width="2" height="92"/>
+        <rect x="294" y="0" width="4" height="92"/>
+      </g>
+    </svg>
+    <div class="code">4 562026 000262</div>
+  </div>
+
+  <div class="stage">
+    <div class="kicker"><span class="sq"></span>TOKYO&nbsp;&nbsp;<b>EST. 2026</b>&nbsp;&nbsp;·&nbsp;&nbsp;@friday_sedori</div>
+
+    <div class="lockup">
+      <div class="bar"></div>
+      <div class="word">
+        <span class="en">Friday<span class="dot">.</span></span>
+        <span class="jp">商事</span>
+      </div>
+    </div>
+
+    <div class="tag">
+      <span class="en2">Select &amp; Resell</span>
+      <span class="sep"></span>
+      <span class="jp2">目利きが選ぶ、確かなモノ。</span>
+    </div>
+  </div>
+
+  <div class="meta">
+    <div class="h">AFFILIATE &nbsp;/&nbsp; RESELL</div>
+    <div class="row">SOURCING — TOKYO, JP</div>
+  </div>
+
+  <!-- 角マーク・枠は最前面 -->
+  <div class="frame"></div>
+  <span class="tick tl"></span><span class="tick tr"></span>
+  <span class="tick bl"></span><span class="tick br"></span>
+  <div class="vignette"></div>
+  <svg class="grain"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+</body>
+</html>

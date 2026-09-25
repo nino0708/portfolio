@@ -1,0 +1,15 @@
+{
+  "name": "friday-assistant",
+  "version": "1.0.0",
+  "description": "個人AI秘書 Friday - タスク管理 & LINE自動通知",
+  "main": "scripts/scheduler.js",
+  "scripts": {
+    "start": "node scripts/scheduler.js",
+    "test-notify": "node scripts/scheduler.js --test",
+    "morning": "node -e \"require('dotenv').config(); const b=require('./scripts/brief'); const l=require('./scripts/line'); const t=require('./scripts/tasks'); t.advanceTasks(); l.sendLine(b.generateMorningBrief());\""
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "node-cron": "^3.0.3"
+  }
+}

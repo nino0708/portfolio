@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Space+Mono:wght@700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4F6F9; --brand:#1F5FAE; --ink:#16243A; --accent:#D98324; --line:#D6DEEA;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:400px;height:400px}
+  body{background:var(--paper);position:relative;overflow:hidden;
+    font-family:"Space Mono",monospace}
+  .grid{position:absolute;inset:0;pointer-events:none;
+    background:
+      linear-gradient(90deg, rgba(31,95,174,.10) 1px, transparent 1px) 0 0/28px 100%,
+      linear-gradient(0deg,  rgba(31,95,174,.10) 1px, transparent 1px) 0 0/100% 28px;
+    -webkit-mask:radial-gradient(circle at 50% 46%, #000 30%, transparent 82%);
+            mask:radial-gradient(circle at 50% 46%, #000 30%, transparent 82%);}
+  .frame{position:absolute;inset:22px;border:1.5px solid var(--ink)}
+
+  .mark{position:absolute;left:0;right:0;top:36px;display:flex;justify-content:center}
+
+  .foot{position:absolute;left:0;right:0;bottom:48px;text-align:center}
+  .foot .nm{font-family:"Space Mono",monospace;font-weight:700;font-size:23px;
+    letter-spacing:.26em;color:var(--ink)}
+  .foot .sub{font-family:"Space Mono",monospace;font-weight:700;font-size:12px;
+    letter-spacing:.46em;color:var(--accent);margin-top:8px}
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+
+  <div class="mark">
+    <svg width="240" height="250" viewBox="0 0 240 250" fill="none">
+      <defs>
+        <pattern id="w" width="20" height="22" patternUnits="userSpaceOnUse">
+          <rect x="5" y="5" width="9" height="11" fill="#1F5FAE" opacity="0.18"/>
+        </pattern>
+      </defs>
+      <!-- 地面 -->
+      <line x1="40" y1="226" x2="200" y2="226" stroke="#16243A" stroke-width="3"/>
+      <line x1="56" y1="234" x2="184" y2="234" stroke="#16243A" stroke-width="1.5" opacity=".5"/>
+      <!-- タワー本体(セットバック付き) -->
+      <rect x="80"  y="120" width="80" height="106" fill="url(#w)" stroke="#16243A" stroke-width="3"/>
+      <rect x="92"  y="84"  width="56" height="36"  fill="url(#w)" stroke="#16243A" stroke-width="3"/>
+      <rect x="104" y="56"  width="32" height="28"  fill="url(#w)" stroke="#16243A" stroke-width="3"/>
+      <!-- アンテナ + 琥珀のビーコン -->
+      <line x1="120" y1="56" x2="120" y2="26" stroke="#D98324" stroke-width="3"/>
+      <circle cx="120" cy="20" r="7" fill="#D98324"/>
+      <circle cx="120" cy="20" r="13" fill="none" stroke="#D98324" stroke-width="2" opacity=".45"/>
+    </svg>
+  </div>
+
+  <div class="foot">
+    <div class="nm">BUILT JAPAN</div>
+    <div class="sub">TOKYO ARCHITECTURE</div>
+  </div>
+
+  <div class="frame"></div>
+</body>
+</html>
