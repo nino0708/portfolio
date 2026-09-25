@@ -37,3 +37,4 @@ Mac 側のローカル clone は `~/portfolio`。`claude code/` 配下の作業�
 - 2026-09-25: Mac にだけあった Tempus 一式（plan-review、検証ログ、migration 0001〜0019 など）を PR #15 で main に取り込んだ
 - 2026-09-25: Mac にだけあった `claude code/CLAUDE.md`・`PROJECT_MAP.md`・`.claude/` を main に push（`settings.local.json` と `.mcp.json` は除外）
 - 2026-09-25: plan-review に一度 `ANTHROPIC_API_KEY` を設定したが、無料のコンセプトに合わないため外した（AI は使わない方針を明記）
+- 2026-09-25: app-glow-up-weekly（9/19停止）が残した PR #12〜#14 をマージし、Tempus の定期作業「app-glow-up 週次｜PRを確認」を削除した
