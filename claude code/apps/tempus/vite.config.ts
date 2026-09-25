@@ -12,8 +12,8 @@ export default defineConfig({
         name: 'Tempus',
         short_name: 'Tempus',
         description: '時間割型のタスク管理',
-        theme_color: '#1f6f4a',
-        background_color: '#f6f8f6',
+        theme_color: '#0b0f14',
+        background_color: '#0b0f14',
         display: 'standalone',
         start_url: '/',
         // ホーム画面から1タップで起票できるようにする（起票コストを潰す要件）

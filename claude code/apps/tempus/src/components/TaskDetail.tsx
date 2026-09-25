@@ -140,12 +140,12 @@ function LogForm({ taskId }: { taskId: string }) {
       <div className="detail-label">進め方の記録</div>
       <div className="row">
         <input
+          className="log-input"
           value={text}
           placeholder="やったこと・決めたことを書いて Enter"
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => { if (e.key === 'Enter' && !e.nativeEvent.isComposing) void send(); }}
           disabled={sending}
-          style={{ flex: 1 }}
         />
         <button className="btn" onClick={() => void send()} disabled={sending || !text.trim()}>
           {sending ? '送信中…' : '追記'}
