@@ -11,7 +11,7 @@
 | `claude code/apps/accounting-app/` | 団体会計アプリ（Python/Flask + SQLite） |
 | `claude code/docs/superpowers/specs/` | 設計スペック |
 
-Mac 側のローカル clone は `~/portfolio`。`claude code/CLAUDE.md` と `claude code/PROJECT_MAP.md` があれば、作業前にそれも読む（現状は Mac にのみ存在し、未 push のことがある）。
+Mac 側のローカル clone は `~/portfolio`。`claude code/` 配下の作業では、`claude code/CLAUDE.md`（詳細な作業ルール）と `claude code/PROJECT_MAP.md`（全アプリの地図）も読む。エージェント・コマンド・資料は `claude code/.claude/`（`agents/`、`commands/`、`docs/`、`knowledge/`）にある。
 
 ## Tempus の要点
 
@@ -34,3 +34,4 @@ Mac 側のローカル clone は `~/portfolio`。`claude code/CLAUDE.md` と `cl
 ## 最近の経緯
 
 - 2026-09-25: Mac にだけあった Tempus 一式（plan-review、検証ログ、migration 0001〜0019 など）を PR #15 で main に取り込んだ
+- 2026-09-25: Mac にだけあった `claude code/CLAUDE.md`・`PROJECT_MAP.md`・`.claude/` を main に push（`settings.local.json` と `.mcp.json` は除外）
