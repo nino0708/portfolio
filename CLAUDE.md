@@ -19,7 +19,8 @@ Mac 側のローカル clone は `~/portfolio`。`claude code/` 配下の作業�
 - 本番 URL: https://divine-breeze-3e59.itsuki9978miya.workers.dev
 - 開発: `npm install` → `npm run dev` / `npm test` / `npm run verify:db`（PGlite で migration と RLS を検証）/ `npm run build`
 - Edge Functions（`supabase/functions/`）: `plan-review`（毎朝7時の「今日の見立て」）、`calendar-sync`、`line-webhook`、`agent-ingest`、`usage-guard`、共通は `_shared/`
-- `plan-review`: 既定モデル `claude-opus-5-5`（`PLAN_REVIEW_MODEL` で上書き）、adaptive thinking・effort `low`。`ANTHROPIC_API_KEY` が無いか `PLAN_REVIEW_MODE=free` だと Claude を呼ばず `_shared/insight.ts` の計算だけで見立てを作る（画面に「計算による見立て（無料）」と出る）
+- **方針: Tempus は無料のタスク管理。AI（Claude API 等の従量課金）は呼ばない**。AI 連携・AI による自動処理を提案・追加しないこと。「AIとのやりとりノート」系のタスクも、人が記録を残す場所であって AI に何かさせる機能ではない
+- `plan-review`: 本番は `ANTHROPIC_API_KEY` を設定せず、`_shared/insight.ts` の計算だけで見立てを作る（画面に「計算による見立て（無料）」と出る）。Claude 経路のコード（既定 `claude-opus-5-5`）は残っているが使わない
 - デプロイは Mac から `supabase functions deploy <name>`。secrets は `supabase secrets list/set`
 - migration は `supabase/migrations/` の連番。`*.prod.sql` は本番専用（cron 等）
 
@@ -35,3 +36,4 @@ Mac 側のローカル clone は `~/portfolio`。`claude code/` 配下の作業�
 
 - 2026-09-25: Mac にだけあった Tempus 一式（plan-review、検証ログ、migration 0001〜0019 など）を PR #15 で main に取り込んだ
 - 2026-09-25: Mac にだけあった `claude code/CLAUDE.md`・`PROJECT_MAP.md`・`.claude/` を main に push（`settings.local.json` と `.mcp.json` は除外）
+- 2026-09-25: plan-review に一度 `ANTHROPIC_API_KEY` を設定したが、無料のコンセプトに合わないため外した（AI は使わない方針を明記）
