@@ -9,9 +9,8 @@
 - [ ] `npm test` / `npm run build` が通ることを確認
 - [ ] Google Cloud コンソールで Google Drive API / Google Docs API を有効化
 - [ ] OAuth 同意画面のスコープに `https://www.googleapis.com/auth/drive.file` を追加
-- [ ] `src/lib/supabase.ts` の `signIn` のスコープに同じ `drive.file` を追加
-      （`access_type: 'offline'`, `prompt: 'consent'` も確認）
-- [ ] `supabase db push`（0018_drive_task_docs.sql を適用）
+- [x] `src/lib/supabase.ts` の `signIn` のスコープに同じ `drive.file` を追加（済み）
+- [ ] `supabase db push`（0020_drive_task_docs.sql を適用）
 - [ ] `supabase functions deploy drive-sync`
 - [ ] アプリでログアウト→再ログインし、Driveの許可（チェックボックス）を出す
 - [ ] Google ドライブに `Tempus/` フォルダとプロジェクト別フォルダ（Built Japan / Friday商事 / Tempus / AWS育成 / その他タスク）・ドキュメントができているか確認

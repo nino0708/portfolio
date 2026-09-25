@@ -34,7 +34,7 @@
 
 | 部品 | 役割 |
 |---|---|
-| `supabase/migrations/0018_drive_task_docs.sql` | フォルダ・ドキュメントの ID と URL を覚える列を追加 |
+| `supabase/migrations/0020_drive_task_docs.sql` | フォルダ・ドキュメントの ID と URL を覚える列を追加 |
 | `supabase/functions/drive-sync` | Drive のフォルダ・ドキュメントを作る・揃える |
 | `supabase/functions/_shared/driveDoc.ts` | ドキュメント名と本文を組み立てる純関数（テストあり） |
 | `src/lib/drive.ts` | アプリから drive-sync を呼ぶ |
