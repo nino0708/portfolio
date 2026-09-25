@@ -160,6 +160,11 @@ body {
 #sidebar nav a[data-page="opening"] { --ico-bg:#e0f2f1; --ico-fg:#00695c; }
 #sidebar nav a[data-page="data"]    { --ico-bg:#eef0f3; --ico-fg:#5f6368; }
 #sidebar nav a[data-page="deletion"]{ --ico-bg:#fde8e8; --ico-fg:#c0392b; }
+#sidebar nav a[data-page="csvimport"]{ --ico-bg:#e8eaf6; --ico-fg:#3949ab; }
+#sidebar nav a[data-page="monthly"]  { --ico-bg:#e3f2fd; --ico-fg:#1565c0; }
+#sidebar nav a[data-page="budget"]   { --ico-bg:#fff3e0; --ico-fg:#e65100; }
+#sidebar nav a[data-page="ss"]       { --ico-bg:#f9fbe7; --ico-fg:#558b2f; }
+#sidebar nav a[data-page="opening"]  { --ico-bg:#e0f2f1; --ico-fg:#00695c; }
 
 #sidebar nav .section-label {
   padding: 16px 16px 6px;
