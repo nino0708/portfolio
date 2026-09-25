@@ -1,0 +1,43 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# 環境変数・シークレット
+.env
+.env.local
+.env.*.local
+*.secret
+
+# ログ
+*.log
+cron.log
+
+# YouTube字幕キャッシュ（再取得可能・容量が膨らむ）
+tools/youtube/.cache/
+
+# データベース（本番データ保護）
+# accounting-app/data/accounting.db  ← コメントアウト: バージョン管理する場合は外す
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo

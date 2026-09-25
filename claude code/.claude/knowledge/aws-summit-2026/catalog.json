@@ -1,0 +1,3214 @@
+[
+  {
+    "title": "AI が開発／運用しやすいクラウド サーバーレスの視点から考える設計原則",
+    "category": "AWSセッション",
+    "pages": 114,
+    "topics": [
+      "AI駆動開発",
+      "アーキテクチャ/サーバーレス"
+    ],
+    "services": [
+      "AWS Lambda",
+      "AgentCore",
+      "Amazon API Gateway",
+      "Amazon DynamoDB",
+      "Amazon S3",
+      "Amazon SQS",
+      "Claude",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AI が開発／運用しやすいクラウド サーバーレスの視点から考える設計原則.pdf",
+    "path": "sessions/AWSセッション/AI_が開発運用しやすいクラウド_サーバーレスの視点から考える設計原則.md",
+    "chars": 19279,
+    "session_id": "CNS449"
+  },
+  {
+    "title": "AI で VMware 移行を加速： AWS Transform for VMware",
+    "category": "AWSセッション",
+    "pages": 51,
+    "topics": [
+      "マイグレーション/モダナイゼーション"
+    ],
+    "services": [
+      "AWS CDK",
+      "Amazon EC2",
+      "Amazon ECS",
+      "Amazon EKS",
+      "Amazon FSx",
+      "Amazon RDS"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AI で VMware 移行を加速： AWS Transform for VMware.pdf",
+    "path": "sessions/AWSセッション/AI_で_VMware_移行を加速_AWS_Transform_for_VMware.md",
+    "chars": 7343,
+    "session_id": "MAM301"
+  },
+  {
+    "title": "AI でコードは書けても、 レビューできる⼈がいなくなる ― ソフトウェア開発における⾃動化のパラドックス",
+    "category": "AWSセッション",
+    "pages": 46,
+    "topics": [
+      "その他"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AI でコードは書けても、 レビューできる⼈がいなくなる ― ソフトウェア開発における⾃動化のパラドックス.pdf",
+    "path": "sessions/AWSセッション/AI_でコードは書けても、_レビューできる人がいなくなる_―_ソフトウェア開発における自動化のパラドックス.md",
+    "chars": 8281,
+    "session_id": "AIM223"
+  },
+  {
+    "title": "AI を活用した新しいデプロイメント手法と CI:CD における迅速な障害検知と 復旧の実現方法",
+    "category": "AWSセッション",
+    "pages": 41,
+    "topics": [
+      "AI駆動開発",
+      "運用/SRE"
+    ],
+    "services": [
+      "AWS CDK",
+      "AWS CloudFormation",
+      "AWS Config",
+      "AWS Lambda",
+      "Amazon S3",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AI を活用した新しいデプロイメント手法と CI:CD における迅速な障害検知と 復旧の実現方法.pdf",
+    "path": "sessions/AWSセッション/AI_を活用した新しいデプロイメント手法と_CICD_における迅速な障害検知と_復旧の実現方法.md",
+    "chars": 6627,
+    "session_id": "DVT350"
+  },
+  {
+    "title": "AI エージェントで切り拓く 商⽤ DB から Amazon Aurora への移⾏ ― コード変換の実践⼿法とお客様検証事例",
+    "category": "AWSセッション",
+    "pages": 54,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS DMS",
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon EC2",
+      "Amazon RDS",
+      "Amazon S3",
+      "Claude",
+      "Kiro",
+      "MCP",
+      "Strands Agents"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AI エージェントで切り拓く 商⽤ DB から Amazon Aurora への移⾏ ― コード変換の実践⼿法とお客様検証事例.pdf",
+    "path": "sessions/AWSセッション/AI_エージェントで切り拓く_商用_DB_から_Amazon_Aurora_への移行_―_コード変換の実践手法とお客様検証事例.md",
+    "chars": 9819,
+    "session_id": "DAT302"
+  },
+  {
+    "title": "AI エージェントで実現する データベース運⽤︓検知・推奨・最適化",
+    "category": "AWSセッション",
+    "pages": 53,
+    "topics": [
+      "コスト最適化/FinOps",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon Aurora",
+      "Amazon DynamoDB",
+      "Amazon RDS",
+      "Amazon Redshift",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AI エージェントで実現する データベース運⽤︓検知・推奨・最適化.pdf",
+    "path": "sessions/AWSセッション/AI_エージェントで実現する_データベース運用検知・推奨・最適化.md",
+    "chars": 6962,
+    "session_id": "DAT358"
+  },
+  {
+    "title": "AI エージェントのオブザーバビリティ実践",
+    "category": "AWSセッション",
+    "pages": 47,
+    "topics": [
+      "生成AI/エージェント",
+      "運用/SRE"
+    ],
+    "services": [
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon S3"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AI エージェントのオブザーバビリティ実践.pdf",
+    "path": "sessions/AWSセッション/AI_エージェントのオブザーバビリティ実践.md",
+    "chars": 4497,
+    "session_id": "CNS317"
+  },
+  {
+    "title": "\"AI エージェントの推論から⼤規模学習まで\" コスト効率と性能が両⽴する AI インフラ ̶ AWS Trainium の全貌",
+    "category": "AWSセッション",
+    "pages": 47,
+    "topics": [
+      "機械学習/MLOps",
+      "生成AI/エージェント",
+      "運用/SRE"
+    ],
+    "services": [
+      "Amazon EC2",
+      "Claude",
+      "Inferentia",
+      "Kiro",
+      "Trainium"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/\"AI エージェントの推論から⼤規模学習まで\" コスト効率と性能が両⽴する AI インフラ ̶ AWS Trainium の全貌.pdf",
+    "path": "sessions/AWSセッション/AI_エージェントの推論から大規模学習まで_コスト効率と性能が両立する_AI_インフラ_̶_AWS_Trainium_の全貌.md",
+    "chars": 9088,
+    "session_id": "AIM360"
+  },
+  {
+    "title": "AI エージェント時代における責任ある AI（Responsible AI）の ベストプラクティスと実践例",
+    "category": "AWSセッション",
+    "pages": 61,
+    "topics": [
+      "セキュリティ",
+      "機械学習/MLOps",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Kiro"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AI エージェント時代における責任ある AI（Responsible AI）の ベストプラクティスと実践例.pdf",
+    "path": "sessions/AWSセッション/AI_エージェント時代における責任ある_AI(Responsible_AI)の_ベストプラクティスと実践例.md",
+    "chars": 13852,
+    "session_id": "AIM345"
+  },
+  {
+    "title": "AI エージェント精度改善のポイント - Architecture・Context・Tools の設計方針",
+    "category": "AWSセッション",
+    "level": "L300",
+    "pages": 67,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AgentCore",
+      "Amazon Bedrock",
+      "Strands Agents"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AI エージェント精度改善のポイント - Architecture・Context・Tools の設計方針.pdf",
+    "path": "sessions/AWSセッション/AI_エージェント精度改善のポイント_-_Architecture・Context・Tools_の設計方針.md",
+    "chars": 10147,
+    "session_id": "AIM314"
+  },
+  {
+    "title": "AI ネイティブで実現する、妥協なき顧客体験 — Amazon Connect Customer",
+    "category": "AWSセッション",
+    "pages": 37,
+    "topics": [
+      "その他"
+    ],
+    "services": [
+      "Amazon Connect"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AI ネイティブで実現する、妥協なき顧客体験 — Amazon Connect Customer.pdf",
+    "path": "sessions/AWSセッション/AI_ネイティブで実現する、妥協なき顧客体験_—_Amazon_Connect_Customer.md",
+    "chars": 4985,
+    "session_id": "BIZ201"
+  },
+  {
+    "title": "AI 駆動は上流工程にこそ活きる －非エンジニアにこそ知ってほしい、 AI 駆動開発ライフサイクルによる上流工程の変革",
+    "category": "AWSセッション",
+    "pages": 55,
+    "topics": [
+      "AI駆動開発",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS CloudFormation",
+      "AWS Lambda",
+      "Amazon Bedrock",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AI 駆動は上流工程にこそ活きる －非エンジニアにこそ知ってほしい、 AI 駆動開発ライフサイクルによる上流工程の変革.pdf",
+    "path": "sessions/AWSセッション/AI_駆動は上流工程にこそ活きる_-非エンジニアにこそ知ってほしい、_AI_駆動開発ライフサイクルによる上流工程の変革.md",
+    "chars": 7683,
+    "session_id": "AIM222"
+  },
+  {
+    "title": "AI 駆動開発ライフサイクル (AI-DLC) のご紹介",
+    "category": "AWSセッション",
+    "pages": 45,
+    "topics": [
+      "AI駆動開発"
+    ],
+    "services": [
+      "Kiro"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AI 駆動開発ライフサイクル (AI-DLC) のご紹介.pdf",
+    "path": "sessions/AWSセッション/AI_駆動開発ライフサイクル_(AI-DLC)_のご紹介.md",
+    "chars": 6066,
+    "session_id": "AIM221"
+  },
+  {
+    "title": "AWS Analytics MCP サーバーで実現する エージェント型データエンジニアリング",
+    "category": "AWSセッション",
+    "pages": 55,
+    "topics": [
+      "データ分析/基盤",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Glue",
+      "AgentCore",
+      "Amazon Athena",
+      "Amazon Bedrock",
+      "Amazon EC2",
+      "Amazon OpenSearch",
+      "Amazon Q",
+      "Amazon Redshift",
+      "Amazon S3",
+      "Amazon SageMaker",
+      "Claude",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AWS Analytics MCP サーバーで実現する エージェント型データエンジニアリング.pdf",
+    "path": "sessions/AWSセッション/AWS_Analytics_MCP_サーバーで実現する_エージェント型データエンジニアリング.md",
+    "chars": 7672,
+    "session_id": "ANT310"
+  },
+  {
+    "title": "AWS DevOps Agent による ⾃律的インシデント対応 －その能⼒を引き出す設計のベストプラクティス－",
+    "category": "AWSセッション",
+    "pages": 67,
+    "topics": [
+      "組織/内製化",
+      "運用/SRE"
+    ],
+    "services": [
+      "AWS DevOps Agent",
+      "AgentCore",
+      "Amazon CloudWatch",
+      "Claude",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AWS DevOps Agent による ⾃律的インシデント対応 －その能⼒を引き出す設計のベストプラクティス－.pdf",
+    "path": "sessions/AWSセッション/AWS_DevOps_Agent_による_自律的インシデント対応_-その能力を引き出す設計のベストプラクティス-.md",
+    "chars": 7501,
+    "session_id": "CNS319"
+  },
+  {
+    "title": "AWS Infrastructure as Code - 2025 年主要アップデートの振り返り",
+    "category": "AWSセッション",
+    "pages": 82,
+    "topics": [
+      "セキュリティ",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS CDK",
+      "AWS CloudFormation",
+      "AWS Lambda",
+      "AWS Transit Gateway",
+      "Amazon API Gateway",
+      "Amazon Bedrock",
+      "Amazon DynamoDB",
+      "Amazon EC2",
+      "Amazon Kinesis",
+      "Amazon RDS",
+      "Amazon S3",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AWS Infrastructure as Code - 2025 年主要アップデートの振り返り.pdf",
+    "path": "sessions/AWSセッション/AWS_Infrastructure_as_Code_-_2025_年主要アップデートの振り返り.md",
+    "chars": 10408,
+    "session_id": "DVT225"
+  },
+  {
+    "title": "AWS Transform custom - AI エージェントによる ⼤規模コードモダナイゼーションの⾃動化",
+    "category": "AWSセッション",
+    "pages": 42,
+    "topics": [
+      "AI駆動開発",
+      "マイグレーション/モダナイゼーション",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Batch",
+      "AWS CDK",
+      "Amazon CloudWatch",
+      "Amazon S3",
+      "Kiro"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AWS Transform custom - AI エージェントによる ⼤規模コードモダナイゼーションの⾃動化.pdf",
+    "path": "sessions/AWSセッション/AWS_Transform_custom_-_AI_エージェントによる_大規模コードモダナイゼーションの自動化.md",
+    "chars": 7866,
+    "session_id": "MAM204"
+  },
+  {
+    "title": "AWS における Kubernetes の未来",
+    "category": "AWSセッション",
+    "pages": 61,
+    "topics": [
+      "AI駆動開発"
+    ],
+    "services": [
+      "AWS IAM",
+      "AWS Organizations",
+      "Amazon EKS",
+      "Amazon Q",
+      "Kiro",
+      "MCP",
+      "Trainium"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AWS における Kubernetes の未来.pdf",
+    "path": "sessions/AWSセッション/AWS_における_Kubernetes_の未来.md",
+    "chars": 10869,
+    "session_id": "CNS348"
+  },
+  {
+    "title": "AWS 移行こそ 最善のセキュリティ対策である理由 ― 納得と説得のエッセンス",
+    "category": "AWSセッション",
+    "pages": 46,
+    "topics": [
+      "セキュリティ",
+      "マイグレーション/モダナイゼーション",
+      "組織/内製化"
+    ],
+    "services": [
+      "AWS Control Tower",
+      "Amazon EC2",
+      "Amazon S3"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/AWS 移行こそ 最善のセキュリティ対策である理由 ― 納得と説得のエッセンス.pdf",
+    "path": "sessions/AWSセッション/AWS_移行こそ_最善のセキュリティ対策である理由_―_納得と説得のエッセンス.md",
+    "chars": 7200,
+    "session_id": "SEC234"
+  },
+  {
+    "title": "Advanced VPC Networking －知っておきたい AWS ネットワークの最新動向 ： VPC 関連サービスのアップデートを総整理－",
+    "category": "AWSセッション",
+    "level": "L300",
+    "pages": 105,
+    "topics": [
+      "その他"
+    ],
+    "services": [
+      "AWS Direct Connect",
+      "AWS IAM",
+      "AWS Lambda",
+      "AWS Transit Gateway",
+      "Amazon CloudFront",
+      "Amazon DynamoDB",
+      "Amazon Route 53",
+      "Amazon S3",
+      "Amazon VPC"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/Advanced VPC Networking －知っておきたい AWS ネットワークの最新動向 ： VPC 関連サービスのアップデートを総整理－.pdf",
+    "path": "sessions/AWSセッション/Advanced_VPC_Networking_-知っておきたい_AWS_ネットワークの最新動向_VPC_関連サービスのアップデートを総整理-.md",
+    "chars": 28531,
+    "session_id": "CDN320"
+  },
+  {
+    "title": "Amazon Aurora DSQL Deep Dive ― 内部アーキテクチャの設計思想と実装の勘所",
+    "category": "AWSセッション",
+    "pages": 111,
+    "topics": [
+      "アーキテクチャ/サーバーレス"
+    ],
+    "services": [
+      "AWS CloudTrail",
+      "AWS Lambda",
+      "Amazon Aurora",
+      "Amazon DynamoDB",
+      "Amazon RDS"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/Amazon Aurora DSQL Deep Dive ― 内部アーキテクチャの設計思想と実装の勘所.pdf",
+    "path": "sessions/AWSセッション/Amazon_Aurora_DSQL_Deep_Dive_―_内部アーキテクチャの設計思想と実装の勘所.md",
+    "chars": 18685,
+    "session_id": "DAT338"
+  },
+  {
+    "title": "Amazon Bedrock AgentCore による 堅牢な SaaS データエージェントの設計",
+    "category": "AWSセッション",
+    "pages": 56,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Lambda",
+      "AgentCore",
+      "Amazon API Gateway",
+      "Amazon Bedrock",
+      "Amazon RDS",
+      "Amazon S3",
+      "MCP",
+      "Strands Agents"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/Amazon Bedrock AgentCore による 堅牢な SaaS データエージェントの設計.pdf",
+    "path": "sessions/AWSセッション/Amazon_Bedrock_AgentCore_による_堅牢な_SaaS_データエージェントの設計.md",
+    "chars": 8984,
+    "session_id": "AIM344"
+  },
+  {
+    "title": "Amazon Bedrock AgentCore を活用した エンタープライズ Agentic RAG の実装解説",
+    "category": "AWSセッション",
+    "pages": 100,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon S3",
+      "Amazon SageMaker",
+      "Strands Agents"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/Amazon Bedrock AgentCore を活用した エンタープライズ Agentic RAG の実装解説.pdf",
+    "path": "sessions/AWSセッション/Amazon_Bedrock_AgentCore_を活用した_エンタープライズ_Agentic_RAG_の実装解説.md",
+    "chars": 17701,
+    "session_id": "AIM412"
+  },
+  {
+    "title": "Amazon Connect Customer で 実現する進化したコンタクトセンター －エージェンティック AI が変える顧客体験－",
+    "category": "AWSセッション",
+    "pages": 85,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon Connect",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/Amazon Connect Customer で 実現する進化したコンタクトセンター －エージェンティック AI が変える顧客体験－.pdf",
+    "path": "sessions/AWSセッション/Amazon_Connect_Customer_で_実現する進化したコンタクトセンター_-エージェンティック_AI_が変える顧客体験-.md",
+    "chars": 4337,
+    "session_id": "BIZ326"
+  },
+  {
+    "title": "Amazon DynamoDB アドバンスドデータモデリング",
+    "category": "AWSセッション",
+    "pages": 155,
+    "topics": [
+      "その他"
+    ],
+    "services": [
+      "Amazon DynamoDB"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/Amazon DynamoDB アドバンスドデータモデリング.pdf",
+    "path": "sessions/AWSセッション/Amazon_DynamoDB_アドバンスドデータモデリング.md",
+    "chars": 14663,
+    "session_id": "DAT340"
+  },
+  {
+    "title": "Amazon EC2 がセキュアな理由を、 専用チップの設計から徹底解説 — EC2 インスタンスの裏で動く AWS Nitro System —",
+    "category": "AWSセッション",
+    "pages": 55,
+    "topics": [
+      "セキュリティ"
+    ],
+    "services": [
+      "Amazon EC2",
+      "Inferentia",
+      "Trainium"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/Amazon EC2 がセキュアな理由を、 専用チップの設計から徹底解説 — EC2 インスタンスの裏で動く AWS Nitro System —.pdf",
+    "path": "sessions/AWSセッション/Amazon_EC2_がセキュアな理由を、_専用チップの設計から徹底解説_—_EC2_インスタンスの裏で動く_AWS_Nitro_System_—.md",
+    "chars": 6920,
+    "session_id": "CMP336"
+  },
+  {
+    "title": "Amazon ECS Managed Instances と AWS Fargate の仕組みと違いを知る",
+    "category": "AWSセッション",
+    "pages": 66,
+    "topics": [
+      "コスト最適化/FinOps",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Fargate",
+      "Amazon EC2",
+      "Amazon ECS"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/Amazon ECS Managed Instances と AWS Fargate の仕組みと違いを知る.pdf",
+    "path": "sessions/AWSセッション/Amazon_ECS_Managed_Instances_と_AWS_Fargate_の仕組みと違いを知る.md",
+    "chars": 13818,
+    "session_id": "CNS341"
+  },
+  {
+    "title": "Amazon S3 で切り開く クラウドストレージの未来",
+    "category": "AWSセッション",
+    "pages": 56,
+    "topics": [
+      "その他"
+    ],
+    "services": [
+      "AWS Glue",
+      "AWS IAM",
+      "Amazon Athena",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon S3",
+      "Amazon SageMaker"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/Amazon S3 で切り開く クラウドストレージの未来.pdf",
+    "path": "sessions/AWSセッション/Amazon_S3_で切り開く_クラウドストレージの未来.md",
+    "chars": 5841,
+    "session_id": "STG206"
+  },
+  {
+    "title": "Amazon S3 の非構造化データを Amazon SageMaker Catalog で AI-ready な資産に変換する",
+    "category": "AWSセッション",
+    "pages": 40,
+    "topics": [
+      "データ分析/基盤",
+      "機械学習/MLOps"
+    ],
+    "services": [
+      "AWS Glue",
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon OpenSearch",
+      "Amazon Q",
+      "Amazon Redshift",
+      "Amazon S3",
+      "Amazon SageMaker"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/Amazon S3 の非構造化データを Amazon SageMaker Catalog で AI-ready な資産に変換する.pdf",
+    "path": "sessions/AWSセッション/Amazon_S3_の非構造化データを_Amazon_SageMaker_Catalog_で_AI-ready_な資産に変換する.md",
+    "chars": 6666,
+    "session_id": "ANT308"
+  },
+  {
+    "title": "Amazon S3 セキュリティベストプラクティス",
+    "category": "AWSセッション",
+    "pages": 50,
+    "topics": [
+      "セキュリティ"
+    ],
+    "services": [
+      "AWS CloudTrail",
+      "AWS Config",
+      "AWS IAM",
+      "AWS Organizations",
+      "Amazon CloudFront",
+      "Amazon S3",
+      "Amazon SageMaker"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/Amazon S3 セキュリティベストプラクティス.pdf",
+    "path": "sessions/AWSセッション/Amazon_S3_セキュリティベストプラクティス.md",
+    "chars": 8215,
+    "session_id": "STG357"
+  },
+  {
+    "title": "Apache Iceberg on AWS 実践ガイド -設計・取り込み・活用のベストプラクティス",
+    "category": "AWSセッション",
+    "pages": 37,
+    "topics": [
+      "データ分析/基盤",
+      "機械学習/MLOps"
+    ],
+    "services": [
+      "AWS CDK",
+      "AWS Glue",
+      "Amazon Athena",
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon Q",
+      "Amazon RDS",
+      "Amazon Redshift",
+      "Amazon S3",
+      "Amazon SageMaker"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/Apache Iceberg on AWS 実践ガイド -設計・取り込み・活用のベストプラクティス.pdf",
+    "path": "sessions/AWSセッション/Apache_Iceberg_on_AWS_実践ガイド_-設計・取り込み・活用のベストプラクティス.md",
+    "chars": 10098,
+    "session_id": "ANT355"
+  },
+  {
+    "title": "Kiro と Amazon の文化から学ぶ AI 駆動開発の型",
+    "category": "AWSセッション",
+    "level": "L300",
+    "pages": 61,
+    "topics": [
+      "AI駆動開発",
+      "組織/内製化"
+    ],
+    "services": [
+      "AWS CDK",
+      "AWS Lambda",
+      "AWS Security Hub",
+      "Amazon CloudFront",
+      "Amazon Inspector",
+      "Amazon RDS",
+      "Claude",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/Kiro と Amazon の文化から学ぶ AI 駆動開発の型.pdf",
+    "path": "sessions/AWSセッション/Kiro_と_Amazon_の文化から学ぶ_AI_駆動開発の型.md",
+    "chars": 9860,
+    "session_id": "DVT324"
+  },
+  {
+    "title": "Microsoft ワークロードの モダナイゼーション最新⽅程式 - もう待たない、⽣成 AI で加速する移⾏の現実解",
+    "category": "AWSセッション",
+    "pages": 35,
+    "topics": [
+      "AI駆動開発",
+      "マイグレーション/モダナイゼーション"
+    ],
+    "services": [
+      "AWS DMS",
+      "AWS Lambda",
+      "Amazon Aurora",
+      "Amazon ECS",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/Microsoft ワークロードの モダナイゼーション最新⽅程式 - もう待たない、⽣成 AI で加速する移⾏の現実解.pdf",
+    "path": "sessions/AWSセッション/Microsoft_ワークロードの_モダナイゼーション最新方程式_-_もう待たない、生成_AI_で加速する移行の現実解.md",
+    "chars": 6470,
+    "session_id": "MAM331"
+  },
+  {
+    "title": "Operation Phase of AI-DLC － AI 駆動カオスエンジニアリングのすすめ－",
+    "category": "AWSセッション",
+    "pages": 88,
+    "topics": [
+      "AI駆動開発"
+    ],
+    "services": [
+      "AWS DevOps Agent",
+      "Claude",
+      "Kiro"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/Operation Phase of AI-DLC － AI 駆動カオスエンジニアリングのすすめ－.pdf",
+    "path": "sessions/AWSセッション/Operation_Phase_of_AI-DLC_-_AI_駆動カオスエンジニアリングのすすめ-.md",
+    "chars": 10410,
+    "session_id": "DVT452"
+  },
+  {
+    "title": "Physical AI における学習・運用での AWS 活用方法",
+    "category": "AWSセッション",
+    "pages": 61,
+    "topics": [
+      "機械学習/MLOps",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Batch",
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon EC2",
+      "Amazon FSx",
+      "Amazon S3",
+      "Amazon SageMaker",
+      "Claude",
+      "SageMaker HyperPod",
+      "Strands Agents"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/Physical AI における学習・運用での AWS 活用方法.pdf",
+    "path": "sessions/AWSセッション/Physical_AI_における学習・運用での_AWS_活用方法.md",
+    "chars": 12979,
+    "session_id": "AIM328"
+  },
+  {
+    "title": "SageMaker HyperPod で GPU 投資を成果に変える ― 基盤モデルの学習・推論を支える ML Performance Engineering 入門",
+    "category": "AWSセッション",
+    "pages": 92,
+    "topics": [
+      "機械学習/MLOps"
+    ],
+    "services": [
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon EC2",
+      "Amazon EKS",
+      "Amazon FSx",
+      "Amazon Q",
+      "Amazon Q Developer",
+      "Amazon S3",
+      "Amazon SageMaker",
+      "SageMaker HyperPod",
+      "Trainium"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/SageMaker HyperPod で GPU 投資を成果に変える ― 基盤モデルの学習・推論を支える ML Performance Engineering 入門.pdf",
+    "path": "sessions/AWSセッション/SageMaker_HyperPod_で_GPU_投資を成果に変える_―_基盤モデルの学習・推論を支える_ML_Performance_Engineering_入門.md",
+    "chars": 14715,
+    "session_id": "AIM461"
+  },
+  {
+    "title": "VMware 環境をそのまま AWS へ︓ AWS への最速の移⾏を実現する アーキテクチャ詳解・デモ・お客様事例",
+    "category": "AWSセッション",
+    "pages": 42,
+    "topics": [
+      "アーキテクチャ/サーバーレス",
+      "マイグレーション/モダナイゼーション"
+    ],
+    "services": [
+      "AWS CloudFormation",
+      "AWS Lambda",
+      "AWS Outposts",
+      "AWS Transit Gateway",
+      "Amazon EC2",
+      "Amazon EKS",
+      "Amazon FSx",
+      "Amazon RDS",
+      "Amazon VPC"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/VMware 環境をそのまま AWS へ︓ AWS への最速の移⾏を実現する アーキテクチャ詳解・デモ・お客様事例.pdf",
+    "path": "sessions/AWSセッション/VMware_環境をそのまま_AWS_へ_AWS_への最速の移行を実現する_アーキテクチャ詳解・デモ・お客様事例.md",
+    "chars": 10751,
+    "session_id": "MAM332"
+  },
+  {
+    "title": "あなたの新しいエージェンティックな チームメイト、Amazon Quick を知ろう",
+    "category": "AWSセッション",
+    "pages": 38,
+    "topics": [
+      "AI駆動開発",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon Q",
+      "Kiro"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/あなたの新しいエージェンティックな チームメイト、Amazon Quick を知ろう.pdf",
+    "path": "sessions/AWSセッション/あなたの新しいエージェンティックな_チームメイト、Amazon_Quick_を知ろう.md",
+    "chars": 6736,
+    "session_id": "AIM202"
+  },
+  {
+    "title": "おにぎり⽉ 40 個から 32 万個へ — ビジネスの成⻑痛を和らげる サーバーレスアーキテクチャの育て⽅",
+    "category": "AWSセッション",
+    "pages": 78,
+    "topics": [
+      "アーキテクチャ/サーバーレス"
+    ],
+    "services": [
+      "AWS CDK",
+      "AWS Lambda",
+      "AWS Step Functions",
+      "Amazon EventBridge",
+      "Amazon Kinesis",
+      "Amazon SQS",
+      "Kiro"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/おにぎり⽉ 40 個から 32 万個へ — ビジネスの成⻑痛を和らげる サーバーレスアーキテクチャの育て⽅.pdf",
+    "path": "sessions/AWSセッション/おにぎり月_40_個から_32_万個へ_—_ビジネスの成⻑痛を和らげる_サーバーレスアーキテクチャの育て方.md",
+    "chars": 12190,
+    "session_id": "CNS347"
+  },
+  {
+    "title": "より速く、より安く、より良く ― Valkey と ElastiCache によるキャッシュ基盤の革新",
+    "category": "AWSセッション",
+    "pages": 105,
+    "topics": [
+      "アーキテクチャ/サーバーレス"
+    ],
+    "services": [
+      "Valkey"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/より速く、より安く、より良く ― Valkey と ElastiCache によるキャッシュ基盤の革新.pdf",
+    "path": "sessions/AWSセッション/より速く、より安く、より良く_―_Valkey_と_ElastiCache_によるキャッシュ基盤の革新.md",
+    "chars": 15784,
+    "session_id": "DAT456"
+  },
+  {
+    "title": "アーキテクチャ道場 2026 - AI 時代編！",
+    "category": "AWSセッション",
+    "pages": 115,
+    "topics": [
+      "アーキテクチャ/サーバーレス",
+      "マイグレーション/モダナイゼーション"
+    ],
+    "services": [
+      "AWS CDK",
+      "AWS Fargate",
+      "AWS Lambda",
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon Nova",
+      "Amazon S3",
+      "Claude",
+      "Kiro",
+      "Valkey"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/アーキテクチャ道場 2026 - AI 時代編！.pdf",
+    "path": "sessions/AWSセッション/アーキテクチャ道場_2026_-_AI_時代編!.md",
+    "chars": 25667,
+    "session_id": "ARC446"
+  },
+  {
+    "title": "インテリジェント運⽤︓ AI エージェントによるセキュリティ運⽤の効率化",
+    "category": "AWSセッション",
+    "pages": 57,
+    "topics": [
+      "AI駆動開発",
+      "セキュリティ",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS CDK",
+      "AWS CloudFormation",
+      "AWS CloudTrail",
+      "AWS Config",
+      "AWS DevOps Agent",
+      "AWS IAM",
+      "AWS Lambda",
+      "AWS Organizations",
+      "AWS Security Hub",
+      "AWS Systems Manager",
+      "AWS WAF",
+      "Amazon EC2",
+      "Amazon EventBridge",
+      "Amazon GuardDuty",
+      "Amazon Inspector",
+      "Amazon S3",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/インテリジェント運⽤︓ AI エージェントによるセキュリティ運⽤の効率化.pdf",
+    "path": "sessions/AWSセッション/インテリジェント運用_AI_エージェントによるセキュリティ運用の効率化.md",
+    "chars": 16751,
+    "session_id": "SEC351"
+  },
+  {
+    "title": "エージェンティック AI で、 これまでにないソフトウェア構築を実現",
+    "category": "AWSセッション",
+    "pages": 39,
+    "topics": [
+      "AI駆動開発",
+      "アーキテクチャ/サーバーレス",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AgentCore",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/エージェンティック AI で、 これまでにないソフトウェア構築を実現.pdf",
+    "path": "sessions/AWSセッション/エージェンティック_AI_で、_これまでにないソフトウェア構築を実現.md",
+    "chars": 4414,
+    "session_id": "DVT201"
+  },
+  {
+    "title": "エージェンティック AI における ビジネスインテリジェンスの再構築と民主化",
+    "category": "AWSセッション",
+    "pages": 83,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon Q"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/エージェンティック AI における ビジネスインテリジェンスの再構築と民主化.pdf",
+    "path": "sessions/AWSセッション/エージェンティック_AI_における_ビジネスインテリジェンスの再構築と民主化.md",
+    "chars": 3739,
+    "session_id": "AIM216"
+  },
+  {
+    "title": "エージェンティック AI のための データ活⽤実践ガイド",
+    "category": "AWSセッション",
+    "pages": 50,
+    "topics": [
+      "アーキテクチャ/サーバーレス",
+      "データ分析/基盤",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Glue",
+      "AgentCore",
+      "Amazon Athena",
+      "Amazon Bedrock",
+      "Amazon S3",
+      "Amazon SageMaker",
+      "MCP",
+      "Strands Agents",
+      "Valkey"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/エージェンティック AI のための データ活⽤実践ガイド.pdf",
+    "path": "sessions/AWSセッション/エージェンティック_AI_のための_データ活用実践ガイド.md",
+    "chars": 10712,
+    "session_id": "ANT301"
+  },
+  {
+    "title": "エージェンティック AI の構築︓ - Strands Agents で始める AI エージェント開発",
+    "category": "AWSセッション",
+    "pages": 102,
+    "topics": [
+      "機械学習/MLOps",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon EC2",
+      "Amazon ECS",
+      "Amazon Q",
+      "Amazon Q Developer",
+      "Amazon SageMaker",
+      "MCP",
+      "Strands Agents"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/エージェンティック AI の構築︓ - Strands Agents で始める AI エージェント開発.pdf",
+    "path": "sessions/AWSセッション/エージェンティック_AI_の構築_-_Strands_Agents_で始める_AI_エージェント開発.md",
+    "chars": 12001,
+    "session_id": "AIM313"
+  },
+  {
+    "title": "エージェンティック AI アプリの セキュリティ・UX・開発速度を同時に実現 ─ Amazon Bedrock AgentCore Identity が解決する 3つの課題",
+    "category": "AWSセッション",
+    "pages": 39,
+    "topics": [
+      "セキュリティ",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS CloudTrail",
+      "AWS IAM",
+      "AgentCore",
+      "Amazon Bedrock",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/エージェンティック AI アプリの セキュリティ・UX・開発速度を同時に実現 ─ Amazon Bedrock AgentCore Identity が解決する 3つの課題.pdf",
+    "path": "sessions/AWSセッション/エージェンティック_AI_アプリの_セキュリティ・UX・開発速度を同時に実現_─_Amazon_Bedrock_AgentCore_Identity_が解決する_3つの課題.md",
+    "chars": 8294,
+    "session_id": "SEC353"
+  },
+  {
+    "title": "エージェントで検索は進化する - Amazon OpenSearch Service のエージェント機能徹底解説 -",
+    "category": "AWSセッション",
+    "pages": 69,
+    "topics": [
+      "その他"
+    ],
+    "services": [
+      "Amazon Aurora",
+      "Amazon OpenSearch",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/エージェントで検索は進化する - Amazon OpenSearch Service のエージェント機能徹底解説 -.pdf",
+    "path": "sessions/AWSセッション/エージェントで検索は進化する_-_Amazon_OpenSearch_Service_のエージェント機能徹底解説_-.md",
+    "chars": 13531,
+    "session_id": "ANT407"
+  },
+  {
+    "title": "クラウドとインターネットのつなぎ⽅ －サービス公開と外向き通信を整理する－",
+    "category": "AWSセッション",
+    "pages": 83,
+    "topics": [
+      "アーキテクチャ/サーバーレス"
+    ],
+    "services": [
+      "AWS Direct Connect",
+      "AWS Lambda",
+      "AWS Transit Gateway",
+      "AWS WAF",
+      "Amazon API Gateway",
+      "Amazon CloudFront",
+      "Amazon EC2",
+      "Amazon VPC"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/クラウドとインターネットのつなぎ⽅ －サービス公開と外向き通信を整理する－.pdf",
+    "path": "sessions/AWSセッション/クラウドとインターネットのつなぎ方_-サービス公開と外向き通信を整理する-.md",
+    "chars": 18577,
+    "session_id": "CDN335"
+  },
+  {
+    "title": "サーバーレス API のセキュリティ －API 認可の基本を押さえ、AI エージェント時代に備える－",
+    "category": "AWSセッション",
+    "pages": 112,
+    "topics": [
+      "アーキテクチャ/サーバーレス",
+      "セキュリティ",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Lambda",
+      "AWS Systems Manager",
+      "AWS WAF",
+      "AgentCore",
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon ElastiCache",
+      "Amazon GuardDuty",
+      "Amazon Inspector",
+      "Amazon Neptune",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/サーバーレス API のセキュリティ －API 認可の基本を押さえ、AI エージェント時代に備える－.pdf",
+    "path": "sessions/AWSセッション/サーバーレス_API_のセキュリティ_-API_認可の基本を押さえ、AI_エージェント時代に備える-.md",
+    "chars": 16523,
+    "session_id": "CNS315"
+  },
+  {
+    "title": "データウェアハウスのモダナイズ - 事例とデモで学ぶ Amazon Redshift マルチウェアハウスアーキテクチャ",
+    "category": "AWSセッション",
+    "pages": 57,
+    "topics": [
+      "アーキテクチャ/サーバーレス",
+      "データ分析/基盤",
+      "マイグレーション/モダナイゼーション",
+      "機械学習/MLOps"
+    ],
+    "services": [
+      "AWS Glue",
+      "AWS IAM",
+      "AWS Lambda",
+      "Amazon Bedrock",
+      "Amazon Q",
+      "Amazon RDS",
+      "Amazon Redshift",
+      "Amazon S3",
+      "Amazon SageMaker",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/データウェアハウスのモダナイズ - 事例とデモで学ぶ Amazon Redshift マルチウェアハウスアーキテクチャ.pdf",
+    "path": "sessions/AWSセッション/データウェアハウスのモダナイズ_-_事例とデモで学ぶ_Amazon_Redshift_マルチウェアハウスアーキテクチャ.md",
+    "chars": 9847,
+    "session_id": "ANT209"
+  },
+  {
+    "title": "パーソナライズでビジネス成⻑を実現する コンタクトセンターへ ― AI エージェントが顧客を知り、先回りする―",
+    "category": "AWSセッション",
+    "pages": 60,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon Connect",
+      "Amazon Nova",
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/パーソナライズでビジネス成⻑を実現する コンタクトセンターへ ― AI エージェントが顧客を知り、先回りする―.pdf",
+    "path": "sessions/AWSセッション/パーソナライズでビジネス成⻑を実現する_コンタクトセンターへ_―_AI_エージェントが顧客を知り、先回りする―.md",
+    "chars": 6631,
+    "session_id": "BIZ233"
+  },
+  {
+    "title": "メインフレームアプリケーションが AWS 上で生まれ変わる- 生成 AI 活用による Reimagine",
+    "category": "AWSセッション",
+    "pages": 56,
+    "topics": [
+      "AI駆動開発",
+      "マイグレーション/モダナイゼーション",
+      "生成AI/エージェント",
+      "組織/内製化"
+    ],
+    "services": [
+      "AWS CDK",
+      "Kiro"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/メインフレームアプリケーションが AWS 上で生まれ変わる- 生成 AI 活用による Reimagine.pdf",
+    "path": "sessions/AWSセッション/メインフレームアプリケーションが_AWS_上で生まれ変わる-_生成_AI_活用による_Reimagine.md",
+    "chars": 14441,
+    "session_id": "MAM303"
+  },
+  {
+    "title": "ランサムウェアに対して最優先で取るべき AWS の復旧対策",
+    "category": "AWSセッション",
+    "pages": 64,
+    "topics": [
+      "セキュリティ"
+    ],
+    "services": [
+      "Amazon EC2",
+      "Amazon EventBridge",
+      "Amazon FSx",
+      "Amazon GuardDuty",
+      "Amazon S3"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/ランサムウェアに対して最優先で取るべき AWS の復旧対策.pdf",
+    "path": "sessions/AWSセッション/ランサムウェアに対して最優先で取るべき_AWS_の復旧対策.md",
+    "chars": 12668,
+    "session_id": "STG205"
+  },
+  {
+    "title": "ワークフローオーケストレーターにおける 複雑性と非決定性のコントロール",
+    "category": "AWSセッション",
+    "pages": 88,
+    "topics": [
+      "アーキテクチャ/サーバーレス"
+    ],
+    "services": [
+      "AWS Batch",
+      "AWS Glue",
+      "AWS Lambda",
+      "AWS Step Functions",
+      "AWS Systems Manager",
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon EventBridge",
+      "Amazon S3",
+      "Amazon SQS",
+      "Amazon SageMaker"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/ワークフローオーケストレーターにおける 複雑性と非決定性のコントロール.pdf",
+    "path": "sessions/AWSセッション/ワークフローオーケストレーターにおける_複雑性と非決定性のコントロール.md",
+    "chars": 11358,
+    "session_id": "CNS454"
+  },
+  {
+    "title": "⼀歩先を⾏く︓ 効果的な脆弱性管理のためのスマート戦略",
+    "category": "AWSセッション",
+    "pages": 38,
+    "topics": [
+      "セキュリティ"
+    ],
+    "services": [
+      "AWS CDK",
+      "AWS CloudFormation",
+      "AWS Lambda",
+      "AWS Organizations",
+      "AWS Systems Manager",
+      "Amazon EC2",
+      "Amazon Inspector"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/⼀歩先を⾏く︓ 効果的な脆弱性管理のためのスマート戦略.pdf",
+    "path": "sessions/AWSセッション/一歩先を行く_効果的な脆弱性管理のためのスマート戦略.md",
+    "chars": 9462,
+    "session_id": "SEC337"
+  },
+  {
+    "title": "大規模障害から考える、 AWS 上で備えるべきレジリエンスの実践",
+    "category": "AWSセッション",
+    "pages": 62,
+    "topics": [
+      "運用/SRE"
+    ],
+    "services": [
+      "AWS Lambda",
+      "Amazon Aurora",
+      "Amazon CloudWatch",
+      "Amazon EC2",
+      "Amazon ECS",
+      "Amazon EKS",
+      "Amazon Route 53"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/大規模障害から考える、 AWS 上で備えるべきレジリエンスの実践.pdf",
+    "path": "sessions/AWSセッション/大規模障害から考える、_AWS_上で備えるべきレジリエンスの実践.md",
+    "chars": 7217,
+    "session_id": "ARC339"
+  },
+  {
+    "title": "実践！Amazon RDS と Amazon Aurora の コスト最適化とパフォーマンス向上",
+    "category": "AWSセッション",
+    "pages": 79,
+    "topics": [
+      "AI駆動開発",
+      "コスト最適化/FinOps"
+    ],
+    "services": [
+      "AWS Lambda",
+      "Amazon Aurora",
+      "Amazon EC2",
+      "Amazon EKS",
+      "Amazon RDS",
+      "Amazon S3",
+      "Kiro"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/実践！Amazon RDS と Amazon Aurora の コスト最適化とパフォーマンス向上.pdf",
+    "path": "sessions/AWSセッション/実践!Amazon_RDS_と_Amazon_Aurora_の_コスト最適化とパフォーマンス向上.md",
+    "chars": 15054,
+    "session_id": "DAT318"
+  },
+  {
+    "title": "情報を集め、判断し、行動する時代へ： データ基盤・AI エージェント・エッジ AI で 変わる製造現場",
+    "category": "AWSセッション",
+    "pages": 65,
+    "topics": [
+      "アーキテクチャ/サーバーレス",
+      "データ分析/基盤",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Glue",
+      "AWS Lambda",
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon ECS",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/情報を集め、判断し、行動する時代へ： データ基盤・AI エージェント・エッジ AI で 変わる製造現場.pdf",
+    "path": "sessions/AWSセッション/情報を集め、判断し、行動する時代へ_データ基盤・AI_エージェント・エッジ_AI_で_変わる製造現場.md",
+    "chars": 12082,
+    "session_id": "IND327"
+  },
+  {
+    "title": "技術的負債を競争⼒に変える︓ マイグレーション＆モダナイゼーション",
+    "category": "AWSセッション",
+    "pages": 48,
+    "topics": [
+      "マイグレーション/モダナイゼーション"
+    ],
+    "services": [
+      "AWS DMS",
+      "AgentCore",
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon EC2",
+      "Amazon ECS",
+      "Amazon Q",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/技術的負債を競争⼒に変える︓ マイグレーション＆モダナイゼーション.pdf",
+    "path": "sessions/AWSセッション/技術的負債を競争力に変える_マイグレーション&モダナイゼーション.md",
+    "chars": 7868,
+    "session_id": "MAM201"
+  },
+  {
+    "title": "明日から始める、 コーディングエージェント時代の フルスタック開発",
+    "category": "AWSセッション",
+    "pages": 41,
+    "topics": [
+      "AI駆動開発"
+    ],
+    "services": [
+      "AWS CDK",
+      "AWS CloudFormation",
+      "AWS Lambda",
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon DynamoDB",
+      "Amazon S3",
+      "Amazon SQS",
+      "Kiro",
+      "Strands Agents"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/明日から始める、 コーディングエージェント時代の フルスタック開発.pdf",
+    "path": "sessions/AWSセッション/明日から始める、_コーディングエージェント時代の_フルスタック開発.md",
+    "chars": 4675,
+    "session_id": "DVT359"
+  },
+  {
+    "title": "本番展開を見据えて： エージェンティックAI に対する実践的アプローチ",
+    "category": "AWSセッション",
+    "pages": 61,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon Q",
+      "Claude",
+      "Kiro",
+      "MCP",
+      "Strands Agents"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/本番展開を見据えて： エージェンティックAI に対する実践的アプローチ.pdf",
+    "path": "sessions/AWSセッション/本番展開を見据えて_エージェンティックAI_に対する実践的アプローチ.md",
+    "chars": 10500,
+    "session_id": "AIM201"
+  },
+  {
+    "title": "本番運⽤を⾒据えた AI エージェント - Amazon Bedrock AgentCore を活⽤したベストプラクティス",
+    "category": "AWSセッション",
+    "pages": 48,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/本番運⽤を⾒据えた AI エージェント - Amazon Bedrock AgentCore を活⽤したベストプラクティス.pdf",
+    "path": "sessions/AWSセッション/本番運用を見据えた_AI_エージェント_-_Amazon_Bedrock_AgentCore_を活用したベストプラクティス.md",
+    "chars": 8692,
+    "session_id": "AIM342"
+  },
+  {
+    "title": "生成 AI で「売れる製品」を作る — POC 止まりを突破する 6 つのプロダクトデザイン戦略",
+    "category": "AWSセッション",
+    "pages": 41,
+    "topics": [
+      "アーキテクチャ/サーバーレス",
+      "機械学習/MLOps",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon Bedrock",
+      "Amazon SageMaker",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/生成 AI で「売れる製品」を作る — POC 止まりを突破する 6 つのプロダクトデザイン戦略.pdf",
+    "path": "sessions/AWSセッション/生成_AI_で「売れる製品」を作る_—_POC_止まりを突破する_6_つのプロダクトデザイン戦略.md",
+    "chars": 7051,
+    "session_id": "AIM343"
+  },
+  {
+    "title": "⽣成 AI モデルを選ぶ技術 - モデル選択のフレームワーク -",
+    "category": "AWSセッション",
+    "pages": 49,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon SageMaker",
+      "Claude"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/⽣成 AI モデルを選ぶ技術 - モデル選択のフレームワーク -.pdf",
+    "path": "sessions/AWSセッション/生成_AI_モデルを選ぶ技術_-_モデル選択のフレームワーク_-.md",
+    "chars": 12550,
+    "session_id": "AIM311"
+  },
+  {
+    "title": "社内 AI エージェント展開の勘所 - AI の能⼒を組織で最⼤限引き出すための課題と打ち⼿",
+    "category": "AWSセッション",
+    "pages": 49,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Lambda",
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon OpenSearch",
+      "Amazon Q",
+      "Amazon S3",
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/社内 AI エージェント展開の勘所 - AI の能⼒を組織で最⼤限引き出すための課題と打ち⼿.pdf",
+    "path": "sessions/AWSセッション/社内_AI_エージェント展開の勘所_-_AI_の能力を組織で最大限引き出すための課題と打ち手.md",
+    "chars": 9302,
+    "session_id": "AIM329"
+  },
+  {
+    "title": "経済安保が求めるデジタル主権 ― 重要インフラの AI とデータを AWS で守る",
+    "category": "AWSセッション",
+    "pages": 47,
+    "topics": [
+      "アーキテクチャ/サーバーレス",
+      "セキュリティ",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Control Tower",
+      "Amazon Bedrock",
+      "Amazon EC2"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/AWSセッション/経済安保が求めるデジタル主権 ― 重要インフラの AI とデータを AWS で守る.pdf",
+    "path": "sessions/AWSセッション/経済安保が求めるデジタル主権_―_重要インフラの_AI_とデータを_AWS_で守る.md",
+    "chars": 11305,
+    "session_id": "SEC230"
+  },
+  {
+    "title": "165 日から 30 分へ：JAL デジタルが敷いた 「開発者専用の滑走路」 －認知負荷をゼロにする Platform Engineering 実践記－",
+    "category": "パートナーセッション",
+    "sponsor": "Red Hat",
+    "pages": 20,
+    "topics": [
+      "組織/内製化"
+    ],
+    "services": [
+      "AWS Lambda",
+      "Amazon API Gateway",
+      "Amazon DynamoDB",
+      "Amazon EC2",
+      "Amazon ECS",
+      "Amazon EventBridge"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/165 日から 30 分へ：JAL デジタルが敷いた 「開発者専用の滑走路」 －認知負荷をゼロにする Platform Engineering 実践記－ (sponsored by Red Hat).pdf",
+    "path": "sessions/パートナーセッション/165_日から_30_分へJAL_デジタルが敷いた_「開発者専用の滑走路」_-認知負荷をゼロにする_Platform_Engineering_実践記-.md",
+    "chars": 4169,
+    "session_id": "PRT141"
+  },
+  {
+    "title": "AI で加速するデジタルレジリエンス - Splunk が導くデータ活用の未来",
+    "category": "パートナーセッション",
+    "sponsor": "Splunk",
+    "pages": 33,
+    "topics": [
+      "データ分析/基盤"
+    ],
+    "services": [
+      "AWS Security Hub",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon EventBridge",
+      "Amazon GuardDuty",
+      "Amazon S3",
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/AI で加速するデジタルレジリエンス - Splunk が導くデータ活用の未来 (sponsored by Splunk).pdf",
+    "path": "sessions/パートナーセッション/AI_で加速するデジタルレジリエンス_-_Splunk_が導くデータ活用の未来.md",
+    "chars": 13626,
+    "session_id": "PRT122"
+  },
+  {
+    "title": "AI 分析基盤が拓く健康 DX と 健康経営・企業基幹業務への展開",
+    "category": "パートナーセッション",
+    "sponsor": "Hitachi Systems",
+    "pages": 28,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS CloudTrail",
+      "AWS Glue",
+      "AWS IAM",
+      "Amazon Athena",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon S3",
+      "Claude"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/AI 分析基盤が拓く健康 DX と 健康経営・企業基幹業務への展開 (sponsored by Hitachi Systems.pdf",
+    "path": "sessions/パートナーセッション/AI_分析基盤が拓く健康_DX_と_健康経営・企業基幹業務への展開.md",
+    "chars": 7048,
+    "session_id": "PRT126"
+  },
+  {
+    "title": "AI 時代のIT 基盤を支えるキンドリルの実践知 －Agentic AI と設計・運用判断の高度化－",
+    "category": "パートナーセッション",
+    "sponsor": "Kyndryl",
+    "pages": 27,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS CDK",
+      "AWS CloudFormation",
+      "AWS IAM",
+      "AWS Lambda",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon DynamoDB",
+      "Amazon Q",
+      "Amazon Q Developer",
+      "Amazon S3",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/AI 時代のIT 基盤を支えるキンドリルの実践知 －Agentic AI と設計・運用判断の高度化－ (sponsored by Kyndryl).pdf",
+    "path": "sessions/パートナーセッション/AI_時代のIT_基盤を支えるキンドリルの実践知_-Agentic_AI_と設計・運用判断の高度化-.md",
+    "chars": 8465,
+    "session_id": "PRT238"
+  },
+  {
+    "title": "AI 時代のサイバー脅威最前線： 実践的セキュリティ対策",
+    "category": "パートナーセッション",
+    "sponsor": "CrowdStrike",
+    "pages": 36,
+    "topics": [
+      "セキュリティ"
+    ],
+    "services": [
+      "Amazon Bedrock",
+      "Amazon SageMaker"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/AI 時代のサイバー脅威最前線： 実践的セキュリティ対策 (sponsored by CrowdStrike).pdf",
+    "path": "sessions/パートナーセッション/AI_時代のサイバー脅威最前線_実践的セキュリティ対策.md",
+    "chars": 11978,
+    "session_id": "PRT239"
+  },
+  {
+    "title": "AI 活用のリスクと対策： 検出・評価・保護で実現する AI セキュリティ",
+    "category": "パートナーセッション",
+    "sponsor": "Palo Alto Networks",
+    "pages": 29,
+    "topics": [
+      "セキュリティ",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon Bedrock"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/AI 活用のリスクと対策： 検出・評価・保護で実現する AI セキュリティ (sponsored by Palo Alto Networks).pdf",
+    "path": "sessions/パートナーセッション/AI_活用のリスクと対策_検出・評価・保護で実現する_AI_セキュリティ.md",
+    "chars": 7956,
+    "session_id": "PRT207"
+  },
+  {
+    "title": "AI 駆動開発 × セキュアな医療インフラ －技術が叶える、データの民主化－",
+    "category": "パートナーセッション",
+    "sponsor": "KDDI iret",
+    "pages": 41,
+    "topics": [
+      "AI駆動開発"
+    ],
+    "services": [
+      "AWS DevOps Agent",
+      "AWS Lambda",
+      "AWS WAF",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon DynamoDB",
+      "Amazon EventBridge",
+      "Amazon S3",
+      "Amazon SQS",
+      "Claude"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/AI 駆動開発 × セキュアな医療インフラ －技術が叶える、データの民主化－ (sponsored by KDDI iret).pdf",
+    "path": "sessions/パートナーセッション/AI_駆動開発_×_セキュアな医療インフラ_-技術が叶える、データの民主化-.md",
+    "chars": 5822,
+    "session_id": "PRT213"
+  },
+  {
+    "title": "Amazon Bedrock で挑む AI 監修による 日本発 IP 事業のスケール",
+    "category": "パートナーセッション",
+    "sponsor": "Accenture",
+    "pages": 16,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Fargate",
+      "AWS Lambda",
+      "AWS Transit Gateway",
+      "Amazon API Gateway",
+      "Amazon Bedrock",
+      "Amazon EKS",
+      "Amazon S3",
+      "Claude"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/Amazon Bedrock で挑む AI 監修による 日本発 IP 事業のスケール (sponsored by Accenture).pdf",
+    "path": "sessions/パートナーセッション/Amazon_Bedrock_で挑む_AI_監修による_日本発_IP_事業のスケール.md",
+    "chars": 4726,
+    "session_id": "PRT225"
+  },
+  {
+    "title": "DX 担当者が登壇！「とりあえずRAG 」の先へ －Data & AI の実践知－",
+    "category": "パートナーセッション",
+    "sponsor": "Sky",
+    "pages": 34,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon Bedrock",
+      "Amazon EKS",
+      "Amazon OpenSearch",
+      "Strands Agents"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/DX 担当者が登壇！「とりあえずRAG 」の先へ －Data & AI の実践知－ (sponsored by Sky).pdf",
+    "path": "sessions/パートナーセッション/DX_担当者が登壇!「とりあえずRAG_」の先へ_-Data_&_AI_の実践知-.md",
+    "chars": 464,
+    "session_id": "PRT232"
+  },
+  {
+    "title": "PoC を乗り越える AI エージェント実装戦略 －業務特化型ユースケースの選定と AI 基盤統合への ロードマップ－",
+    "category": "パートナーセッション",
+    "sponsor": "TIS",
+    "pages": 46,
+    "topics": [
+      "データ分析/基盤",
+      "機械学習/MLOps",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/PoC を乗り越える AI エージェント実装戦略 －業務特化型ユースケースの選定と AI 基盤統合への ロードマップ－ (sponsored by TIS).pdf",
+    "path": "sessions/パートナーセッション/PoC_を乗り越える_AI_エージェント実装戦略_-業務特化型ユースケースの選定と_AI_基盤統合への_ロードマップ-.md",
+    "chars": 18535,
+    "session_id": "PRT340"
+  },
+  {
+    "title": "SaaS with AI ahead. AWS のAI を活用する AI Security Platform の時代へ",
+    "category": "パートナーセッション",
+    "sponsor": "Zscaler",
+    "pages": 38,
+    "topics": [
+      "コスト最適化/FinOps",
+      "セキュリティ",
+      "マイグレーション/モダナイゼーション"
+    ],
+    "services": [
+      "AWS CloudTrail",
+      "AWS WAF",
+      "Amazon Bedrock",
+      "Amazon CloudFront",
+      "Amazon CloudWatch",
+      "Amazon Q",
+      "Amazon S3",
+      "Amazon VPC",
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/SaaS with AI ahead. AWS のAI を活用する AI Security Platform の時代へ (sponsored by Zscaler).pdf",
+    "path": "sessions/パートナーセッション/SaaS_with_AI_ahead._AWS_のAI_を活用する_AI_Security_Platform_の時代へ.md",
+    "chars": 12001,
+    "session_id": "PRT234"
+  },
+  {
+    "title": "“オープンモデルだからできる！” を AWS と NVIDIA で体感：NVIDIA Nemotron と NemoClaw でつくる 企業の安全な AI エージェント",
+    "category": "パートナーセッション",
+    "sponsor": "NVIDIA",
+    "pages": 25,
+    "topics": [
+      "機械学習/MLOps",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon Bedrock",
+      "Amazon EKS",
+      "Claude",
+      "Kiro"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/“オープンモデルだからできる！” を AWS と NVIDIA で体感：NVIDIA Nemotron と NemoClaw でつくる 企業の安全な AI エージェント (sponsored by NVIDIA).pdf",
+    "path": "sessions/パートナーセッション/“オープンモデルだからできる!”_を_AWS_と_NVIDIA_で体感NVIDIA_Nemotron_と_NemoClaw_でつくる_企業の安全な_AI_エージェント.md",
+    "chars": 6380,
+    "session_id": "RPT114"
+  },
+  {
+    "title": "【デモで実演】新時代に迫る脅威！ －生成 AI への脅威事例と AI Security について－",
+    "category": "パートナーセッション",
+    "sponsor": "Trend Micro",
+    "pages": 43,
+    "topics": [
+      "セキュリティ",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS CloudTrail",
+      "AWS Direct Connect",
+      "AWS Outposts",
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon DynamoDB",
+      "Amazon EC2",
+      "Amazon ECS",
+      "Amazon EKS",
+      "Amazon RDS",
+      "Amazon S3",
+      "Amazon SQS",
+      "Amazon VPC",
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/【デモで実演】新時代に迫る脅威！ －生成 AI への脅威事例と AI Security について－ (sponsored by Trend Micro).pdf",
+    "path": "sessions/パートナーセッション/【デモで実演】新時代に迫る脅威!_-生成_AI_への脅威事例と_AI_Security_について-.md",
+    "chars": 9198,
+    "session_id": "PRT220"
+  },
+  {
+    "title": "【実践】事例に学ぶ Amazon Bedrock での Claude 活用術 －データ・実装・セキュリティ－",
+    "category": "パートナーセッション",
+    "sponsor": "Serverworks",
+    "pages": 51,
+    "topics": [
+      "セキュリティ",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS IAM",
+      "AWS Organizations",
+      "AWS Step Functions",
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon Connect",
+      "Amazon EventBridge",
+      "Amazon Nova",
+      "Amazon Q",
+      "Amazon Redshift",
+      "Amazon S3",
+      "Amazon SageMaker",
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/【実践】事例に学ぶ Amazon Bedrock での Claude 活用術 －データ・実装・セキュリティ－ (sponsored by Serverworks).pdf",
+    "path": "sessions/パートナーセッション/【実践】事例に学ぶ_Amazon_Bedrock_での_Claude_活用術_-データ・実装・セキュリティ-.md",
+    "chars": 13188,
+    "session_id": "PRT231"
+  },
+  {
+    "title": "いよいよ本格業務活用へ －NRI が示すエンタープライズ生成 AI 実践基盤－",
+    "category": "パートナーセッション",
+    "sponsor": "NRI",
+    "pages": 26,
+    "topics": [
+      "セキュリティ",
+      "機械学習/MLOps",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Lambda",
+      "AWS WAF",
+      "AgentCore",
+      "Amazon API Gateway",
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon CloudFront",
+      "Claude",
+      "Inferentia",
+      "MCP",
+      "Strands Agents",
+      "Trainium"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/いよいよ本格業務活用へ －NRI が示すエンタープライズ生成 AI 実践基盤－ (sponsored by NRI).pdf",
+    "path": "sessions/パートナーセッション/いよいよ本格業務活用へ_-NRI_が示すエンタープライズ生成_AI_実践基盤-.md",
+    "chars": 9852,
+    "session_id": "PRT203"
+  },
+  {
+    "title": "なぜあなたの運用は AI で楽にならないのか",
+    "category": "パートナーセッション",
+    "sponsor": "PagerDuty",
+    "pages": 47,
+    "topics": [
+      "運用/SRE"
+    ],
+    "services": [
+      "Amazon CloudWatch"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/なぜあなたの運用は AI で楽にならないのか (sponsored by PagerDuty).pdf",
+    "path": "sessions/パートナーセッション/なぜあなたの運用は_AI_で楽にならないのか.md",
+    "chars": 10125,
+    "session_id": "PRT211"
+  },
+  {
+    "title": "まだ人力？！ 生成 AI を使った クラウド運用作業効率化を始めよう！ 生成 AIを使ってクラウド・ガバメントクラウドの 運用を楽にしませんか？",
+    "category": "パートナーセッション",
+    "sponsor": "NEC",
+    "pages": 29,
+    "topics": [
+      "セキュリティ",
+      "生成AI/エージェント",
+      "運用/SRE"
+    ],
+    "services": [
+      "AWS Direct Connect",
+      "AWS Lambda",
+      "AWS Security Hub",
+      "Amazon Bedrock",
+      "Amazon DynamoDB",
+      "Amazon S3",
+      "Amazon SNS",
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/まだ人力？！ 生成 AI を使った クラウド運用作業効率化を始めよう！ 生成 AIを使ってクラウド・ガバメントクラウドの 運用を楽にしませんか？ (sponsored by NEC).pdf",
+    "path": "sessions/パートナーセッション/まだ人力!_生成_AI_を使った_クラウド運用作業効率化を始めよう!_生成_AIを使ってクラウド・ガバメントクラウドの_運用を楽にしませんか.md",
+    "chars": 8805,
+    "session_id": "PRT215"
+  },
+  {
+    "title": "エンタープライズ AI の最適解： Amazon Bedrock での Claude を Boomi で加速させる、 安全でスケーラブルな AI 活用基盤",
+    "category": "パートナーセッション",
+    "sponsor": "Boomi",
+    "pages": 20,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon Bedrock",
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/エンタープライズ AI の最適解： Amazon Bedrock での Claude を Boomi で加速させる、 安全でスケーラブルな AI 活用基盤 (sponsored by Boomi).pdf",
+    "path": "sessions/パートナーセッション/エンタープライズ_AI_の最適解_Amazon_Bedrock_での_Claude_を_Boomi_で加速させる、_安全でスケーラブルな_AI_活用基盤.md",
+    "chars": 6420,
+    "session_id": "PRT224"
+  },
+  {
+    "title": "クラウドと AI で創る製造業の未来 －コニカミノルタ × ＦＰＴの挑戦－",
+    "category": "パートナーセッション",
+    "sponsor": "FPT",
+    "pages": 50,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Glue",
+      "AWS Lambda",
+      "AWS Step Functions",
+      "Amazon Athena",
+      "Amazon Bedrock",
+      "Amazon Kinesis",
+      "Amazon OpenSearch",
+      "Amazon Q",
+      "Amazon Redshift",
+      "Amazon S3",
+      "Amazon SageMaker",
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/クラウドと AI で創る製造業の未来 －コニカミノルタ × ＦＰＴの挑戦－ (sponsored by FPT).pdf",
+    "path": "sessions/パートナーセッション/クラウドと_AI_で創る製造業の未来_-コニカミノルタ_×_FPTの挑戦-.md",
+    "chars": 16758,
+    "session_id": "PRT128"
+  },
+  {
+    "title": "サービスを止めずに実現する AWS セキュリティ最適化 －後から「セキュリティ バイ デザイン」を実現するための 段階的アプローチ－",
+    "category": "パートナーセッション",
+    "sponsor": "HEARTBEATS",
+    "pages": 52,
+    "topics": [
+      "セキュリティ"
+    ],
+    "services": [
+      "AWS CloudTrail",
+      "AWS IAM",
+      "AWS Lambda",
+      "AWS Organizations",
+      "AWS Security Hub",
+      "Amazon Bedrock",
+      "Amazon EC2",
+      "Amazon ECS",
+      "Amazon EKS",
+      "Amazon EventBridge",
+      "Amazon GuardDuty",
+      "Amazon Inspector",
+      "Amazon RDS",
+      "Amazon S3"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/サービスを止めずに実現する AWS セキュリティ最適化 －後から「セキュリティ バイ デザイン」を実現するための 段階的アプローチ－ (sponsored by HEARTBEATS).pdf",
+    "path": "sessions/パートナーセッション/サービスを止めずに実現する_AWS_セキュリティ最適化_-後から「セキュリティ_バイ_デザイン」を実現するための_段階的アプローチ-.md",
+    "chars": 12601,
+    "session_id": "PRT130"
+  },
+  {
+    "title": "セキュアクラウド環境での 音声基盤を提供する Notta －次なる業務効率化の進化－",
+    "category": "パートナーセッション",
+    "sponsor": "Notta",
+    "pages": 27,
+    "topics": [
+      "アーキテクチャ/サーバーレス",
+      "セキュリティ",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Direct Connect",
+      "AWS Lambda",
+      "AWS Step Functions",
+      "AgentCore",
+      "Amazon API Gateway",
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon DynamoDB",
+      "Amazon S3",
+      "Amazon VPC",
+      "Claude"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/セキュアクラウド環境での 音声基盤を提供する Notta －次なる業務効率化の進化－ (sponsored by Notta).pdf",
+    "path": "sessions/パートナーセッション/セキュアクラウド環境での_音声基盤を提供する_Notta_-次なる業務効率化の進化-.md",
+    "chars": 7334,
+    "session_id": "PRT217"
+  },
+  {
+    "title": "ソニーのスポーツ領域への新たな挑戦",
+    "category": "パートナーセッション",
+    "pages": 56,
+    "topics": [
+      "AI駆動開発",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS DevOps Agent",
+      "AWS Lambda",
+      "Amazon Bedrock",
+      "Claude",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/ソニーのスポーツ領域への新たな挑戦.pdf",
+    "path": "sessions/パートナーセッション/ソニーのスポーツ領域への新たな挑戦.md",
+    "chars": 10306,
+    "session_id": "PRT104"
+  },
+  {
+    "title": "パナソニック様における クラウドプラットフォームでの FinOps 推進事例のご紹介",
+    "category": "パートナーセッション",
+    "sponsor": "Apptio",
+    "pages": 46,
+    "topics": [
+      "コスト最適化/FinOps",
+      "セキュリティ"
+    ],
+    "services": [
+      "Amazon EC2"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/パナソニック様における クラウドプラットフォームでの FinOps 推進事例のご紹介 (sponsored by Apptio).pdf",
+    "path": "sessions/パートナーセッション/パナソニック様における_クラウドプラットフォームでの_FinOps_推進事例のご紹介.md",
+    "chars": 16519,
+    "session_id": "PRT123"
+  },
+  {
+    "title": "パルグループのインシデント対応 －サイバー攻撃という最大の危機を AWS 移行で乗り越えた 経営判断－",
+    "category": "パートナーセッション",
+    "sponsor": "TOKAI Communications",
+    "pages": 19,
+    "topics": [
+      "セキュリティ",
+      "マイグレーション/モダナイゼーション",
+      "運用/SRE"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/パルグループのインシデント対応 －サイバー攻撃という最大の危機を AWS 移行で乗り越えた 経営判断－ (sponsored by TOKAI Communications).pdf",
+    "path": "sessions/パートナーセッション/パルグループのインシデント対応_-サイバー攻撃という最大の危機を_AWS_移行で乗り越えた_経営判断-.md",
+    "chars": 3338,
+    "session_id": "PRT210"
+  },
+  {
+    "title": "三井住友トラスト・アセットマネジメントが Snowflake と実現する、AI エージェントを フル活用した業務改革",
+    "category": "パートナーセッション",
+    "sponsor": "Snowflake",
+    "pages": 34,
+    "topics": [
+      "データ分析/基盤",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Fargate",
+      "AWS Glue",
+      "AWS Lambda",
+      "Amazon Bedrock",
+      "Amazon DynamoDB",
+      "Amazon ECS",
+      "Amazon EKS",
+      "Amazon Q",
+      "Amazon RDS",
+      "Amazon S3",
+      "Amazon SageMaker",
+      "Claude"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/三井住友トラスト・アセットマネジメントが Snowflake と実現する、AI エージェントを フル活用した業務改革 (sponsored by Snowflake).pdf",
+    "path": "sessions/パートナーセッション/三井住友トラスト・アセットマネジメントが_Snowflake_と実現する、AI_エージェントを_フル活用した業務改革.md",
+    "chars": 9329,
+    "session_id": "PRT206"
+  },
+  {
+    "title": "三井住友信託銀行に学ぶ FinOps 「実現できるコスト最適化」",
+    "category": "パートナーセッション",
+    "sponsor": "SCSK",
+    "pages": 36,
+    "topics": [
+      "コスト最適化/FinOps"
+    ],
+    "services": [
+      "AWS Lambda",
+      "AWS Systems Manager",
+      "Amazon EC2",
+      "Amazon EventBridge",
+      "Amazon Q",
+      "Amazon RDS",
+      "Claude"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/三井住友信託銀行に学ぶ FinOps 「実現できるコスト最適化」 (sponsored by SCSK).pdf",
+    "path": "sessions/パートナーセッション/三井住友信託銀行に学ぶ_FinOps_「実現できるコスト最適化」.md",
+    "chars": 10460,
+    "session_id": "PRT202"
+  },
+  {
+    "title": "住信SBIネット銀行のビジネス成長を支える 勘定系アーキテクチャー刷新",
+    "category": "パートナーセッション",
+    "sponsor": "IBM",
+    "pages": 28,
+    "topics": [
+      "アーキテクチャ/サーバーレス",
+      "マイグレーション/モダナイゼーション"
+    ],
+    "services": [
+      "Amazon EC2",
+      "Amazon Q",
+      "Amazon Q Developer",
+      "Amazon RDS",
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/住信SBIネット銀行のビジネス成長を支える 勘定系アーキテクチャー刷新 (sponsored by IBM).pdf",
+    "path": "sessions/パートナーセッション/住信SBIネット銀行のビジネス成長を支える_勘定系アーキテクチャー刷新.md",
+    "chars": 9411,
+    "session_id": "PRT119"
+  },
+  {
+    "title": "国民皆保険を支える FinOps 2.0 －国民健康保険中央会が実践するデータ × AI による コスト最適化戦略－",
+    "category": "パートナーセッション",
+    "sponsor": "NHN Techorus",
+    "pages": 58,
+    "topics": [
+      "コスト最適化/FinOps",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Claude",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/国民皆保険を支える FinOps 2.0 －国民健康保険中央会が実践するデータ × AI による コスト最適化戦略－ (sponsored by NHN Techorus).pdf",
+    "path": "sessions/パートナーセッション/国民皆保険を支える_FinOps_2.0_-国民健康保険中央会が実践するデータ_×_AI_による_コスト最適化戦略-.md",
+    "chars": 8670,
+    "session_id": "PRT221"
+  },
+  {
+    "title": "好きや経験が資産になる AI × オンチェーンが実現する未来",
+    "category": "パートナーセッション",
+    "sponsor": "Simplex",
+    "pages": 30,
+    "topics": [
+      "その他"
+    ],
+    "services": [
+      "AgentCore",
+      "Amazon Bedrock",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/好きや経験が資産になる AI × オンチェーンが実現する未来 (sponsored by Simplex).pdf",
+    "path": "sessions/パートナーセッション/好きや経験が資産になる_AI_×_オンチェーンが実現する未来.md",
+    "chars": 6184,
+    "session_id": "PRT129"
+  },
+  {
+    "title": "守りながら攻める －塩野義製薬流 AI 活用とガバナンスの両立術－",
+    "category": "パートナーセッション",
+    "sponsor": "Classmethod",
+    "pages": 28,
+    "topics": [
+      "セキュリティ"
+    ],
+    "services": [
+      "AWS Organizations",
+      "Amazon Bedrock",
+      "Claude"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/守りながら攻める －塩野義製薬流 AI 活用とガバナンスの両立術－ (sponsored by Classmethod).pdf",
+    "path": "sessions/パートナーセッション/守りながら攻める_-塩野義製薬流_AI_活用とガバナンスの両立術-.md",
+    "chars": 6918,
+    "session_id": "PRT108"
+  },
+  {
+    "title": "実用的なワーク AI： エンタープライズコンテキストを エージェントの優位性へと変える",
+    "category": "パートナーセッション",
+    "sponsor": "Glean",
+    "pages": 27,
+    "topics": [
+      "セキュリティ"
+    ],
+    "services": [
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/実用的なワーク AI： エンタープライズコンテキストを エージェントの優位性へと変える (sponsored by Glean).pdf",
+    "path": "sessions/パートナーセッション/実用的なワーク_AI_エンタープライズコンテキストを_エージェントの優位性へと変える.md",
+    "chars": 8438,
+    "session_id": "PRT143"
+  },
+  {
+    "title": "対話が業務を動かす時代へ －会話を起点にした業務再設計と AI 活用－",
+    "category": "パートナーセッション",
+    "sponsor": "FUJI SOFT",
+    "pages": 27,
+    "topics": [
+      "データ分析/基盤",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Lambda",
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon DynamoDB",
+      "Amazon S3",
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/対話が業務を動かす時代へ －会話を起点にした業務再設計と AI 活用－ (sponsored by FUJI SOFT).pdf",
+    "path": "sessions/パートナーセッション/対話が業務を動かす時代へ_-会話を起点にした業務再設計と_AI_活用-.md",
+    "chars": 6123,
+    "session_id": "PRT218"
+  },
+  {
+    "title": "既存 DB の限界を突破、秒間 10 億件を処理し、 AI と共創するデータ基盤の新標準",
+    "category": "パートナーセッション",
+    "sponsor": "ClickHouse",
+    "pages": 30,
+    "topics": [
+      "データ分析/基盤"
+    ],
+    "services": [
+      "Amazon Aurora",
+      "Amazon EC2",
+      "Amazon EKS",
+      "Amazon Kinesis",
+      "Amazon RDS",
+      "Amazon S3",
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/既存 DB の限界を突破、秒間 10 億件を処理し、 AI と共創するデータ基盤の新標準 (sponsored by ClickHouse).pdf",
+    "path": "sessions/パートナーセッション/既存_DB_の限界を突破、秒間_10_億件を処理し、_AI_と共創するデータ基盤の新標準.md",
+    "chars": 9874,
+    "session_id": "PRT212"
+  },
+  {
+    "title": "日産自動車 × デロイト トーマツ： Kiro CLI によるコネクティッドカーサービス 基盤開発の加速",
+    "category": "パートナーセッション",
+    "sponsor": "Deloitte",
+    "pages": 22,
+    "topics": [
+      "AI駆動開発",
+      "アーキテクチャ/サーバーレス"
+    ],
+    "services": [
+      "AWS CloudFormation",
+      "AWS Lambda",
+      "AWS Security Hub",
+      "AWS WAF",
+      "Amazon API Gateway",
+      "Amazon CloudWatch",
+      "Amazon DynamoDB",
+      "Amazon EC2",
+      "Amazon EventBridge",
+      "Amazon GuardDuty",
+      "Amazon Inspector",
+      "Amazon RDS",
+      "Amazon Route 53",
+      "Amazon S3",
+      "Amazon SNS",
+      "Amazon SQS",
+      "Kiro"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/日産自動車 × デロイト トーマツ： Kiro CLI によるコネクティッドカーサービス 基盤開発の加速 (sponsored by Deloitte).pdf",
+    "path": "sessions/パートナーセッション/日産自動車_×_デロイト_トーマツ_Kiro_CLI_によるコネクティッドカーサービス_基盤開発の加速.md",
+    "chars": 8967,
+    "session_id": "PRT205"
+  },
+  {
+    "title": "次の成長フェーズにおける最適資源配分と 次世代 CRM の実装 － AWS 基盤で実現するデータドリブンな顧客体験変革－",
+    "category": "パートナーセッション",
+    "sponsor": "TCS",
+    "pages": 22,
+    "topics": [
+      "コスト最適化/FinOps",
+      "データ分析/基盤"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/次の成長フェーズにおける最適資源配分と 次世代 CRM の実装 － AWS 基盤で実現するデータドリブンな顧客体験変革－ (sponsored by TCS).pdf",
+    "path": "sessions/パートナーセッション/次の成長フェーズにおける最適資源配分と_次世代_CRM_の実装_-_AWS_基盤で実現するデータドリブンな顧客体験変革-.md",
+    "chars": 3961,
+    "session_id": "PRT233"
+  },
+  {
+    "title": "生成AIブームのその先へ",
+    "category": "パートナーセッション",
+    "pages": 32,
+    "topics": [
+      "マイグレーション/モダナイゼーション",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS CloudFormation",
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon CloudFront",
+      "Amazon DynamoDB",
+      "Amazon EC2",
+      "Amazon ECS",
+      "Amazon OpenSearch"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/生成AIブームのその先へ.pdf",
+    "path": "sessions/パートナーセッション/生成AIブームのその先へ.md",
+    "chars": 13298,
+    "session_id": "PRT237"
+  },
+  {
+    "title": "生成 AI × MCP で切り拓く次世代 SRE！ 自律型運用への挑戦と開発者体験の進化",
+    "category": "パートナーセッション",
+    "sponsor": "New Relic",
+    "pages": 56,
+    "topics": [
+      "生成AI/エージェント",
+      "運用/SRE"
+    ],
+    "services": [
+      "AWS DevOps Agent",
+      "AgentCore",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/生成 AI × MCP で切り拓く次世代 SRE！ 自律型運用への挑戦と開発者体験の進化 (sponsored by New Relic).pdf",
+    "path": "sessions/パートナーセッション/生成_AI_×_MCP_で切り拓く次世代_SRE!_自律型運用への挑戦と開発者体験の進化.md",
+    "chars": 13044,
+    "session_id": "PRT216"
+  },
+  {
+    "title": "生成 AI 時代の開発を組織全体に広げる －スケールするために何が必要かを考える－",
+    "category": "パートナーセッション",
+    "sponsor": "BeeX",
+    "pages": 64,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon Bedrock",
+      "Amazon EC2",
+      "Claude"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/生成 AI 時代の開発を組織全体に広げる －スケールするために何が必要かを考える－ (sponsored by BeeX).pdf",
+    "path": "sessions/パートナーセッション/生成_AI_時代の開発を組織全体に広げる_-スケールするために何が必要かを考える-.md",
+    "chars": 6168,
+    "session_id": "PRT244"
+  },
+  {
+    "title": "自律型 AI エージェントが再定義する企業活動",
+    "category": "パートナーセッション",
+    "sponsor": "NTT DATA",
+    "pages": 36,
+    "topics": [
+      "データ分析/基盤",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS CloudTrail",
+      "AWS Config",
+      "AWS IAM",
+      "AgentCore",
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon ECS",
+      "Amazon Neptune",
+      "Amazon Nova",
+      "Amazon OpenSearch",
+      "Amazon Redshift",
+      "Amazon S3",
+      "Amazon SageMaker",
+      "Claude",
+      "Kiro",
+      "MCP",
+      "Strands Agents"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/パートナーセッション/自律型 AI エージェントが再定義する企業活動 (sponsored by NTT DATA).pdf",
+    "path": "sessions/パートナーセッション/自律型_AI_エージェントが再定義する企業活動.md",
+    "chars": 14122,
+    "session_id": "PRT201"
+  },
+  {
+    "title": "－街に OS がある時代－ データを活用するスマートシティの今",
+    "category": "事例セッション",
+    "pages": 52,
+    "topics": [
+      "その他"
+    ],
+    "services": [
+      "AWS Glue",
+      "AWS Lambda",
+      "AWS WAF",
+      "Amazon API Gateway",
+      "Amazon Athena",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon EC2",
+      "Amazon ECS",
+      "Amazon ElastiCache",
+      "Amazon Route 53",
+      "Amazon S3",
+      "Amazon SQS"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/－街に OS がある時代－ データを活用するスマートシティの今.pdf",
+    "path": "sessions/事例セッション/-街に_OS_がある時代-_データを活用するスマートシティの今.md",
+    "chars": 12335,
+    "session_id": "ARC243"
+  },
+  {
+    "title": "5GC on AWS のサービス開始と Agentic AI による構築自動化",
+    "category": "事例セッション",
+    "pages": 49,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon EKS",
+      "Amazon RDS",
+      "Amazon Route 53",
+      "Amazon VPC",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/5GC on AWS のサービス開始と Agentic AI による構築自動化.pdf",
+    "path": "sessions/事例セッション/5GC_on_AWS_のサービス開始と_Agentic_AI_による構築自動化.md",
+    "chars": 12036,
+    "session_id": "IND242"
+  },
+  {
+    "title": "AI Agent が変える業界特化サービスの 業務と顧客体験",
+    "category": "事例セッション",
+    "pages": 50,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Lambda",
+      "AgentCore",
+      "Amazon API Gateway",
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon CloudFront",
+      "Amazon DynamoDB",
+      "Amazon S3",
+      "Amazon SQS"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/AI Agent が変える業界特化サービスの 業務と顧客体験.pdf",
+    "path": "sessions/事例セッション/AI_Agent_が変える業界特化サービスの_業務と顧客体験.md",
+    "chars": 12960,
+    "session_id": "AIM322"
+  },
+  {
+    "title": "AI に\"賭ける\"- LayerX の AI エージェント基盤と活用最前線",
+    "category": "事例セッション",
+    "pages": 54,
+    "topics": [
+      "セキュリティ",
+      "生成AI/エージェント",
+      "運用/SRE"
+    ],
+    "services": [
+      "AWS Fargate",
+      "AWS IAM",
+      "AWS Lambda",
+      "AWS Step Functions",
+      "AgentCore",
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon ECS",
+      "Amazon EFS",
+      "Amazon OpenSearch",
+      "Amazon S3",
+      "MCP",
+      "Valkey"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/AI に\"賭ける\"- LayerX の AI エージェント基盤と活用最前線.pdf",
+    "path": "sessions/事例セッション/AI_に賭ける-_LayerX_の_AI_エージェント基盤と活用最前線.md",
+    "chars": 11586,
+    "session_id": "AIM347"
+  },
+  {
+    "title": "AI を活用したスマート店舗 DX",
+    "category": "事例セッション",
+    "pages": 29,
+    "topics": [
+      "その他"
+    ],
+    "services": [
+      "AWS Fargate",
+      "AWS Lambda",
+      "Amazon API Gateway",
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon EC2",
+      "Amazon Kinesis",
+      "Amazon S3",
+      "Amazon SQS",
+      "Amazon SageMaker"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/AI を活用したスマート店舗 DX.pdf",
+    "path": "sessions/事例セッション/AI_を活用したスマート店舗_DX.md",
+    "chars": 8077,
+    "session_id": "AIM239"
+  },
+  {
+    "title": "AI エージェントで現場を変えた － 2 社の挑戦の瞬間",
+    "category": "事例セッション",
+    "pages": 36,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Lambda",
+      "Amazon Bedrock",
+      "Amazon EC2",
+      "Amazon Q",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/AI エージェントで現場を変えた － 2 社の挑戦の瞬間.pdf",
+    "path": "sessions/事例セッション/AI_エージェントで現場を変えた_-_2_社の挑戦の瞬間.md",
+    "chars": 11990,
+    "session_id": "AIM207"
+  },
+  {
+    "title": "AI エージェントで組織と製造現場を変える！ 三菱電機の挑戦！",
+    "category": "事例セッション",
+    "pages": 27,
+    "topics": [
+      "アーキテクチャ/サーバーレス",
+      "生成AI/エージェント",
+      "運用/SRE"
+    ],
+    "services": [
+      "AWS DevOps Agent",
+      "AWS Glue",
+      "AWS Lambda",
+      "AgentCore",
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon Q",
+      "Amazon S3",
+      "Kiro",
+      "MCP",
+      "Strands Agents"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/AI エージェントで組織と製造現場を変える！ 三菱電機の挑戦！.pdf",
+    "path": "sessions/事例セッション/AI_エージェントで組織と製造現場を変える!_三菱電機の挑戦!.md",
+    "chars": 8830,
+    "session_id": "AIM228"
+  },
+  {
+    "title": "AI 駆動開発 × 開発標準化で実現する エンタープライズ向けシステム開発の今と未来",
+    "category": "事例セッション",
+    "pages": 24,
+    "topics": [
+      "AI駆動開発"
+    ],
+    "services": [
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon S3",
+      "Claude",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/AI 駆動開発 × 開発標準化で実現する エンタープライズ向けシステム開発の今と未来.pdf",
+    "path": "sessions/事例セッション/AI_駆動開発_×_開発標準化で実現する_エンタープライズ向けシステム開発の今と未来.md",
+    "chars": 9752,
+    "session_id": "AIM310"
+  },
+  {
+    "title": "AI 駆動開発による開発者体験の変革",
+    "category": "事例セッション",
+    "pages": 34,
+    "topics": [
+      "AI駆動開発",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Lambda",
+      "AgentCore",
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon Q",
+      "Amazon Q Developer",
+      "Claude",
+      "Kiro",
+      "MCP",
+      "Strands Agents"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/AI 駆動開発による開発者体験の変革.pdf",
+    "path": "sessions/事例セッション/AI_駆動開発による開発者体験の変革.md",
+    "chars": 11805,
+    "session_id": "AIM213"
+  },
+  {
+    "title": "AWS Security Hub CSPM の成功・失敗体験",
+    "category": "事例セッション",
+    "pages": 31,
+    "topics": [
+      "セキュリティ"
+    ],
+    "services": [
+      "AWS Config",
+      "AWS Organizations",
+      "AWS Security Hub",
+      "AWS WAF",
+      "Amazon GuardDuty",
+      "Amazon S3"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/AWS Security Hub CSPM の成功・失敗体験.pdf",
+    "path": "sessions/事例セッション/AWS_Security_Hub_CSPM_の成功・失敗体験.md",
+    "chars": 6478,
+    "session_id": "DEV351"
+  },
+  {
+    "title": "AWS での日産の 次世代コネクテッドプラットフォーム開発",
+    "category": "事例セッション",
+    "pages": 29,
+    "topics": [
+      "アーキテクチャ/サーバーレス"
+    ],
+    "services": [
+      "AWS Glue",
+      "AWS Lambda",
+      "Amazon EKS",
+      "Amazon Kinesis",
+      "Amazon S3"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/AWS での日産の 次世代コネクテッドプラットフォーム開発.pdf",
+    "path": "sessions/事例セッション/AWS_での日産の_次世代コネクテッドプラットフォーム開発.md",
+    "chars": 5311,
+    "session_id": "ARC209"
+  },
+  {
+    "title": "Agentic RAG が切り開く 製造現場語理解の新たな可能性",
+    "category": "事例セッション",
+    "pages": 33,
+    "topics": [
+      "機械学習/MLOps",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Glue",
+      "AgentCore",
+      "Amazon Athena",
+      "Amazon Bedrock",
+      "Amazon CloudFront",
+      "Amazon DynamoDB",
+      "Amazon Nova",
+      "Amazon OpenSearch",
+      "Amazon Q",
+      "Amazon S3",
+      "Claude"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/Agentic RAG が切り開く 製造現場語理解の新たな可能性.pdf",
+    "path": "sessions/事例セッション/Agentic_RAG_が切り開く_製造現場語理解の新たな可能性.md",
+    "chars": 10259,
+    "session_id": "AIM336"
+  },
+  {
+    "title": "DX から AX へ：AI で加速する NEC の コーポレート・トランスフォーメーション ― AI ネイティブを目指した AI プラットフォームの活用 ―",
+    "category": "事例セッション",
+    "pages": 29,
+    "topics": [
+      "その他"
+    ],
+    "services": [
+      "Claude",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/DX から AX へ：AI で加速する NEC の コーポレート・トランスフォーメーション ― AI ネイティブを目指した AI プラットフォームの活用 ―.pdf",
+    "path": "sessions/事例セッション/DX_から_AX_へAI_で加速する_NEC_の_コーポレート・トランスフォーメーション_―_AI_ネイティブを目指した_AI_プラットフォームの活用_―.md",
+    "chars": 10722,
+    "session_id": "MAM206"
+  },
+  {
+    "title": "IaC コードを資産へ： AWS CDK 社内ライブラリと横断展開",
+    "category": "事例セッション",
+    "pages": 41,
+    "topics": [
+      "その他"
+    ],
+    "services": [
+      "AWS CDK",
+      "AWS CloudFormation",
+      "Amazon Athena",
+      "Amazon Aurora",
+      "Amazon CloudFront",
+      "Amazon S3"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/IaC コードを資産へ： AWS CDK 社内ライブラリと横断展開.pdf",
+    "path": "sessions/事例セッション/IaC_コードを資産へ_AWS_CDK_社内ライブラリと横断展開.md",
+    "chars": 6140,
+    "session_id": "DEV352"
+  },
+  {
+    "title": "LINEヤフーが挑む⼤規模 DWH 基盤の クラウド化の軌跡",
+    "category": "事例セッション",
+    "pages": 31,
+    "topics": [
+      "データ分析/基盤"
+    ],
+    "services": [
+      "AWS CloudFormation",
+      "AWS Direct Connect",
+      "AWS Transit Gateway",
+      "Amazon CloudWatch",
+      "Amazon Q",
+      "Amazon Redshift",
+      "Amazon S3",
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/LINEヤフーが挑む⼤規模 DWH 基盤の クラウド化の軌跡.pdf",
+    "path": "sessions/事例セッション/LINEヤフーが挑む大規模_DWH_基盤の_クラウド化の軌跡.md",
+    "chars": 8263,
+    "session_id": "ANT325"
+  },
+  {
+    "title": "MMO 戦略シミュレーションゲーム 『三國志 覇道』における Amazon Bedrock を 用いたチャット等リアルタイム翻訳事例",
+    "category": "事例セッション",
+    "pages": 46,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon EC2",
+      "Amazon Nova",
+      "Claude"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/MMO 戦略シミュレーションゲーム 『三國志 覇道』における Amazon Bedrock を 用いたチャット等リアルタイム翻訳事例.pdf",
+    "path": "sessions/事例セッション/MMO_戦略シミュレーションゲーム_『三國志_覇道』における_Amazon_Bedrock_を_用いたチャット等リアルタイム翻訳事例.md",
+    "chars": 10903,
+    "session_id": "AIM118"
+  },
+  {
+    "title": "SUBARU のエンジン設計現場発 －生成 AI ×設計業務改革－",
+    "category": "事例セッション",
+    "pages": 28,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Lambda",
+      "AgentCore",
+      "Claude",
+      "Strands Agents"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/SUBARU のエンジン設計現場発 －生成 AI ×設計業務改革－.pdf",
+    "path": "sessions/事例セッション/SUBARU_のエンジン設計現場発_-生成_AI_×設計業務改革-.md",
+    "chars": 6882,
+    "session_id": "DVT210"
+  },
+  {
+    "title": "TBSテレビ「ラヴィット！」大規模配信の 裏側と AWS サーバーレス設計",
+    "category": "事例セッション",
+    "pages": 28,
+    "topics": [
+      "アーキテクチャ/サーバーレス",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Lambda",
+      "AWS Step Functions",
+      "Amazon API Gateway",
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon CloudFront",
+      "Amazon ECS",
+      "Amazon ElastiCache",
+      "Amazon Nova",
+      "Amazon RDS",
+      "Amazon SQS",
+      "Claude",
+      "Valkey"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/TBSテレビ「ラヴィット！」大規模配信の 裏側と AWS サーバーレス設計.pdf",
+    "path": "sessions/事例セッション/TBSテレビ「ラヴィット!」大規模配信の_裏側と_AWS_サーバーレス設計.md",
+    "chars": 7989,
+    "session_id": "CDN227"
+  },
+  {
+    "title": "Umios（旧マルハニチロ）が 生成 AI で挑戦する需要予測 ー過剰在庫の削減・作業 4,200 時間削減への裏側ー",
+    "category": "事例セッション",
+    "pages": 31,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Lambda",
+      "AWS Step Functions",
+      "Amazon DynamoDB",
+      "Amazon Redshift",
+      "Amazon S3",
+      "Amazon SageMaker"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/Umios（旧マルハニチロ）が 生成 AI で挑戦する需要予測 ー過剰在庫の削減・作業 4,200 時間削減への裏側ー.pdf",
+    "path": "sessions/事例セッション/Umios(旧マルハニチロ)が_生成_AI_で挑戦する需要予測_ー過剰在庫の削減・作業_4,200_時間削減への裏側ー.md",
+    "chars": 6355,
+    "session_id": "AIM226"
+  },
+  {
+    "title": "freee の月 100 万件 AI-OCR ： 汎用 LLM の壁を越える独自 SLM の開発と運用",
+    "category": "事例セッション",
+    "pages": 33,
+    "topics": [
+      "機械学習/MLOps",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon EC2",
+      "Amazon EKS",
+      "Amazon SageMaker",
+      "Claude",
+      "SageMaker HyperPod"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/freee の月 100 万件 AI-OCR ： 汎用 LLM の壁を越える独自 SLM の開発と運用.pdf",
+    "path": "sessions/事例セッション/freee_の月_100_万件_AI-OCR_汎用_LLM_の壁を越える独自_SLM_の開発と運用.md",
+    "chars": 5392,
+    "session_id": "AIM312"
+  },
+  {
+    "title": "tsuzumi 2 - NTT 版 LLM の開発と AWS GPU サービスの活用",
+    "category": "事例セッション",
+    "pages": 35,
+    "topics": [
+      "機械学習/MLOps",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon SageMaker",
+      "SageMaker HyperPod"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/tsuzumi 2 - NTT 版 LLM の開発と AWS GPU サービスの活用.pdf",
+    "path": "sessions/事例セッション/tsuzumi_2_-_NTT_版_LLM_の開発と_AWS_GPU_サービスの活用.md",
+    "chars": 7684,
+    "session_id": "AIM238"
+  },
+  {
+    "title": "「 AI エージェントが店長になる日」 －小売 DX 次の 10 年－",
+    "category": "事例セッション",
+    "pages": 29,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Glue",
+      "AWS Lambda",
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon DynamoDB",
+      "Amazon EventBridge",
+      "Claude"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/「 AI エージェントが店長になる日」 －小売 DX 次の 10 年－.pdf",
+    "path": "sessions/事例セッション/「_AI_エージェントが店長になる日」_-小売_DX_次の_10_年-.md",
+    "chars": 11183,
+    "session_id": "IND237"
+  },
+  {
+    "title": "「勝⼿に広まる」 ⼈気 AI エージェントを爆速で作ろう︕",
+    "category": "事例セッション",
+    "pages": 54,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon S3",
+      "Claude",
+      "MCP",
+      "Strands Agents"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/「勝⼿に広まる」 ⼈気 AI エージェントを爆速で作ろう︕.pdf",
+    "path": "sessions/事例セッション/「勝手に広まる」_人気_AI_エージェントを爆速で作ろう!.md",
+    "chars": 7175,
+    "session_id": "DEV250"
+  },
+  {
+    "title": "ガバメントクラウドでの AI 駆動開発の設計と実践",
+    "category": "事例セッション",
+    "pages": 40,
+    "topics": [
+      "AI駆動開発",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS DevOps Agent",
+      "AWS IAM",
+      "AWS Organizations",
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Claude",
+      "Kiro",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/ガバメントクラウドでの AI 駆動開発の設計と実践.pdf",
+    "path": "sessions/事例セッション/ガバメントクラウドでの_AI_駆動開発の設計と実践.md",
+    "chars": 11926,
+    "session_id": "AIM203"
+  },
+  {
+    "title": "ゲームチャットを支える技術",
+    "category": "事例セッション",
+    "pages": 85,
+    "topics": [
+      "その他"
+    ],
+    "services": [
+      "Amazon API Gateway",
+      "Amazon DynamoDB",
+      "Amazon SQS"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/ゲームチャットを支える技術.pdf",
+    "path": "sessions/事例セッション/ゲームチャットを支える技術.md",
+    "chars": 10282,
+    "session_id": "CDN221"
+  },
+  {
+    "title": "サイバーエージェントにおける AI 推進戦略と変革への取り組み",
+    "category": "事例セッション",
+    "pages": 60,
+    "topics": [
+      "セキュリティ",
+      "運用/SRE"
+    ],
+    "services": [
+      "Claude"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/サイバーエージェントにおける AI 推進戦略と変革への取り組み.pdf",
+    "path": "sessions/事例セッション/サイバーエージェントにおける_AI_推進戦略と変革への取り組み.md",
+    "chars": 16188,
+    "session_id": "AIM229"
+  },
+  {
+    "title": "スタートアップに Amazon EKS は早すぎる？ マルチプロダクト戦略を加速する Platform Engineering の実践",
+    "category": "事例セッション",
+    "pages": 38,
+    "topics": [
+      "組織/内製化",
+      "運用/SRE"
+    ],
+    "services": [
+      "AWS CloudFormation",
+      "AWS Fargate",
+      "AWS IAM",
+      "Amazon EKS"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/スタートアップに Amazon EKS は早すぎる？ マルチプロダクト戦略を加速する Platform Engineering の実践.pdf",
+    "path": "sessions/事例セッション/スタートアップに_Amazon_EKS_は早すぎる_マルチプロダクト戦略を加速する_Platform_Engineering_の実践.md",
+    "chars": 8074,
+    "session_id": "ARC349"
+  },
+  {
+    "title": "ステーブルコイン「JPYC」を支える AWS －統制とスタートアップスピードの両立－",
+    "category": "事例セッション",
+    "pages": 24,
+    "topics": [
+      "セキュリティ"
+    ],
+    "services": [
+      "AWS CloudTrail",
+      "AWS Config",
+      "AWS IAM",
+      "AWS Security Hub",
+      "AWS Systems Manager",
+      "Amazon ECS",
+      "Amazon GuardDuty",
+      "Amazon S3"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/ステーブルコイン「JPYC」を支える AWS －統制とスタートアップスピードの両立－.pdf",
+    "path": "sessions/事例セッション/ステーブルコイン「JPYC」を支える_AWS_-統制とスタートアップスピードの両立-.md",
+    "chars": 2970,
+    "session_id": "IND230"
+  },
+  {
+    "title": "ソニーのスポーツ領域への新たな挑戦",
+    "category": "事例セッション",
+    "pages": 36,
+    "topics": [
+      "その他"
+    ],
+    "services": [
+      "Amazon SNS"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/ソニーのスポーツ領域への新たな挑戦.pdf",
+    "path": "sessions/事例セッション/ソニーのスポーツ領域への新たな挑戦.md",
+    "chars": 7952,
+    "session_id": "IND248"
+  },
+  {
+    "title": "データ駆動型創薬研究から AI 中心型創薬研究へ",
+    "category": "事例セッション",
+    "pages": 31,
+    "topics": [
+      "機械学習/MLOps"
+    ],
+    "services": [
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon Q",
+      "Amazon SageMaker",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/データ駆動型創薬研究から AI 中心型創薬研究へ.pdf",
+    "path": "sessions/事例セッション/データ駆動型創薬研究から_AI_中心型創薬研究へ.md",
+    "chars": 6119,
+    "session_id": "AIM332"
+  },
+  {
+    "title": "トヨタの品質管理を支える監査即応 AI —文書管理の実践",
+    "category": "事例セッション",
+    "pages": 62,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon Bedrock",
+      "Amazon DynamoDB",
+      "Amazon ECS",
+      "Amazon OpenSearch",
+      "Amazon S3",
+      "MCP",
+      "Strands Agents"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/トヨタの品質管理を支える監査即応 AI —文書管理の実践.pdf",
+    "path": "sessions/事例セッション/トヨタの品質管理を支える監査即応_AI_—文書管理の実践.md",
+    "chars": 9307,
+    "session_id": "BIZ220"
+  },
+  {
+    "title": "マーケットデータ× AI Agent ― \"閉ざされたデータ\"を\"開かれた価値\"に変える 日本取引所グループの実践",
+    "category": "事例セッション",
+    "pages": 36,
+    "topics": [
+      "セキュリティ",
+      "データ分析/基盤",
+      "マイグレーション/モダナイゼーション"
+    ],
+    "services": [
+      "AWS Step Functions",
+      "Amazon Q",
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/マーケットデータ× AI Agent ― \"閉ざされたデータ\"を\"開かれた価値\"に変える 日本取引所グループの実践.pdf",
+    "path": "sessions/事例セッション/マーケットデータ×_AI_Agent_―_閉ざされたデータを開かれた価値に変える_日本取引所グループの実践.md",
+    "chars": 10755,
+    "session_id": "IND244"
+  },
+  {
+    "title": "ランサム危機を転機に ーアスクルが加速させた AI-DLC",
+    "category": "事例セッション",
+    "pages": 42,
+    "topics": [
+      "AI駆動開発",
+      "セキュリティ"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/ランサム危機を転機に ーアスクルが加速させた AI-DLC.pdf",
+    "path": "sessions/事例セッション/ランサム危機を転機に_ーアスクルが加速させた_AI-DLC.md",
+    "chars": 4664,
+    "session_id": "AIM146"
+  },
+  {
+    "title": "リコーが実現する AI による 企業の秘伝のたれの活用と、 フィジカル AI による現場革新",
+    "category": "事例セッション",
+    "pages": 35,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon FSx",
+      "Amazon S3",
+      "Claude"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/リコーが実現する AI による 企業の秘伝のたれの活用と、 フィジカル AI による現場革新.pdf",
+    "path": "sessions/事例セッション/リコーが実現する_AI_による_企業の秘伝のたれの活用と、_フィジカル_AI_による現場革新.md",
+    "chars": 5714,
+    "session_id": "AIM333"
+  },
+  {
+    "title": "三井住友信託銀行の戦略的 AWS 投資と 組織イノベーション三井住友信託銀行の戦略的 AWS 投資と 組織イノベーション",
+    "category": "事例セッション",
+    "pages": 15,
+    "topics": [
+      "組織/内製化"
+    ],
+    "services": [
+      "AWS CloudFormation",
+      "AWS CloudTrail",
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon Inspector",
+      "Strands Agents"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/三井住友信託銀行の戦略的 AWS 投資と 組織イノベーション三井住友信託銀行の戦略的 AWS 投資と 組織イノベーション.pdf",
+    "path": "sessions/事例セッション/三井住友信託銀行の戦略的_AWS_投資と_組織イノベーション三井住友信託銀行の戦略的_AWS_投資と_組織イノベーション.md",
+    "chars": 7166,
+    "session_id": "IND214"
+  },
+  {
+    "title": "制約を超えて進化する B2B SaaS の AI 基盤",
+    "category": "事例セッション",
+    "pages": 36,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS CDK",
+      "AWS Lambda",
+      "Amazon Aurora",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon EKS",
+      "Amazon ElastiCache",
+      "Amazon S3",
+      "Amazon SQS",
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/制約を超えて進化する B2B SaaS の AI 基盤.pdf",
+    "path": "sessions/事例セッション/制約を超えて進化する_B2B_SaaS_の_AI_基盤.md",
+    "chars": 9065,
+    "session_id": "ARC317"
+  },
+  {
+    "title": "創業 100 年の酒屋カクヤスが挑む、 生成 AI で実現するシステム革命",
+    "category": "事例セッション",
+    "pages": 25,
+    "topics": [
+      "マイグレーション/モダナイゼーション",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon Bedrock",
+      "Amazon EC2",
+      "Amazon RDS",
+      "Claude"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/創業 100 年の酒屋カクヤスが挑む、 生成 AI で実現するシステム革命.pdf",
+    "path": "sessions/事例セッション/創業_100_年の酒屋カクヤスが挑む、_生成_AI_で実現するシステム革命.md",
+    "chars": 7865,
+    "session_id": "MAM202"
+  },
+  {
+    "title": "建築確認手続への AI の活用に向けたチャレンジ － OSS の RAPID をカスタマイズ。 3 か月で AI サービスを立ち上げた事例－",
+    "category": "事例セッション",
+    "pages": 31,
+    "topics": [
+      "その他"
+    ],
+    "services": [
+      "Amazon Bedrock",
+      "Claude"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/建築確認手続への AI の活用に向けたチャレンジ － OSS の RAPID をカスタマイズ。 3 か月で AI サービスを立ち上げた事例－.pdf",
+    "path": "sessions/事例セッション/建築確認手続への_AI_の活用に向けたチャレンジ_-_OSS_の_RAPID_をカスタマイズ。_3_か月で_AI_サービスを立ち上げた事例-.md",
+    "chars": 7745,
+    "session_id": "AIM205"
+  },
+  {
+    "title": "政府の生成 AI 基盤『源内』 －ガバメントクラウド上での AI 実装と AgentCore による エージェント AI への進化－",
+    "category": "事例セッション",
+    "pages": 40,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS Lambda",
+      "AWS WAF",
+      "AgentCore",
+      "Amazon API Gateway",
+      "Amazon Bedrock",
+      "Amazon CloudFront",
+      "Amazon DynamoDB",
+      "Amazon Route 53",
+      "Amazon S3"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/政府の生成 AI 基盤『源内』 －ガバメントクラウド上での AI 実装と AgentCore による エージェント AI への進化－.pdf",
+    "path": "sessions/事例セッション/政府の生成_AI_基盤『源内』_-ガバメントクラウド上での_AI_実装と_AgentCore_による_エージェント_AI_への進化-.md",
+    "chars": 13543,
+    "session_id": "BIZ204"
+  },
+  {
+    "title": "村田製作所の知を活かす AI エージェント統制",
+    "category": "事例セッション",
+    "pages": 27,
+    "topics": [
+      "セキュリティ",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS WAF",
+      "AgentCore",
+      "Amazon Bedrock",
+      "Amazon DynamoDB",
+      "Amazon ECS",
+      "Claude",
+      "MCP"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/村田製作所の知を活かす AI エージェント統制.pdf",
+    "path": "sessions/事例セッション/村田製作所の知を活かす_AI_エージェント統制.md",
+    "chars": 10389,
+    "session_id": "AIM308"
+  },
+  {
+    "title": "東京電力におけるコンタクトセンター変革 － CX 向上に向けた AI 活用の取り組み－",
+    "category": "事例セッション",
+    "pages": 27,
+    "topics": [
+      "その他"
+    ],
+    "services": [
+      "Amazon Bedrock",
+      "Amazon Connect",
+      "Amazon Q",
+      "Amazon S3"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/東京電力におけるコンタクトセンター変革 － CX 向上に向けた AI 活用の取り組み－.pdf",
+    "path": "sessions/事例セッション/東京電力におけるコンタクトセンター変革_-_CX_向上に向けた_AI_活用の取り組み-.md",
+    "chars": 7325,
+    "session_id": "AIM240"
+  },
+  {
+    "title": "汎用 LLM で足りない領域に、どう挑むか ── ドメイン特化基盤モデルをゼロから作り、 世界最高精度を獲るまで",
+    "category": "事例セッション",
+    "pages": 25,
+    "topics": [
+      "機械学習/MLOps",
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "Amazon FSx",
+      "Amazon S3"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/汎用 LLM で足りない領域に、どう挑むか ── ドメイン特化基盤モデルをゼロから作り、 世界最高精度を獲るまで.pdf",
+    "path": "sessions/事例セッション/汎用_LLM_で足りない領域に、どう挑むか_──_ドメイン特化基盤モデルをゼロから作り、_世界最高精度を獲るまで.md",
+    "chars": 4877,
+    "session_id": "AIM210"
+  },
+  {
+    "title": "特許調査工数 50 %減も！オムロン R&D が 内製する『知財 AI エージェント』の裏側 －検索精度 UP &リードタイム短縮のノウハウ－",
+    "category": "事例セッション",
+    "pages": 37,
+    "topics": [
+      "生成AI/エージェント"
+    ],
+    "services": [
+      "AWS CloudFormation",
+      "AWS CloudTrail",
+      "AWS Config",
+      "AWS Control Tower",
+      "AWS IAM",
+      "AWS Lambda",
+      "Amazon Bedrock",
+      "Amazon CloudWatch",
+      "Amazon EC2",
+      "Amazon OpenSearch",
+      "Amazon S3",
+      "Amazon SNS",
+      "Amazon VPC"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/特許調査工数 50 %減も！オムロン R&D が 内製する『知財 AI エージェント』の裏側 －検索精度 UP &リードタイム短縮のノウハウ－.pdf",
+    "path": "sessions/事例セッション/特許調査工数_50_%減も!オムロン_R&D_が_内製する『知財_AI_エージェント』の裏側_-検索精度_UP_&リードタイム短縮のノウハウ-.md",
+    "chars": 23397,
+    "session_id": "AIM234"
+  },
+  {
+    "title": "統制された自由」の実現 －電通グループ 140 社を支える AI 時代の IT ガバナンス－",
+    "category": "事例セッション",
+    "pages": 19,
+    "topics": [
+      "セキュリティ",
+      "マイグレーション/モダナイゼーション"
+    ],
+    "services": [
+      "AWS CloudFormation",
+      "AWS CloudTrail",
+      "AWS Config",
+      "AWS IAM",
+      "AWS Organizations",
+      "AWS WAF",
+      "Amazon GuardDuty",
+      "Amazon VPC"
+    ],
+    "source_pdf": "/Users/itsukinino/Desktop/AWS Summit セッション資料/事例セッション/統制された自由」の実現 －電通グループ 140 社を支える AI 時代の IT ガバナンス－.pdf",
+    "path": "sessions/事例セッション/統制された自由」の実現_-電通グループ_140_社を支える_AI_時代の_IT_ガバナンス-.md",
+    "chars": 4167,
+    "session_id": "MAM241"
+  }
+]
