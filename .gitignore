@@ -1,6 +1,49 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# 環境変数・シークレット
+.env
+.env.local
+.env.*.local
+*.secret
+
+# ログ
+*.log
+cron.log
+
+# YouTube字幕キャッシュ（再取得可能・容量が膨らむ）
+tools/youtube/.cache/
+
+# データベース（本番データ保護）
+# accounting-app/data/accounting.db  ← コメントアウト: バージョン管理する場合は外す
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
 # Terraformキャッシュ・プロバイダー
 .terraform/
-.terraform.lock.hcl
 
 # tfstateファイル（機密情報含む）
 *.tfstate
@@ -8,3 +51,14 @@
 
 # 機密情報
 *.tfvars
+
+# 生成物
+*.tsbuildinfo
+dist-sql/
+
+# Claude Code のローカル設定
+.claude/settings.local.json
+.mcp.json
+
+# Supabase CLI の一時ファイル
+supabase/.temp/

@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>観光都市計画シミュレーター</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Hiragino Sans','Yu Gothic',sans-serif;background:#0f172a;color:#e2e8f0;height:100vh;overflow:hidden;user-select:none;}
+#app{display:flex;flex-direction:column;height:100vh;}
+
+/* HEADER */
+#header{background:linear-gradient(to right,#1e293b,#0f172a);border-bottom:1px solid #334155;padding:0 12px;height:50px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.logo{font-size:15px;font-weight:bold;color:#f59e0b;white-space:nowrap;}
+.chip{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:3px 9px;font-size:11px;display:flex;align-items:center;gap:4px;white-space:nowrap;}
+.chip .lbl{color:#94a3b8;font-size:10px;}
+.chip .val{font-weight:bold;color:#fbbf24;}
+.chip.pos .val{color:#4ade80;}
+.chip.neg .val{color:#f87171;}
+.chip.blu .val{color:#60a5fa;}
+#hd-turn{margin-left:auto;font-size:12px;color:#64748b;}
+#hd-turn span{color:#e2e8f0;font-weight:bold;}
+
+/* MAIN */
+#main{display:flex;flex:1;overflow:hidden;}
+
+/* MAP */
+#map-wrap{flex:1;position:relative;background:#0a0f1e;overflow:hidden;}
+#map-canvas{display:block;cursor:crosshair;}
+
+/* SIDEBAR */
+#sidebar{width:272px;background:#1e293b;border-left:1px solid #334155;display:flex;flex-direction:column;overflow:hidden;}
+
+/* Category tabs */
+#cat-tabs{display:flex;background:#0f172a;border-bottom:1px solid #334155;overflow-x:auto;flex-shrink:0;}
+#cat-tabs::-webkit-scrollbar{height:2px;}
+.ctab{padding:7px 10px;font-size:11px;cursor:pointer;white-space:nowrap;color:#64748b;border-bottom:2px solid transparent;transition:all .15s;flex-shrink:0;}
+.ctab:hover{color:#94a3b8;}
+.ctab.on{color:#f59e0b;border-bottom-color:#f59e0b;}
+
+/* Tool grid */
+#tool-area{padding:8px;border-bottom:1px solid #334155;flex-shrink:0;}
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
+.tbtn{background:#0f172a;border:1px solid #334155;border-radius:6px;color:#cbd5e1;padding:6px 3px;cursor:pointer;font-size:11px;text-align:center;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:1px;}
+.tbtn:hover{background:#1e3a5c;border-color:#475569;}
+.tbtn.on{background:#1d4ed8;border-color:#3b82f6;color:#fff;}
+.tbtn .ti{font-size:17px;line-height:1;}
+.tbtn .tn{font-size:10px;line-height:1.2;}
+.tbtn .tc{font-size:9px;color:#fbbf24;}
+.tbtn.on .tc{color:#fde68a;}
+
+/* Side panels */
+.spanel{padding:8px 10px;border-bottom:1px solid #334155;flex-shrink:0;}
+.spanel h4{font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;}
+.srow{display:flex;justify-content:space-between;align-items:center;padding:1px 0;font-size:11px;}
+.srow .sl{color:#94a3b8;}
+.srow .sv{font-weight:600;color:#e2e8f0;}
+.srow .sv.p{color:#4ade80;}.srow .sv.n{color:#f87171;}
+.hbar{height:5px;background:#334155;border-radius:3px;overflow:hidden;margin-top:3px;}
+.hfill{height:100%;border-radius:3px;background:linear-gradient(to right,#ef4444,#f59e0b,#4ade80);transition:width .5s;}
+
+/* Log */
+#log-wrap{flex:1;overflow-y:auto;padding:6px 10px;}
+.litem{font-size:11px;padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.04);line-height:1.5;color:#94a3b8;}
+.litem.g{color:#4ade80;}.litem.b{color:#f87171;}.litem.i{color:#60a5fa;}.litem.e{color:#f59e0b;}.litem.t{color:#e2e8f0;font-weight:bold;border-bottom:1px solid #334155;padding:3px 0;}
+
+/* ACTION BAR */
+#abar{background:#1e293b;border-top:1px solid #334155;padding:7px 12px;display:flex;align-items:center;gap:7px;flex-shrink:0;}
+.abtn{background:#334155;border:1px solid #475569;border-radius:7px;color:#e2e8f0;padding:6px 14px;cursor:pointer;font-size:12px;transition:all .15s;}
+.abtn:hover{background:#475569;}
+.abtn.pri{background:linear-gradient(135deg,#1d4ed8,#2563eb);border-color:#3b82f6;font-weight:bold;}
+.abtn.pri:hover{background:linear-gradient(135deg,#2563eb,#3b82f6);}
+#hint{margin-left:auto;font-size:11px;color:#64748b;text-align:right;}
+
+/* MODAL */
+#moverlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;justify-content:center;align-items:center;z-index:1000;}
+#moverlay.show{display:flex;}
+#mdialog{background:#1e293b;border:1px solid #334155;border-radius:12px;width:460px;max-height:82vh;overflow-y:auto;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.9);}
+.mtitle{font-size:17px;font-weight:bold;color:#f59e0b;margin-bottom:14px;border-bottom:1px solid #334155;padding-bottom:9px;}
+.msec{margin-bottom:14px;}
+.msec h4{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.7px;margin-bottom:7px;}
+.mrow{display:flex;justify-content:space-between;padding:3px 0;font-size:12px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.mrow .ml{color:#94a3b8;}
+.mrow .mr{font-weight:bold;}
+.mrow .mr.p{color:#4ade80;}.mrow .mr.n{color:#f87171;}
+.mrow.tot{border-top:1px solid #334155;padding-top:5px;font-size:13px;}
+.mrow.tot .ml{color:#e2e8f0;font-weight:bold;}
+.ecard{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:7px;padding:8px;margin-bottom:6px;font-size:11px;}
+.ecard .et{color:#fbbf24;font-weight:bold;margin-bottom:2px;}
+.ecard .ed{color:#94a3b8;}
+.acard{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.35);border-radius:7px;padding:8px;margin-bottom:6px;font-size:12px;color:#c084fc;font-weight:bold;}
+#mbtn{background:#2563eb;border:none;border-radius:7px;color:#fff;padding:10px;font-size:13px;font-weight:bold;cursor:pointer;width:100%;margin-top:14px;}
+#mbtn:hover{background:#1d4ed8;}
+
+/* NOTIF */
+#notif{position:fixed;top:58px;left:50%;transform:translateX(-50%);background:#1d4ed8;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:bold;display:none;z-index:500;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,80,.5);}
+
+::-webkit-scrollbar{width:3px;height:3px;}
+::-webkit-scrollbar-track{background:#0f172a;}
+::-webkit-scrollbar-thumb{background:#334155;border-radius:2px;}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="header">
+    <div class="logo">🏙 観光都市計画</div>
+    <div class="chip"><span class="lbl">💰</span><span class="val" id="hm">50,000</span><span class="lbl">万円</span></div>
+    <div class="chip" id="hic"><span class="lbl">収支</span><span class="val" id="hi">±0</span><span class="lbl">万/期</span></div>
+    <div class="chip"><span class="lbl">👥</span><span class="val" id="hp">0</span><span class="lbl">人</span></div>
+    <div class="chip"><span class="lbl">🧳</span><span class="val" id="ht">0</span><span class="lbl">人/月</span></div>
+    <div class="chip blu"><span class="lbl">😊</span><span class="val" id="hh">50</span></div>
+    <div id="hd-turn">第 <span id="htn">1</span> 期 | <span id="hdt">2025年 Q1</span></div>
+  </div>
+
+  <div id="main">
+    <div id="map-wrap"><canvas id="map-canvas"></canvas></div>
+    <div id="sidebar">
+      <div id="cat-tabs">
+        <div class="ctab on" onclick="setCat('transport')" data-c="transport">🚃 交通</div>
+        <div class="ctab" onclick="setCat('residential')" data-c="residential">🏠 住宅</div>
+        <div class="ctab" onclick="setCat('commercial')" data-c="commercial">🏪 商業</div>
+        <div class="ctab" onclick="setCat('tourism')" data-c="tourism">🏨 観光</div>
+        <div class="ctab" onclick="setCat('amenity')" data-c="amenity">🌳 施設</div>
+        <div class="ctab" onclick="setCat('industrial')" data-c="industrial">🏭 工業</div>
+      </div>
+      <div id="tool-area"><div class="tgrid" id="tgrid"></div></div>
+
+      <div class="spanel">
+        <h4>📊 都市状況</h4>
+        <div class="srow"><span class="sl">路線</span><span class="sv" id="ss-line">未開業</span></div>
+        <div class="srow"><span class="sl">駅数</span><span class="sv" id="ss-sta">0駅</span></div>
+        <div class="srow"><span class="sl">住宅地</span><span class="sv" id="ss-res">0区</span></div>
+        <div class="srow"><span class="sl">観光施設</span><span class="sv" id="ss-tour">0棟</span></div>
+        <div class="srow" style="margin-top:3px"><span class="sl">市民満足度</span><span class="sv" id="ss-hv">50/100</span></div>
+        <div class="hbar"><div class="hfill" id="ss-hb" style="width:50%"></div></div>
+      </div>
+
+      <div class="spanel">
+        <h4>💹 財政（予測）</h4>
+        <div class="srow"><span class="sl">住民税</span><span class="sv p" id="ft">+0万</span></div>
+        <div class="srow"><span class="sl">商業収益</span><span class="sv p" id="fc">+0万</span></div>
+        <div class="srow"><span class="sl">観光収益</span><span class="sv p" id="fto">+0万</span></div>
+        <div class="srow"><span class="sl">工業収益</span><span class="sv p" id="fi">+0万</span></div>
+        <div class="srow"><span class="sl">維持費</span><span class="sv n" id="fm">-0万</span></div>
+      </div>
+
+      <div id="log-wrap">
+        <div class="litem i">🎮 ゲーム開始！観光都市を育てましょう。</div>
+        <div class="litem">まず駅を2つ建て、線路で繋ぎましょう。</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="abar">
+    <button class="abtn pri" onclick="nextTurn()">▶ 次の期へ</button>
+    <button class="abtn" onclick="doLoan()">🏦 融資</button>
+    <button class="abtn" onclick="resetGame()">🔄 リセット</button>
+    <button class="abtn" onclick="showHelp()">❓ ヘルプ</button>
+    <div id="hint">ツールを選んでマップをクリック</div>
+  </div>
+</div>
+
+<div id="moverlay" onclick="if(event.target===this)closeModal()">
+  <div id="mdialog">
+    <div class="mtitle" id="mtitle">期次報告書</div>
+    <div id="mcontent"></div>
+    <button id="mbtn" onclick="closeModal()">確認して次へ</button>
+  </div>
+</div>
+<div id="notif"></div>
+
+<script>
+// ── CONSTANTS ──────────────────────────────────────────────
+const CS = 38, COLS = 26, ROWS = 16;
+
+const CATS = {
+  transport:   ['station','rail'],
+  residential: ['house','apartment'],
+  commercial:  ['shop','mall'],
+  tourism:     ['hotel','museum','onsen','resort'],
+  amenity:     ['park','hospital','school','delete'],
+  industrial:  ['factory'],
+};
+
+const BLD = {
+  station:  {name:'駅',       icon:'🚉',cost:5000,maint:150,cat:'transport'},
+  rail:     {name:'線路',     icon:null, cost:200, maint:8,  cat:'transport'},
+  house:    {name:'住宅',     icon:'🏠', cost:1000,maint:30, cat:'residential',pop:400, tax:80},
+  apartment:{name:'マンション',icon:'🏢',cost:3500,maint:80, cat:'residential',pop:1800,tax:280},
+  shop:     {name:'商業',     icon:'🏪', cost:1500,maint:60, cat:'commercial', inc:260},
+  mall:     {name:'モール',   icon:'🏬', cost:6000,maint:220,cat:'commercial', inc:950},
+  hotel:    {name:'ホテル',   icon:'🏨', cost:8000,maint:280,cat:'tourism',    tpull:2500},
+  museum:   {name:'博物館',   icon:'🏛️', cost:5500,maint:180,cat:'tourism',    tpull:1800},
+  onsen:    {name:'温泉',     icon:'♨️', cost:4500,maint:160,cat:'tourism',    tpull:2200},
+  resort:   {name:'リゾート', icon:'🎡', cost:13000,maint:500,cat:'tourism',   tpull:5500},
+  park:     {name:'公園',     icon:'🌳', cost:800, maint:30, cat:'amenity',    happy:12},
+  hospital: {name:'病院',     icon:'🏥', cost:4500,maint:200,cat:'amenity',    happy:10},
+  school:   {name:'学校',     icon:'🏫', cost:3000,maint:110,cat:'amenity',    happy:7},
+  factory:  {name:'工場',     icon:'🏭', cost:2500,maint:100,cat:'industrial', inc:650},
+  delete:   {name:'撤去',     icon:'🗑️', cost:0,   maint:0,  cat:'amenity'},
+};
+
+const NATURAL = new Set(['mountain','water','forest','land']);
+
+const EVENTS = [
+  {id:'boom', title:'🌸 観光ブーム',   desc:'今期は観光客が急増しました！',       apply:g=>{g.eTour=2.0;g.eDur=1;}},
+  {id:'grant',title:'🏛 政府補助金',   desc:'政府から5,000万円が交付されました。', apply:g=>{g.money+=5000;}},
+  {id:'fest', title:'🎆 地域フェス',   desc:'お祭りで商業収益が増加しました！',    apply:g=>{g.eCom=1.8;g.eDur=1;}},
+  {id:'rain', title:'🌧 悪天候続き',   desc:'悪天候で観光客が減少しました。',      apply:g=>{g.eTour=0.4;g.eDur=1;}},
+  {id:'invest',title:'💼 企業投資',    desc:'大手企業の投資で商業地が繁栄！',      apply:g=>{g.eCom=1.5;g.eDur=2;}},
+  {id:'media',title:'📺 メディア掲載', desc:'テレビで紹介され観光客急増！',        apply:g=>{g.eTour=1.6;g.eDur=1;}},
+  {id:'aging',title:'🔧 施設老朽化',   desc:'老朽化で維持費が増加しました。',      apply:g=>{g.eMaint=1.5;g.eDur=2;}},
+];
+
+const ACHIVS = [
+  {id:'sta1',  title:'🚉 開業！',            chk:g=>cnt('station')>=1},
+  {id:'line1', title:'🛤 路線開通！',          chk:g=>railOK()},
+  {id:'pop10k',title:'👥 人口1万人！',         chk:g=>g.pop>=10000},
+  {id:'pop100',title:'👥 人口10万人！',        chk:g=>g.pop>=100000},
+  {id:'t1k',   title:'🧳 月1,000人観光客！',   chk:g=>g.tourists>=1000},
+  {id:'t10k',  title:'🧳 月1万人観光客！',     chk:g=>g.tourists>=10000},
+  {id:'black', title:'💰 黒字経営達成！',      chk:g=>g.lastNet>0},
+  {id:'resort',title:'🎡 リゾート都市認定！',  chk:g=>cnt('resort')>=2},
+];
+
+// ── STATE ──────────────────────────────────────────────────
+let G;
+function newState(){
+  return {
+    money:50000,pop:0,tourists:0,happy:50,turn:1,debt:0,
+    grid:[],tool:null,drag:false,
+    eTour:1,eCom:1,eMaint:1,eDur:0,
+    lastNet:0,
+    trains:[],
+    unlocked:new Set(),
+  };
+}
+
+function initGrid(){
+  G.grid=[];
+  for(let r=0;r<ROWS;r++){
+    G.grid[r]=[];
+    for(let c=0;c<COLS;c++){
+      const rnd=Math.random();
+      let t='land';
+      if(rnd<.05)t='mountain';
+      else if(rnd<.10)t='water';
+      else if(rnd<.20)t='forest';
+      G.grid[r][c]={type:t,lv:1};
+    }
+  }
+  // River
+  let wr=3+Math.floor(Math.random()*4);
+  for(let c=0;c<COLS;c++){
+    if(Math.random()<.7)G.grid[wr][c]={type:'water',lv:1};
+    if(Math.random()<.3)wr=Math.max(1,Math.min(ROWS-2,wr+(Math.random()<.5?1:-1)));
+  }
+}
+
+// ── HELPERS ───────────────────────────────────────────────
+function cnt(type){
+  let n=0;
+  for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++)if(G.grid[r][c].type===type)n++;
+  return n;
+}
+function railOK(){return cnt('station')>=2&&cnt('rail')>=1;}
+function nearby(r,c,type,rad=2){
+  let n=0;
+  for(let dr=-rad;dr<=rad;dr++)for(let dc=-rad;dc<=rad;dc++){
+    const nr=r+dr,nc=c+dc;
+    if(nr>=0&&nr<ROWS&&nc>=0&&nc<COLS&&G.grid[nr][nc].type===type)n++;
+  }
+  return n;
+}
+function isBuilt(t){return!NATURAL.has(t);}
+
+// ── ECONOMY ───────────────────────────────────────────────
+function calcEco(){
+  const staCnt=cnt('station'),rlCnt=cnt('rail');
+  const railAcc=Math.min(1,(staCnt>=2&&rlCnt>=1)?Math.min(1,.2+staCnt*.08+rlCnt*.015):.04);
+  let taxR=0,comR=0,tourR=0,indR=0,pull=0;
+  for(let r=0;r<ROWS;r++){
+    for(let c=0;c<COLS;c++){
+      const cell=G.grid[r][c],lv=cell.lv||1,b=BLD[cell.type];
+      if(!b)continue;
+      if(cell.type==='house'||cell.type==='apartment'){
+        const ns=nearby(r,c,'station',3)>0?1.3:1;
+        taxR+=(b.tax||0)*lv*ns;
+      }
+      if(cell.type==='shop'||cell.type==='mall'){
+        const nr=Math.min(3,nearby(r,c,'house',3)+nearby(r,c,'apartment',3));
+        comR+=(b.inc||0)*lv*(1+nr*.15)*G.eCom;
+      }
+      if(cell.type==='factory')indR+=(b.inc||0)*lv;
+      if(b.tpull)pull+=b.tpull*lv;
+    }
+  }
+  const tourists=Math.floor(pull*railAcc*G.eTour);
+  tourR=Math.floor(tourists*.4);
+  let maint=0;
+  for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){const b=BLD[G.grid[r][c].type];if(b)maint+=b.maint||0;}
+  maint=Math.floor(maint*G.eMaint);
+  const interest=Math.floor(G.debt*.03);
+  const rev=Math.floor(taxR+comR+tourR+indR);
+  const exp=maint+interest;
+  return{taxR:Math.floor(taxR),comR:Math.floor(comR),tourR,indR:Math.floor(indR),rev,maint,interest,exp,net:rev-exp,tourists,railAcc};
+}
+
+function calcHappy(){
+  let h=50;
+  h+=Math.min(20,cnt('park')*4);
+  h+=Math.min(15,cnt('hospital')*5);
+  h+=Math.min(10,cnt('school')*3);
+  h+=Math.min(8,cnt('station')*2);
+  h-=Math.min(25,cnt('factory')*3);
+  const res=cnt('house')+cnt('apartment');
+  if(res>20)h-=Math.floor((res-20)*.5);
+  return Math.max(10,Math.min(100,Math.round(h)));
+}
+
+function calcPotPop(){
+  let p=0;
+  for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+    const cell=G.grid[r][c],b=BLD[cell.type];
+    if(b&&b.pop)p+=b.pop*(cell.lv||1);
+  }
+  return p;
+}
+
+function tickDev(){
+  for(let r=0;r<ROWS;r++){
+    for(let c=0;c<COLS;c++){
+      const cell=G.grid[r][c];
+      if(!isBuilt(cell.type)||cell.type==='rail'||(cell.lv||1)>=5)continue;
+      let ch=.15;
+      if(G.happy>60)ch+=.08;
+      if(G.happy>80)ch+=.06;
+      if(nearby(r,c,'station',3)>0)ch+=.10;
+      if(nearby(r,c,'park',2)>0)ch+=.05;
+      if(Math.random()<ch)cell.lv=Math.min(5,(cell.lv||1)+1);
+    }
+  }
+}
+
+// ── TURN ──────────────────────────────────────────────────
+function nextTurn(){
+  const eco=calcEco();
+  const pot=calcPotPop();
+  const gap=pot-G.pop;
+  G.pop=Math.floor(G.pop+gap*(G.happy/100)*.25);
+  G.money+=eco.net;
+  G.tourists=eco.tourists;
+  G.happy=calcHappy();
+  G.lastNet=eco.net;
+  if(G.money<0){G.money=0;addLog('⚠ 財政危機！早急に黒字化が必要です','b');}
+  tickDev();
+
+  // Event multiplier decay
+  if(G.eDur>0){G.eDur--;if(G.eDur===0){G.eTour=1;G.eCom=1;G.eMaint=1;}}
+
+  const evs=[];
+  if(Math.random()<.28){
+    const ev=EVENTS[Math.floor(Math.random()*EVENTS.length)];
+    ev.apply(G);evs.push(ev);
+  }
+
+  const achs=[];
+  for(const a of ACHIVS)if(!G.unlocked.has(a.id)&&a.chk(G)){G.unlocked.add(a.id);achs.push(a);}
+
+  const reportTurn=G.turn;
+  G.turn++;
+  showReport(eco,evs,achs,reportTurn);
+  refreshAll();
+  addLog(`── 第${reportTurn}期 ──`,'t');
+  addLog(`収支: ${eco.net>=0?'+':''}${eco.net.toLocaleString()}万円`,eco.net>=0?'g':'b');
+}
+
+// ── REPORT MODAL ──────────────────────────────────────────
+function showReport(eco,evs,achs,turn){
+  const yr=2025+Math.floor((turn-1)/4),q=((turn-1)%4)+1;
+  let h='';
+  if(evs.length){
+    h+='<div class="msec"><h4>⚡ 今期のイベント</h4>';
+    evs.forEach(ev=>h+=`<div class="ecard"><div class="et">${ev.title}</div><div class="ed">${ev.desc}</div></div>`);
+    h+='</div>';
+  }
+  h+=`<div class="msec"><h4>💰 収益内訳</h4>
+    <div class="mrow"><span class="ml">住民税収</span><span class="mr p">+${eco.taxR.toLocaleString()}万円</span></div>
+    <div class="mrow"><span class="ml">商業収益</span><span class="mr p">+${eco.comR.toLocaleString()}万円</span></div>
+    <div class="mrow"><span class="ml">観光収益</span><span class="mr p">+${eco.tourR.toLocaleString()}万円</span></div>
+    <div class="mrow"><span class="ml">工業収益</span><span class="mr p">+${eco.indR.toLocaleString()}万円</span></div>
+    <div class="mrow tot"><span class="ml">収益合計</span><span class="mr p">+${eco.rev.toLocaleString()}万円</span></div>
+  </div>
+  <div class="msec"><h4>💸 支出内訳</h4>
+    <div class="mrow"><span class="ml">施設維持費</span><span class="mr n">-${eco.maint.toLocaleString()}万円</span></div>
+    ${eco.interest?`<div class="mrow"><span class="ml">融資利息(3%)</span><span class="mr n">-${eco.interest.toLocaleString()}万円</span></div>`:''}
+    <div class="mrow tot"><span class="ml">支出合計</span><span class="mr n">-${eco.exp.toLocaleString()}万円</span></div>
+  </div>
+  <div class="msec"><h4>📈 純利益</h4>
+    <div class="mrow tot"><span class="ml">純利益</span><span class="mr ${eco.net>=0?'p':'n'}">${eco.net>=0?'+':''}${eco.net.toLocaleString()}万円</span></div>
+  </div>
+  <div class="msec"><h4>🏙 都市状況</h4>
+    <div class="mrow"><span class="ml">人口</span><span class="mr">${G.pop.toLocaleString()}人</span></div>
+    <div class="mrow"><span class="ml">観光客</span><span class="mr">${G.tourists.toLocaleString()}人/月</span></div>
+    <div class="mrow"><span class="ml">市民満足度</span><span class="mr">${G.happy}/100</span></div>
+    <div class="mrow"><span class="ml">鉄道利用率</span><span class="mr">${Math.round(eco.railAcc*100)}%</span></div>
+  </div>`;
+  if(achs.length){
+    h+='<div class="msec"><h4>🏆 実績解除！</h4>';
+    achs.forEach(a=>h+=`<div class="acard">${a.title}</div>`);
+    h+='</div>';
+  }
+  document.getElementById('mtitle').textContent=`📊 ${yr}年 Q${q} 期次報告書`;
+  document.getElementById('mcontent').innerHTML=h;
+  document.getElementById('moverlay').classList.add('show');
+}
+
+function closeModal(){document.getElementById('moverlay').classList.remove('show');}
+
+// ── BUILD ──────────────────────────────────────────────────
+function buildAt(r,c){
+  const t=G.tool;if(!t){showNotif('ツールを選択してください');return;}
+  const cell=G.grid[r][c];
+  if(t==='delete'){
+    if(!isBuilt(cell.type))return;
+    G.grid[r][c]={type:'land',lv:1};
+    addLog(`撤去 (${c},${r})`,'i');
+    refreshAll();return;
+  }
+  if(cell.type==='mountain'){showNotif('山岳地帯には建設できません');return;}
+  if(cell.type==='water'){showNotif('水上には建設できません');return;}
+  if(cell.type===t)return;
+  const b=BLD[t];
+  if(G.money<b.cost){showNotif(`資金不足！${b.cost.toLocaleString()}万円が必要です`);addLog(`資金不足: ${b.name}`,'b');return;}
+  G.money-=b.cost;
+  G.grid[r][c]={type:t,lv:1};
+  addLog(`${b.name}建設 -${b.cost.toLocaleString()}万円`,'g');
+  refreshAll();
+}
+
+// ── LOAN ──────────────────────────────────────────────────
+function doLoan(){
+  const s=prompt(`融資額を入力（万円）\n現在の借入: ${G.debt.toLocaleString()}万円\n利率: 3%/期\n上限: 50,000万円`);
+  const a=parseInt(s);if(isNaN(a)||a<=0)return;
+  if(G.debt+a>50000){showNotif('融資上限(50,000万円)を超えています');return;}
+  G.money+=a;G.debt+=a;
+  addLog(`融資 +${a.toLocaleString()}万円 (借入累計${G.debt.toLocaleString()}万円)`,'i');
+  updateHUD();
+}
+
+// ── CANVAS ────────────────────────────────────────────────
+const canvas=document.getElementById('map-canvas');
+const ctx=canvas.getContext('2d');
+
+const BGC={
+  land:'#16251a',mountain:'#2d2520',water:'#0d2340',forest:'#0f2010',
+  station:'#2d0d10',rail:'#181818',
+  house:'#0d2010',apartment:'#0d1820',
+  shop:'#201a08',mall:'#2d2008',
+  hotel:'#1a0d28',museum:'#0d1428',onsen:'#200d20',resort:'#280d1a',
+  park:'#0d200d',hospital:'#0d1828',school:'#0d1520',factory:'#1a1510',
+};
+
+let hover=null;
+
+function resizeCvs(){
+  const w=document.getElementById('map-wrap');
+  canvas.width=w.clientWidth;canvas.height=w.clientHeight;
+}
+
+let waterPhase=0;
+function drawMap(){
+  waterPhase+=0.025;
+  const W=canvas.width,H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const ox=Math.max(0,(W-COLS*CS)/2),oy=Math.max(0,(H-ROWS*CS)/2);
+
+  for(let r=0;r<ROWS;r++){
+    for(let c=0;c<COLS;c++){
+      const cell=G.grid[r][c],lv=cell.lv||1;
+      const x=ox+c*CS,y=oy+r*CS;
+      ctx.fillStyle=BGC[cell.type]||'#16251a';
+      ctx.fillRect(x,y,CS,CS);
+      ctx.strokeStyle='rgba(255,255,255,0.04)';
+      ctx.lineWidth=1;ctx.strokeRect(x,y,CS,CS);
+
+      if(cell.type==='water'){
+        const alpha=.25+.08*Math.sin(waterPhase+r*.8+c*.5);
+        ctx.fillStyle=`rgba(30,120,220,${alpha})`;
+        ctx.fillRect(x,y,CS,CS);
+      }
+      if(cell.type==='rail'){drawRail(x,y,r,c);}
+      if(cell.type==='station'){
+        ctx.fillStyle='#3d1820';ctx.fillRect(x+2,y+2,CS-4,CS-4);
+        ctx.fillStyle='#7f3550';ctx.fillRect(x+2,y+CS/2-3,CS-4,6);
+      }
+      const b=BLD[cell.type];
+      const ico=b?b.icon:(cell.type==='forest'?'🌲':cell.type==='mountain'?'⛰️':null);
+      if(ico){
+        ctx.font=`${CS*.48}px serif`;
+        ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.fillText(ico,x+CS/2,y+CS/2);
+      }
+      // Level dots
+      if(isBuilt(cell.type)&&cell.type!=='rail'&&lv>1){
+        const dw=3.5,sp=5.5,tw=lv*dw+(lv-1)*(sp-dw);
+        let dx=x+(CS-tw)/2;
+        for(let i=0;i<lv;i++){
+          ctx.fillStyle='#fbbf24';
+          ctx.beginPath();ctx.arc(dx+dw/2,y+CS-5,dw/2,0,Math.PI*2);ctx.fill();
+          dx+=sp;
+        }
+      }
+      // Hover
+      if(hover&&hover.r===r&&hover.c===c){
+        ctx.fillStyle='rgba(255,255,255,0.11)';ctx.fillRect(x,y,CS,CS);
+        ctx.strokeStyle=G.tool?'#3b82f6':'#64748b';
+        ctx.lineWidth=2;ctx.strokeRect(x+1,y+1,CS-2,CS-2);ctx.lineWidth=1;
+      }
+    }
+  }
+  drawTrains(ox,oy);
+}
+
+function drawRail(x,y,r,c){
+  const L=c>0&&['rail','station'].includes(G.grid[r][c-1].type);
+  const R=c<COLS-1&&['rail','station'].includes(G.grid[r][c+1].type);
+  const U=r>0&&['rail','station'].includes(G.grid[r-1][c].type);
+  const D=r<ROWS-1&&['rail','station'].includes(G.grid[r+1][c].type);
+  const horiz=L||R||(!U&&!D);
+  const vert=U||D;
+  ctx.strokeStyle='#9ca3af';ctx.lineWidth=3;
+  if(horiz){
+    ctx.beginPath();ctx.moveTo(x,y+CS/2);ctx.lineTo(x+CS,y+CS/2);ctx.stroke();
+    ctx.strokeStyle='#6b7280';ctx.lineWidth=1.5;
+    for(let i=5;i<CS;i+=8){ctx.beginPath();ctx.moveTo(x+i,y+CS/2-4);ctx.lineTo(x+i,y+CS/2+4);ctx.stroke();}
+  }
+  if(vert){
+    ctx.strokeStyle='#9ca3af';ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(x+CS/2,y);ctx.lineTo(x+CS/2,y+CS);ctx.stroke();
+    ctx.strokeStyle='#6b7280';ctx.lineWidth=1.5;
+    for(let i=5;i<CS;i+=8){ctx.beginPath();ctx.moveTo(x+CS/2-4,y+i);ctx.lineTo(x+CS/2+4,y+i);ctx.stroke();}
+  }
+  ctx.lineWidth=1;
+}
+
+// ── TRAINS ────────────────────────────────────────────────
+let tPaths=[],tPos=[];
+
+function buildTrainPaths(){
+  const vis=Array.from({length:ROWS},()=>Array(COLS).fill(false));
+  tPaths=[];
+  for(let sr=0;sr<ROWS;sr++){
+    for(let sc=0;sc<COLS;sc++){
+      const t=G.grid[sr][sc].type;
+      if((t==='rail'||t==='station')&&!vis[sr][sc]){
+        const path=[],queue=[[sr,sc]];vis[sr][sc]=true;
+        while(queue.length){
+          const[r,c]=queue.shift();path.push([r,c]);
+          for(const[dr,dc]of[[0,1],[0,-1],[1,0],[-1,0]]){
+            const nr=r+dr,nc=c+dc;
+            if(nr>=0&&nr<ROWS&&nc>=0&&nc<COLS&&!vis[nr][nc]){
+              const nt=G.grid[nr][nc].type;
+              if(nt==='rail'||nt==='station'){vis[nr][nc]=true;queue.push([nr,nc]);}
+            }
+          }
+        }
+        if(path.length>=2)tPaths.push(path);
+      }
+    }
+  }
+  const want=tPaths.reduce((s,p)=>s+Math.min(2,Math.floor(p.length/4)),0);
+  while(tPos.length<want){
+    const pi=Math.floor(Math.random()*tPaths.length);
+    const path=tPaths[pi];
+    tPos.push({pi,idx:Math.floor(Math.random()*path.length),prog:Math.random(),dir:Math.random()<.5?1:-1});
+  }
+  tPos=tPos.slice(0,want);
+}
+
+function tickTrains(){
+  tPos.forEach(t=>{
+    const path=tPaths[t.pi];if(!path||path.length<2)return;
+    t.prog+=0.028*t.dir;
+    if(t.prog>=1){t.prog=0;t.idx=(t.idx+1)%path.length;}
+    else if(t.prog<0){t.prog=1;t.idx=(t.idx-1+path.length)%path.length;}
+    const a=path[t.idx],b=path[(t.idx+1)%path.length];
+    t.x=a[1]+(b[1]-a[1])*t.prog;t.y=a[0]+(b[0]-a[0])*t.prog;
+  });
+}
+
+function drawTrains(ox,oy){
+  tPos.forEach(t=>{
+    if(t.x===undefined)return;
+    ctx.font=`${CS*.56}px serif`;
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('🚃',ox+t.x*CS+CS/2,oy+t.y*CS+CS/2);
+  });
+}
+
+// ── INPUT ─────────────────────────────────────────────────
+function getOff(){
+  return{ox:Math.max(0,(canvas.width-COLS*CS)/2),oy:Math.max(0,(canvas.height-ROWS*CS)/2)};
+}
+function cellAt(e){
+  const rect=canvas.getBoundingClientRect(),{ox,oy}=getOff();
+  const c=Math.floor((e.clientX-rect.left-ox)/CS),r=Math.floor((e.clientY-rect.top-oy)/CS);
+  return(c<0||c>=COLS||r<0||r>=ROWS)?null:{r,c};
+}
+
+canvas.addEventListener('mousemove',e=>{
+  hover=cellAt(e);
+  if(G.drag&&G.tool==='rail'&&hover)buildAt(hover.r,hover.c);
+});
+canvas.addEventListener('mousedown',e=>{
+  const p=cellAt(e);if(!p)return;
+  G.drag=true;buildAt(p.r,p.c);
+});
+canvas.addEventListener('mouseup',()=>G.drag=false);
+canvas.addEventListener('mouseleave',()=>{hover=null;G.drag=false;});
+window.addEventListener('keydown',e=>{
+  if(e.key==='Escape')selectTool(null);
+  if(e.key==='x'||e.key==='X')selectTool('delete');
+});
+
+// ── TOOLS UI ──────────────────────────────────────────────
+let curCat='transport';
+
+function setCat(cat){
+  curCat=cat;
+  document.querySelectorAll('.ctab').forEach(t=>t.classList.toggle('on',t.dataset.c===cat));
+  renderTools();
+}
+
+function renderTools(){
+  const grid=document.getElementById('tgrid');
+  grid.innerHTML=CATS[curCat].map(id=>{
+    const b=BLD[id];
+    return`<button class="tbtn${G.tool===id?' on':''}" onclick="selectTool('${id}')" data-t="${id}">
+      <span class="ti">${b.icon||'🛤️'}</span>
+      <span class="tn">${b.name}</span>
+      <span class="tc">${b.cost?b.cost.toLocaleString()+'万':'無料'}</span>
+    </button>`;
+  }).join('');
+}
+
+function selectTool(t){
+  G.tool=G.tool===t?null:t;
+  renderTools();
+  document.getElementById('hint').textContent=G.tool
+    ?`${BLD[G.tool].name}を配置中 (${BLD[G.tool].cost.toLocaleString()}万円)`
+    :'ツールを選んでマップをクリック';
+}
+
+// ── HUD UPDATE ────────────────────────────────────────────
+function updateHUD(){
+  document.getElementById('hm').textContent=G.money.toLocaleString();
+  document.getElementById('hp').textContent=G.pop.toLocaleString();
+  document.getElementById('ht').textContent=G.tourists.toLocaleString();
+  document.getElementById('hh').textContent=G.happy;
+  const yr=2025+Math.floor((G.turn-1)/4),q=((G.turn-1)%4)+1;
+  document.getElementById('htn').textContent=G.turn;
+  document.getElementById('hdt').textContent=`${yr}年 Q${q}`;
+  const eco=calcEco(),net=eco.net;
+  document.getElementById('hi').textContent=(net>=0?'+':'')+net.toLocaleString();
+  document.getElementById('hic').className='chip '+(net>=0?'pos':'neg');
+}
+
+function updateSide(){
+  document.getElementById('ss-line').textContent=railOK()?`開業中 (${cnt('station')}駅)`:'未開業';
+  document.getElementById('ss-sta').textContent=cnt('station')+'駅';
+  document.getElementById('ss-res').textContent=(cnt('house')+cnt('apartment'))+'区';
+  document.getElementById('ss-tour').textContent=(cnt('hotel')+cnt('museum')+cnt('onsen')+cnt('resort'))+'棟';
+  document.getElementById('ss-hv').textContent=`${G.happy}/100`;
+  document.getElementById('ss-hb').style.width=G.happy+'%';
+}
+
+function updateFin(){
+  const e=calcEco();
+  document.getElementById('ft').textContent=`+${e.taxR.toLocaleString()}万`;
+  document.getElementById('fc').textContent=`+${e.comR.toLocaleString()}万`;
+  document.getElementById('fto').textContent=`+${e.tourR.toLocaleString()}万`;
+  document.getElementById('fi').textContent=`+${e.indR.toLocaleString()}万`;
+  document.getElementById('fm').textContent=`-${e.maint.toLocaleString()}万`;
+}
+
+function refreshAll(){
+  buildTrainPaths();updateHUD();updateSide();updateFin();
+}
+
+// ── LOG ───────────────────────────────────────────────────
+function addLog(msg,cls=''){
+  const w=document.getElementById('log-wrap');
+  const d=document.createElement('div');
+  d.className='litem '+cls;d.textContent=msg;
+  w.insertBefore(d,w.firstChild);
+  while(w.children.length>60)w.removeChild(w.lastChild);
+}
+
+// ── NOTIF ─────────────────────────────────────────────────
+function showNotif(msg){
+  const el=document.getElementById('notif');
+  el.textContent=msg;el.style.display='block';
+  clearTimeout(el._t);el._t=setTimeout(()=>el.style.display='none',2200);
+}
+
+// ── HELP ──────────────────────────────────────────────────
+function showHelp(){
+  alert(`🏙 観光都市計画シミュレーター
+
+【遊び方】
+1. タブでカテゴリを選び建物を選択
+2. マップをクリックして建設（線路はドラッグ可）
+3. 「次の期へ」で1期（3ヶ月）進む
+4. 期次報告書で収支を確認しながら発展させよう
+
+【路線開通条件】
+駅 × 2 + 線路で接続 → 観光客が来るようになる
+
+【経営のコツ】
+• 住宅地で人口→税収の基盤を作る
+• 商業施設は住宅の近くに置くと収益UP
+• ホテル・博物館・温泉は観光収益の柱
+• 工場は高収益だが満足度を下げる
+• 公園・病院・学校で満足度UP→人口増加
+
+【建物レベル (黄点表示)】
+• 条件が整うと自動でLv1→5に成長
+• 駅近・満足度高・公園隣接でレベルアップしやすい
+• Lvが上がるほど収益・人口が増加
+
+【その他】
+• Escキー：ツール解除
+• Xキー：撤去ツール切替
+• 融資ボタンで最大5億円借入可能（利率3%/期）`);
+}
+
+// ── RESET ─────────────────────────────────────────────────
+function resetGame(){
+  if(!confirm('ゲームをリセットしますか？'))return;
+  G=newState();initGrid();
+  renderTools();
+  document.getElementById('log-wrap').innerHTML='<div class="litem i">🎮 リセットしました！</div>';
+  refreshAll();
+}
+
+// ── LOOP ──────────────────────────────────────────────────
+let lastT=0;
+function loop(ts){
+  if(ts-lastT>110){tickTrains();lastT=ts;}
+  drawMap();
+  requestAnimationFrame(loop);
+}
+
+// ── INIT ──────────────────────────────────────────────────
+window.addEventListener('resize',resizeCvs);
+resizeCvs();
+G=newState();initGrid();
+renderTools();refreshAll();
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

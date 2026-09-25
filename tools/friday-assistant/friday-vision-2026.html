@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Friday商事 事業展望 2026</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Helvetica Neue', 'Hiragino Sans', sans-serif;
+    background: #0a0a0f;
+    color: #f0f0f0;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  .slides { width: 100%; height: 100vh; position: relative; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    padding: 60px 80px;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .slide.active { display: flex; }
+
+  /* ── Slide types ── */
+  .slide-title {
+    background: linear-gradient(135deg, #0a0a0f 0%, #12121f 60%, #1a1a2e 100%);
+    align-items: center;
+    text-align: center;
+  }
+  .slide-content { background: #0e0e1a; }
+  .slide-accent {
+    background: linear-gradient(135deg, #0e0e1a 0%, #131325 100%);
+  }
+
+  /* ── Typography ── */
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #5b8fff;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  h1 {
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #ffffff 0%, #a0b4ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+  }
+  h2 {
+    font-size: 42px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    font-size: 20px;
+    color: #6b7280;
+    margin-bottom: 40px;
+  }
+  .meta {
+    font-size: 14px;
+    color: #374151;
+    margin-top: 60px;
+  }
+
+  /* ── Section label ── */
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #5b8fff;
+    border-left: 2px solid #5b8fff;
+    padding-left: 10px;
+    margin-bottom: 32px;
+    font-weight: 600;
+  }
+
+  /* ── Cards ── */
+  .cards {
+    display: grid;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .cards-3 { grid-template-columns: repeat(3, 1fr); }
+  .cards-2 { grid-template-columns: repeat(2, 1fr); }
+
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #5b8fff, #a78bfa);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .card:hover::before { opacity: 1; }
+
+  .card-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .card-desc {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.6;
+  }
+  .card-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .badge-main { background: rgba(91,143,255,0.2); color: #5b8fff; }
+  .badge-sub  { background: rgba(167,139,250,0.2); color: #a78bfa; }
+  .badge-high { background: rgba(52,211,153,0.2); color: #34d399; }
+
+  /* ── Rows ── */
+  .row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .row:last-child { border-bottom: none; }
+  .row-num {
+    width: 28px; height: 28px;
+    background: rgba(91,143,255,0.15);
+    border: 1px solid rgba(91,143,255,0.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #5b8fff;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .row-body { flex: 1; }
+  .row-title { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+  .row-desc  { font-size: 13px; color: #6b7280; line-height: 1.5; }
+
+  /* ── Phase timeline ── */
+  .phases { display: flex; gap: 0; margin-top: 8px; }
+  .phase {
+    flex: 1;
+    padding: 20px 24px;
+    position: relative;
+  }
+  .phase::after {
+    content: '→';
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #374151;
+    font-size: 18px;
+    z-index: 1;
+  }
+  .phase:last-child::after { display: none; }
+
+  .phase-now  { background: rgba(91,143,255,0.1);  border: 1px solid rgba(91,143,255,0.25); border-radius: 10px; }
+  .phase-next { background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.2); border-radius: 10px; }
+  .phase-far  { background: rgba(52,211,153,0.06);  border: 1px solid rgba(52,211,153,0.2); border-radius: 10px; }
+
+  .phase-period { font-size: 11px; color: #5b8fff; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .phase-title  { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+  .phase-item   { font-size: 12px; color: #6b7280; margin-bottom: 5px; display: flex; gap: 8px; }
+  .phase-item::before { content: '—'; color: #374151; flex-shrink: 0; }
+
+  /* ── Stat ── */
+  .stats { display: flex; gap: 24px; margin: 32px 0; }
+  .stat {
+    flex: 1;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+  .stat-val { font-size: 32px; font-weight: 700; color: #5b8fff; margin-bottom: 4px; }
+  .stat-label { font-size: 12px; color: #6b7280; }
+
+  /* ── Navigation ── */
+  .nav {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 10px 20px;
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+  }
+  .nav button {
+    background: none;
+    border: none;
+    color: #6b7280;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .nav button:hover { color: #fff; background: rgba(255,255,255,0.1); }
+  .nav-counter { font-size: 13px; color: #374151; min-width: 50px; text-align: center; }
+
+  /* ── Progress bar ── */
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #5b8fff, #a78bfa);
+    transition: width 0.4s ease;
+  }
+
+  .highlight { color: #5b8fff; font-weight: 700; }
+  .muted { color: #374151; }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="slides" id="slides">
+
+  <!-- 1. タイトル -->
+  <div class="slide slide-title active">
+    <div class="eyebrow">Friday商事 / Business Vision</div>
+    <h1>2026 事業展望</h1>
+    <p class="subtitle">仕入れから販売まで、AIが動かすせどり会社</p>
+    <p class="meta">代表 二瀬樹 ／ 資本金 100,000円 ／ 2026年6月</p>
+  </div>
+
+  <!-- 2. 現状 -->
+  <div class="slide slide-content">
+    <div class="section-label">Current State</div>
+    <h2>今どこにいるか</h2>
+    <p class="subtitle">API整備フェーズ完了目前</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-val">100,000円</div>
+        <div class="stat-label">資本金（フル残高）</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">7部署</div>
+        <div class="stat-label">稼働中AIエージェント</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">2 / 4</div>
+        <div class="stat-label">API接続完了</div>
+      </div>
+    </div>
+    <div class="cards cards-2" style="margin-top:0">
+      <div class="card">
+        <div class="card-title" style="color:#34d399">✅ 整備済み</div>
+        <div class="card-desc">楽天ウェブサービス API<br>Yahoo!ショッピング API<br>経理・帳簿（Google Drive連携）<br>7エージェント自動稼働</div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:#f59e0b">⚠️ 残タスク</div>
+        <div class="card-desc">Amazon アソシエイト申請<br>Keepa API（€19/月）<br>各エージェントへのAPIキー組み込み</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 仕入れ -->
+  <div class="slide slide-accent">
+    <div class="section-label">Sourcing</div>
+    <h2>仕入れの仕組み</h2>
+    <p class="subtitle">AIが毎日リサーチ、人間は判断だけ</p>
+    <div class="cards cards-3">
+      <div class="card">
+        <div class="card-badge badge-main">リサーチ</div>
+        <div class="card-title">楽天市場</div>
+        <div class="card-desc">楽天APIで安値商品をスクリーニング。セール品・在庫処分品を優先的に検出。</div>
+      </div>
+      <div class="card">
+        <div class="card-badge badge-main">リサーチ</div>
+        <div class="card-title">Yahoo!ショッピング</div>
+        <div class="card-desc">Yahoo! APIでクーポン・ポイント還元を加味した実質仕入れ値を計算。</div>
+      </div>
+      <div class="card">
+        <div class="card-badge badge-sub">価格分析</div>
+        <div class="card-title">Keepa（導入予定）</div>
+        <div class="card-desc">Amazon価格トレンドを分析。「今が仕入れどき」かを過去データで判定。</div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:20px; border:none; padding:12px 0 0">
+      <div class="row-body">
+        <div class="row-desc" style="color:#4b5563">仕入れリサーチ部エージェントが毎朝7:00に自動リサーチ → 調達判断部（COO）が毎週月曜に最終仕入れ指示書を発行</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 販売 -->
+  <div class="slide slide-content">
+    <div class="section-label">Sales Channels</div>
+    <h2>販売プラットフォーム戦略</h2>
+    <p class="subtitle">商品特性に合わせて3チャネルを使い分け</p>
+    <div class="cards cards-3">
+      <div class="card">
+        <div class="card-badge badge-main">メイン</div>
+        <div class="card-title">Amazon.co.jp</div>
+        <div class="card-desc">
+          FBAを活用して手間なく高回転。<br>需要が安定した定番商品に最適。<br><br>
+          <span style="color:#4b5563; font-size:12px">JAN登録があれば出品が速い</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-badge badge-high">高回転</div>
+        <div class="card-title">メルカリ</div>
+        <div class="card-desc">
+          手数料10%だが回転が速い。<br>ブランド品・ゲーム・本など<br>即売れ商品に向く。<br><br>
+          <span style="color:#4b5563; font-size:12px">資金回収を急ぐ場面で活用</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-badge badge-sub">高単価</div>
+        <div class="card-title">Yahoo!オークション</div>
+        <div class="card-desc">
+          競り上がりで相場以上を狙う。<br>レア・限定・ヴィンテージ品に強い。<br><br>
+          <span style="color:#4b5563; font-size:12px">利益率が高い反面、時間がかかる</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 利益ロジック -->
+  <div class="slide slide-accent">
+    <div class="section-label">Profit Logic</div>
+    <h2>利益の出し方</h2>
+    <p class="subtitle">1商品あたりの判断基準を統一する</p>
+    <div class="row">
+      <div class="row-num">1</div>
+      <div class="row-body">
+        <div class="row-title">仕入れ上限：残高の20%以内</div>
+        <div class="row-desc">1商品に資金を集中させない。初期は1商品あたり最大20,000円が目安。</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="row-num">2</div>
+      <div class="row-body">
+        <div class="row-title">最低利益率：仕入れ値の15%以上</div>
+        <div class="row-desc">Amazon手数料（約15%）＋送料を引いても15%残ることをKeepaで事前確認。</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="row-num">3</div>
+      <div class="row-body">
+        <div class="row-title">回転期待：30日以内に売れる商品だけ買う</div>
+        <div class="row-desc">在庫を寝かせない。Keepaの売れ筋ランクで回転速度を事前チェック。</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="row-num">4</div>
+      <div class="row-body">
+        <div class="row-title">損切りライン：30日売れなければメルカリで即売り</div>
+        <div class="row-desc">Amazon在庫保管料が増える前に現金化。感情で粘らない。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. フェーズ計画 -->
+  <div class="slide slide-content">
+    <div class="section-label">Roadmap</div>
+    <h2>3フェーズ計画</h2>
+    <p class="subtitle" style="margin-bottom:28px">小さく始めて、確認しながら拡大する</p>
+    <div class="phases">
+      <div class="phase phase-now">
+        <div class="phase-period">Phase 1 ／ 〜2026年8月</div>
+        <div class="phase-title">基盤整備</div>
+        <div class="phase-item">Amazon申請・Keepa契約</div>
+        <div class="phase-item">初仕入れ（〜3万円）</div>
+        <div class="phase-item">PDCAサイクル確立</div>
+        <div class="phase-item">売上目標：月3万円</div>
+      </div>
+      <div class="phase phase-next">
+        <div class="phase-period">Phase 2 ／ 〜2026年末</div>
+        <div class="phase-title">回転数アップ</div>
+        <div class="phase-item">利益商品カテゴリ特定</div>
+        <div class="phase-item">仕入れ額を段階的に拡大</div>
+        <div class="phase-item">FBA活用で自動化推進</div>
+        <div class="phase-item">売上目標：月10万円</div>
+      </div>
+      <div class="phase phase-far">
+        <div class="phase-period">Phase 3 ／ 2027年〜</div>
+        <div class="phase-title">仕組み化・自動化</div>
+        <div class="phase-item">マネーフォワード連携</div>
+        <div class="phase-item">仕入れ完全自動化検討</div>
+        <div class="phase-item">法人化・消費税対応</div>
+        <div class="phase-item">売上目標：月30万円</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. まとめ -->
+  <div class="slide slide-title">
+    <div class="eyebrow">Summary</div>
+    <h1>次の一手</h1>
+    <p class="subtitle" style="max-width:600px; text-align:center; margin: 0 auto 40px">
+      Amazon申請を通して<br>初仕入れにたどり着く。<br>資本金10万円をフルに活かして<br>最初の売上を立てる。
+    </p>
+    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap">
+      <div style="background:rgba(91,143,255,0.1); border:1px solid rgba(91,143,255,0.3); border-radius:8px; padding:12px 20px; font-size:14px; color:#5b8fff">Amazonアソシエイト申請</div>
+      <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:12px 20px; font-size:14px; color:#6b7280">Keepa API契約</div>
+      <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:12px 20px; font-size:14px; color:#6b7280">初仕入れ実行</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="nav">
+  <button onclick="prev()">←</button>
+  <span class="nav-counter" id="counter">1 / 7</span>
+  <button onclick="next()">→</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+
+  function show(n) {
+    slides[current].classList.remove('active');
+    current = (n + total) % total;
+    slides[current].classList.add('active');
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+    document.getElementById('progress').style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  function next() { show(current + 1); }
+  function prev() { show(current - 1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') next();
+    if (e.key === 'ArrowLeft') prev();
+  });
+
+  show(0);
+</script>
+</body>
+</html>

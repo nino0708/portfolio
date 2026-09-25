@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ドリンク代計算 — 宴会お酒計算</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..600,0..1,0">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #0b57d0;
+      --primary-hover: #0a4bb5;
+      --primary-pressed: #08409c;
+      --on-primary: #ffffff;
+      --primary-container: #d3e3fd;
+      --bg: #f6f8fc;
+      --surface: #ffffff;
+      --surface-1: #f3f6fc;
+      --surface-2: #eef3fb;
+      --text: #1f1f1f;
+      --text-secondary: #444746;
+      --text-muted: #5f6368;
+      --border: #e3e6eb;
+      --border-strong: #c7cdd6;
+      --success: #188038;
+      --warning: #ea8600;
+      --warning-bg: #fef7e0;
+      --elev-1: 0 1px 2px rgba(60,64,67,.18), 0 1px 3px 1px rgba(60,64,67,.05);
+      --elev-2: 0 1px 3px rgba(60,64,67,.20), 0 4px 8px 3px rgba(60,64,67,.08);
+      --radius: 12px;
+      --radius-lg: 16px;
+      --radius-sm: 8px;
+      --font: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic UI', system-ui, sans-serif;
+      --mono: 'Roboto Mono', 'SF Mono', 'Consolas', monospace;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      background-image:
+        radial-gradient(1200px 600px at 78% -8%, rgba(11,87,208,.10), transparent 60%),
+        radial-gradient(900px 500px at 102% 100%, rgba(132,48,206,.08), transparent 55%),
+        radial-gradient(700px 500px at -5% 95%, rgba(24,128,56,.07), transparent 55%);
+      background-attachment: fixed;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .material-symbols-rounded {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 20px; line-height: 1; user-select: none;
+    }
+
+    .app-wrap { max-width: 860px; margin: 0 auto; padding: 32px 20px 60px; }
+
+    .app-head { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+    .app-head .brand-mark {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: linear-gradient(135deg, #f59e0b, #ef6c00);
+      color: #fff; display: grid; place-items: center; box-shadow: var(--elev-1); flex: 0 0 auto;
+    }
+    .app-head .brand-mark .material-symbols-rounded { font-size: 26px; }
+    .app-head h1 { font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+    .app-head p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+    .card {
+      background: var(--surface); border-radius: var(--radius-lg);
+      border: 1px solid var(--border); box-shadow: var(--elev-1);
+      padding: 24px; margin-bottom: 20px;
+    }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; gap: 12px; }
+    .card-header h2 { font-size: 17px; font-weight: 700; letter-spacing: -.01em; display: flex; align-items: center; gap: 10px; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 20px; border-radius: 9999px; border: 1px solid transparent;
+      cursor: pointer; font-size: 14px; font-weight: 600; font-family: var(--font);
+      transition: background .15s, box-shadow .15s, border .15s, transform .05s; line-height: 1;
+    }
+    .btn:active { transform: translateY(.5px); }
+    .btn .material-symbols-rounded { font-size: 18px; }
+    .btn-secondary { background: var(--surface); color: var(--primary); border-color: var(--border-strong); }
+    .btn-secondary:hover { background: var(--primary-container); border-color: var(--primary-container); }
+    .btn-sm { padding: 6px 14px; font-size: 13px; }
+    .btn-sm .material-symbols-rounded { font-size: 16px; }
+
+    .form-grid { display: grid; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
+    .form-group input, .form-group select {
+      padding: 10px 12px; border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
+      font-size: 14px; font-family: var(--font); background: var(--surface); color: var(--text);
+      transition: border .15s, box-shadow .15s;
+    }
+    .form-group input:hover, .form-group select:hover { border-color: var(--text-muted); }
+    .form-group input:focus, .form-group select:focus {
+      outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(11,87,208,.15);
+    }
+    .form-group input[type="number"] { font-family: var(--mono); }
+
+    .table-wrapper { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; background: var(--surface); }
+    thead tr { background: var(--surface-2); }
+    th {
+      padding: 12px 14px; text-align: left; font-weight: 700; color: var(--text-secondary);
+      border-bottom: 1px solid var(--border); font-size: 12px; white-space: nowrap; letter-spacing: .02em;
+    }
+    td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--text); }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: var(--surface-1); }
+    .text-right { text-align: right; }
+    .amount { font-family: var(--mono); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+    .text-muted { color: var(--text-muted); }
+    .text-sm { font-size: 12px; }
+    .font-bold { font-weight: 700; }
+    .total-row td { font-weight: 700; background: var(--surface-2); border-top: 2px solid var(--border-strong); }
+
+    /* ===== 宴会お酒計算 ===== */
+    .party-summary { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
+    .party-stat {
+      flex: 1; min-width: 140px; display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: 16px; border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, #fff7ed, #fef3c7); border: 1px solid #fde4b8;
+    }
+    .party-stat .ps-num { font-size: 30px; font-weight: 800; color: #b45309; font-family: var(--mono); line-height: 1; }
+    .party-stat .ps-num small { font-size: 16px; margin-left: 1px; }
+    .party-stat .ps-lbl { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+    .party-warn {
+      display: flex; align-items: flex-start; gap: 8px; margin-bottom: 18px; padding: 12px 14px;
+      background: var(--warning-bg); border: 1px solid #f3d28a; border-radius: var(--radius-sm);
+      color: #8a5a00; font-size: 13px; line-height: 1.6;
+    }
+    .party-warn .material-symbols-rounded { color: var(--warning); font-size: 20px; flex: 0 0 auto; }
+    .party-grid { display: grid; grid-template-columns: 230px 1fr; gap: 20px; align-items: start; }
+    @media (max-width: 820px) { .party-grid { grid-template-columns: 1fr; } }
+    .party-chart { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+    .party-donut { width: 180px; height: 180px; border-radius: 50%; position: relative; display: grid; place-items: center; box-shadow: var(--elev-1); }
+    .party-donut-hole { width: 96px; height: 96px; border-radius: 50%; background: var(--surface); box-shadow: inset 0 1px 3px rgba(0,0,0,.08); }
+    .party-legend { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+    .pl-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--text-secondary); }
+    .pl-item b { margin-left: auto; font-family: var(--mono); color: var(--text); }
+    .party-dot { width: 11px; height: 11px; border-radius: 3px; display: inline-block; flex: 0 0 auto; }
+    .party-table td:first-child { display: flex; align-items: center; gap: 7px; font-weight: 600; }
+    .party-extra { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 20px; }
+    .px-card {
+      display: flex; align-items: flex-start; gap: 10px; padding: 13px 15px;
+      border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface-1); font-size: 13px;
+    }
+    .px-card .material-symbols-rounded { color: #ef6c00; font-size: 22px; flex: 0 0 auto; }
+    .party-stat-cost { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-color: #a7f3d0; }
+    .party-stat-cost .ps-num { color: #047857; }
+    .party-total {
+      display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; margin-top: 18px; padding: 16px 18px;
+      border-radius: var(--radius-sm); background: linear-gradient(135deg, #ecfdf5, #d1fae5); border: 1px solid #a7f3d0;
+    }
+    .party-total > span:first-child { font-weight: 700; color: #065f46; }
+    .party-total strong { font-size: 26px; font-family: var(--mono); color: #047857; }
+
+    @media print {
+      body { background: #fff; }
+      .no-print { display: none !important; }
+      .app-head p, .card:first-of-type { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="app-wrap">
+  <div class="app-head">
+    <span class="brand-mark"><span class="material-symbols-rounded">sports_bar</span></span>
+    <div>
+      <h1>ドリンク代計算</h1>
+      <p>飲み会・宴会の必要本数と費用をサッと概算。幹事の買い出しに。</p>
+    </div>
+  </div>
+  <div id="app"></div>
+</div>
+
+<script>
+// ===== 宴会お酒計算 =====
+// 参考データ（出典は画面下に明記）:
+//  ・缶ビールは参加人数の約1.5倍が適量、2杯目以降はハイボール/酎ハイ・サワーへ移行（懇親会発注ガイド）
+//  ・飲み放題の平均は1人5杯前後、宴会の標準は約2〜2.5時間（居酒屋データ）
+//  ・純アルコール20g/日が「節度ある適度な飲酒」の目安（厚労省 健康日本21）
+//  ・1杯=350ml缶相当 / ビール度数5%で1杯≈14gの純アルコール
+const DRINK_TYPES = {
+  beer:     { label: 'ビール',         color: '#f59e0b', unit: '350ml缶',           perBottle: 1,  ml: 350, alc: 14.0, price: 200,  note: '乾杯の定番。最初の1〜2杯はほぼビール' },
+  sour:     { label: '酎ハイ・サワー', color: '#38bdf8', unit: '350ml缶',           perBottle: 1,  ml: 350, alc: 16.8, price: 130,  note: '若年・女性が多いほど比率アップ' },
+  highball: { label: 'ハイボール',     color: '#a78bfa', unit: 'ウイスキー700ml瓶', perBottle: 15, ml: 45,  alc: 14.4, price: 1600, note: '1本(700ml)で約15杯。炭酸水も別途必要' },
+  sake:     { label: '日本酒',         color: '#34d399', unit: '四合瓶(720ml)',     perBottle: 4,  ml: 180, alc: 21.6, price: 1200, note: '1合(180ml)=1杯。四合瓶で4杯分' },
+  wine:     { label: 'ワイン',         color: '#fb7185', unit: '750ml瓶',           perBottle: 6,  ml: 120, alc: 11.5, price: 1000, note: '1本(750ml)で約6杯' },
+  shochu:   { label: '焼酎',           color: '#94a3b8', unit: '720ml瓶',           perBottle: 8,  ml: 90,  alc: 18.0, price: 1100, note: '水割り1杯=焼酎90ml。1本で約8杯' },
+};
+const PARTY_EXTRA_PRICE = { soda: 80, soft: 100, ice: 250 }; // soda:500ml / soft:0.5Lボトル / ice:1kg
+const PARTY_PRESETS = {
+  balanced:   { label: 'バランス',                    ratio: { beer: 45, sour: 25, highball: 15, sake: 7, wine: 5, shochu: 3 } },
+  beer_heavy: { label: 'ビール党多め',                ratio: { beer: 60, sour: 15, highball: 12, sake: 6, wine: 4, shochu: 3 } },
+  sour_heavy: { label: 'サワー党多め（若年・女性多め）', ratio: { beer: 30, sour: 40, highball: 15, sake: 5, wine: 7, shochu: 3 } },
+};
+const PARTY_PACE = { light: { label: '控えめ', mult: 0.7 }, normal: { label: 'ふつう', mult: 1.0 }, heavy: { label: 'しっかり飲む', mult: 1.4 } };
+const PARTY_PRICE_TIER = { budget: { label: '節約（ディスカウント店）', mult: 0.75 }, standard: { label: '標準（スーパー）', mult: 1.0 }, premium: { label: 'ちょっと良い', mult: 1.4 } };
+
+function calcParty(cfg) {
+  const ratio = PARTY_PRESETS[cfg.preset].ratio;
+  const paceMult = PARTY_PACE[cfg.pace].mult;
+  const priceMult = PARTY_PRICE_TIER[cfg.tier].mult;
+  const perPerson = cfg.hours * 2 * paceMult;
+  const totalServings = perPerson * cfg.people;
+  const items = Object.keys(DRINK_TYPES).map(key => {
+    const t = DRINK_TYPES[key];
+    const pct = ratio[key] || 0;
+    const servings = totalServings * pct / 100;
+    const bottles = Math.ceil(servings / t.perBottle);
+    const alcG = servings * t.alc;
+    const cost = bottles * t.price * priceMult;
+    return { key, ...t, pct, servings, bottles, alcG, cost, totalMl: servings * t.ml };
+  });
+  const totalAlcG = items.reduce((s, i) => s + i.alcG, 0);
+  const alcoholCost = items.reduce((s, i) => s + i.cost, 0);
+  const highballServings = (items.find(i => i.key === 'highball') || {}).servings || 0;
+  const sodaL = highballServings * 0.12;
+  const sodaBottles = Math.ceil(sodaL / 0.5);
+  const softL = cfg.people * 0.5;
+  const softBottles = Math.ceil(softL / 0.5);
+  const iceKg = Math.ceil(cfg.people * 0.3);
+  const sodaCost = sodaBottles * PARTY_EXTRA_PRICE.soda * priceMult;
+  const softCost = softBottles * PARTY_EXTRA_PRICE.soft * priceMult;
+  const iceCost  = iceKg * PARTY_EXTRA_PRICE.ice * priceMult;
+  const extraCost = sodaCost + softCost + iceCost;
+  const totalCost = alcoholCost + extraCost;
+  return {
+    perPerson, totalServings, items, totalAlcG, alcPerPerson: totalAlcG / cfg.people,
+    sodaL, sodaBottles, softL, softBottles, iceKg,
+    alcoholCost, sodaCost, softCost, iceCost, extraCost, totalCost, costPerPerson: totalCost / cfg.people,
+  };
+}
+
+function partyDonut(items) {
+  const stops = [];
+  let acc = 0;
+  items.filter(i => i.pct > 0).forEach(i => {
+    stops.push(`${i.color} ${acc}% ${acc + i.pct}%`);
+    acc += i.pct;
+  });
+  return `<div class="party-donut" style="background:conic-gradient(${stops.join(',')})"><div class="party-donut-hole"></div></div>`;
+}
+
+function getPartyCfg() {
+  const saved = JSON.parse(localStorage.getItem('partyCfg') || '{}');
+  return {
+    people: saved.people || 10,
+    hours: saved.hours || 2.5,
+    pace: saved.pace || 'normal',
+    preset: saved.preset || 'balanced',
+    tier: saved.tier || 'standard',
+  };
+}
+
+function renderParty() {
+  const cfg = getPartyCfg();
+  const paceOpts = Object.entries(PARTY_PACE).map(([k, v]) =>
+    `<option value="${k}" ${k === cfg.pace ? 'selected' : ''}>${v.label}</option>`).join('');
+  const presetOpts = Object.entries(PARTY_PRESETS).map(([k, v]) =>
+    `<option value="${k}" ${k === cfg.preset ? 'selected' : ''}>${v.label}</option>`).join('');
+  const tierOpts = Object.entries(PARTY_PRICE_TIER).map(([k, v]) =>
+    `<option value="${k}" ${k === cfg.tier ? 'selected' : ''}>${v.label}</option>`).join('');
+  return `
+  <div class="card">
+    <div class="card-header">
+      <h2><span class="material-symbols-rounded" style="vertical-align:-5px;color:#ef6c00">sports_bar</span> 条件を入力</h2>
+      <span class="text-muted text-sm">人数を入れると、必要本数・提供割合・費用の概算を提案します</span>
+    </div>
+    <div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+      <div class="form-group"><label>参加人数 *</label>
+        <input type="number" id="ptyPeople" min="1" step="1" value="${cfg.people}"></div>
+      <div class="form-group"><label>所要時間（時間）</label>
+        <input type="number" id="ptyHours" min="1" max="6" step="0.5" value="${cfg.hours}"></div>
+      <div class="form-group"><label>飲むペース</label>
+        <select id="ptyPace">${paceOpts}</select></div>
+      <div class="form-group"><label>顔ぶれ（構成）</label>
+        <select id="ptyPreset">${presetOpts}</select></div>
+      <div class="form-group"><label>価格帯</label>
+        <select id="ptyTier">${tierOpts}</select></div>
+    </div>
+  </div>
+  <div id="partyResult"></div>`;
+}
+
+function renderPartyResult() {
+  const cfg = {
+    people: Math.max(1, parseInt(document.getElementById('ptyPeople').value) || 1),
+    hours: parseFloat(document.getElementById('ptyHours').value) || 2.5,
+    pace: document.getElementById('ptyPace').value,
+    preset: document.getElementById('ptyPreset').value,
+    tier: document.getElementById('ptyTier').value,
+  };
+  localStorage.setItem('partyCfg', JSON.stringify(cfg));
+  const r = calcParty(cfg);
+  const overLimit = r.alcPerPerson > 40;
+  const yen = (v) => '¥' + Math.round(v).toLocaleString('ja-JP');
+
+  const rows = r.items.filter(i => i.pct > 0).map(i => `
+    <tr>
+      <td><span class="party-dot" style="background:${i.color}"></span>${i.label}</td>
+      <td class="text-right">${i.pct}%</td>
+      <td class="text-right amount">${Math.round(i.servings)} 杯</td>
+      <td class="text-right amount font-bold">${i.bottles} <span class="text-muted text-sm">${i.unit}</span></td>
+      <td class="text-right amount">${yen(i.cost)}</td>
+    </tr>`).join('');
+
+  document.getElementById('partyResult').innerHTML = `
+  <div class="card">
+    <div class="card-header">
+      <h2>提案：${cfg.people}人 × ${cfg.hours}時間</h2>
+      <button class="btn btn-secondary btn-sm no-print" onclick="window.print()">印刷</button>
+    </div>
+    <div class="party-summary">
+      <div class="party-stat"><span class="ps-num">${Math.round(r.totalServings)}</span><span class="ps-lbl">総杯数（目安）</span></div>
+      <div class="party-stat"><span class="ps-num">${r.perPerson.toFixed(1)}</span><span class="ps-lbl">1人あたり杯数</span></div>
+      <div class="party-stat"><span class="ps-num">${Math.round(r.alcPerPerson)}<small>g</small></span><span class="ps-lbl">1人あたり純アルコール</span></div>
+      <div class="party-stat party-stat-cost"><span class="ps-num">${yen(r.totalCost)}</span><span class="ps-lbl">概算費用（1人 ${yen(r.costPerPerson)}）</span></div>
+    </div>
+    ${overLimit ? `<div class="party-warn"><span class="material-symbols-rounded">warning</span>
+      1人あたりの純アルコールが多めです（「節度ある適度な飲酒」は1日20gが目安）。ノンアル・水・ソフトドリンクも十分に用意し、無理のない範囲で楽しみましょう。</div>` : ''}
+
+    <div class="party-grid">
+      <div class="party-chart">
+        ${partyDonut(r.items)}
+        <div class="party-legend">
+          ${r.items.filter(i => i.pct > 0).map(i =>
+            `<div class="pl-item"><span class="party-dot" style="background:${i.color}"></span>${i.label} <b>${i.pct}%</b></div>`).join('')}
+        </div>
+      </div>
+      <div class="table-wrapper party-table">
+        <table>
+          <thead><tr><th>種類</th><th class="text-right">提供割合</th><th class="text-right">必要杯数</th><th class="text-right">用意する量</th><th class="text-right">概算費用</th></tr></thead>
+          <tbody>${rows}</tbody>
+          <tfoot><tr class="total-row">
+            <td colspan="4">お酒 小計</td>
+            <td class="text-right amount">${yen(r.alcoholCost)}</td>
+          </tr></tfoot>
+        </table>
+      </div>
+    </div>
+
+    <div class="party-extra">
+      <div class="px-card"><span class="material-symbols-rounded">bubble_chart</span>
+        <div><b>炭酸水（ハイボール用）</b><br>約 ${r.sodaL.toFixed(1)} L（500ml ${r.sodaBottles} 本）<br><span class="text-muted text-sm">概算 ${yen(r.sodaCost)}</span></div></div>
+      <div class="px-card"><span class="material-symbols-rounded">local_cafe</span>
+        <div><b>ソフトドリンク・水</b><br>約 ${r.softL.toFixed(1)} L（下戸・運転者用に1人0.5L目安）<br><span class="text-muted text-sm">ウーロン茶など多めに ・ 概算 ${yen(r.softCost)}</span></div></div>
+      <div class="px-card"><span class="material-symbols-rounded">icecream</span>
+        <div><b>氷</b><br>約 ${r.iceKg} kg（1人300g目安）<br><span class="text-muted text-sm">概算 ${yen(r.iceCost)}</span></div></div>
+    </div>
+
+    <div class="party-total">
+      <span>合計の概算費用</span>
+      <strong>${yen(r.totalCost)}</strong>
+      <span class="text-muted text-sm">（お酒 ${yen(r.alcoholCost)} ＋ 割りもの等 ${yen(r.extraCost)} ／ 1人あたり ${yen(r.costPerPerson)}）</span>
+    </div>
+
+    <p class="text-muted text-sm" style="margin-top:14px;line-height:1.7">
+      ※ 目安です。実際の飲酒量・価格は年代・性別・好み・店舗で大きく変わります。少し多めに用意し、余りは持ち帰り可能なものを中心に。<br>
+      ※ 単価の目安（標準＝スーパー）：ビール350ml缶¥200／酎ハイ350ml缶¥130／ウイスキー700ml¥1,600／日本酒720ml¥1,200／ワイン750ml¥1,000／焼酎720ml¥1,100。価格帯で増減します。<br>
+      ※ 参考：缶ビールは参加人数の約1.5倍が適量で2杯目以降はハイボール/酎ハイ・サワーへ移行（懇親会発注ガイド）／飲み放題の平均は1人5杯前後（居酒屋データ）／「節度ある適度な飲酒」は純アルコール20g/日が目安（厚生労働省）／缶ビール・酎ハイのスーパー相場（価格比較サイト）。
+    </p>
+  </div>`;
+}
+
+function bindParty() {
+  ['ptyPeople', 'ptyHours', 'ptyPace', 'ptyPreset', 'ptyTier'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('input', renderPartyResult);
+    el.addEventListener('change', renderPartyResult);
+  });
+  renderPartyResult();
+}
+
+document.getElementById('app').innerHTML = renderParty();
+bindParty();
+</script>
+</body>
+</html>

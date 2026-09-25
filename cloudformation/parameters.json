@@ -1,0 +1,38 @@
+[
+  {
+    "ParameterKey": "ProjectName",
+    "ParameterValue": "aws-training"
+  },
+  {
+    "ParameterKey": "EC2KeyPairName",
+    "ParameterValue": "impress-keypair"
+  },
+  {
+    "ParameterKey": "DBPassword",
+    "ParameterValue": "YourPassword123!"
+  },
+  {
+    "ParameterKey": "EC2InstanceType",
+    "ParameterValue": "t3.micro"
+  },
+  {
+    "ParameterKey": "DBInstanceClass",
+    "ParameterValue": "db.t3.micro"
+  },
+  {
+    "ParameterKey": "ASGMinSize",
+    "ParameterValue": "2"
+  },
+  {
+    "ParameterKey": "ASGMaxSize",
+    "ParameterValue": "4"
+  },
+  {
+    "ParameterKey": "ASGDesiredSize",
+    "ParameterValue": "2"
+  },
+  {
+    "ParameterKey": "CPUScaleOutThreshold",
+    "ParameterValue": "50"
+  }
+]

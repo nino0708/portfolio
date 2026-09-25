@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIで膨大なAWS資料を15分で要点化 — 社内共有スライド</title>
+<style>
+  @page { size: 1280px 720px; margin: 0; }
+  * { box-sizing: border-box; margin:0; padding:0; }
+  :root{
+    --ink:#0B1428; --ink2:#1B2A4A; --muted:#5b6a85; --line:#dfe5f0;
+    --blue:#2A44C4; --blue2:#5C82C9; --teal:#1FB0C6; --bg:#eef1f6;
+    --card:#ffffff;
+  }
+  html,body{ font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans CJK JP",sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; background:#c9d0de; }
+
+  .slide{
+    position:relative; width:1280px; height:720px; overflow:hidden;
+    background:var(--card); page-break-after:always; break-after:page;
+    display:flex; flex-direction:column;
+  }
+  .slide:last-child{ page-break-after:auto; break-after:auto; }
+
+  /* 共通の装飾 */
+  .pad{ padding:64px 80px; height:100%; display:flex; flex-direction:column; }
+  .kicker{ font-size:13px; letter-spacing:.16em; font-weight:800; color:var(--blue2); margin-bottom:14px; }
+  .footer{ position:absolute; left:80px; right:80px; bottom:28px; display:flex; justify-content:space-between; align-items:center; font-size:12px; color:#9aa6bd; letter-spacing:.03em; }
+  .footer .dot{ width:7px; height:7px; border-radius:50%; background:var(--teal); display:inline-block; margin-right:8px; vertical-align:middle; }
+  .pageno{ font-variant-numeric:tabular-nums; }
+
+  /* ===== 表紙 ===== */
+  .cover{ background:linear-gradient(135deg,#0B1428 0%,#1B2A4A 48%,#22458F 100%); color:#fff; justify-content:center; }
+  .cover::after{ content:""; position:absolute; right:-140px; top:-140px; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle at 30% 30%, rgba(31,176,198,.55), rgba(31,176,198,0) 62%); }
+  .cover::before{ content:""; position:absolute; left:-120px; bottom:-160px; width:460px; height:460px; border-radius:50%; background:radial-gradient(circle at 50% 50%, rgba(92,130,201,.42), rgba(92,130,201,0) 64%); }
+  .cover .pad{ position:relative; z-index:1; }
+  .cover .badge{ align-self:flex-start; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.38); border-radius:999px; padding:7px 16px; font-size:12.5px; letter-spacing:.05em; margin-bottom:26px; }
+  .cover h1{ font-size:52px; line-height:1.25; letter-spacing:.01em; margin-bottom:18px; }
+  .cover h1 .hl{ color:#6EE7FF; }
+  .cover .lead{ font-size:19px; color:#d7e0f2; font-weight:400; line-height:1.7; max-width:820px; }
+  .cover .tagrow{ margin-top:34px; display:flex; gap:12px; }
+  .cover .tag{ font-size:13px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.28); border-radius:8px; padding:9px 15px; letter-spacing:.02em; }
+
+  /* ===== セクション見出し行 ===== */
+  h2.title{ font-size:34px; letter-spacing:.01em; color:var(--ink); margin-bottom:6px; line-height:1.3; }
+  .subhead{ font-size:15px; color:var(--muted); margin-bottom:30px; }
+
+  /* Before / After */
+  .ba{ display:grid; grid-template-columns:1fr 96px 1fr; align-items:stretch; gap:0; flex:1; }
+  .ba .col{ border-radius:18px; padding:34px 34px; display:flex; flex-direction:column; }
+  .ba .before{ background:#f4f6fb; border:1px solid var(--line); }
+  .ba .after{ background:linear-gradient(150deg,#08155A 0%,#1B2A4A 60%,#1FB0C6 160%); color:#fff; }
+  .ba .arrow{ display:flex; align-items:center; justify-content:center; font-size:40px; color:var(--teal); font-weight:800; }
+  .ba .lab{ font-size:12.5px; font-weight:800; letter-spacing:.12em; margin-bottom:14px; }
+  .ba .before .lab{ color:#9aa6bd; }
+  .ba .after .lab{ color:#7FE9F6; }
+  .ba ul{ list-style:none; }
+  .ba li{ font-size:16.5px; line-height:1.55; padding:11px 0 11px 30px; position:relative; border-bottom:1px dashed rgba(120,135,165,.28); }
+  .ba .after li{ border-bottom:1px dashed rgba(255,255,255,.16); }
+  .ba li:last-child{ border-bottom:none; }
+  .ba li::before{ content:""; position:absolute; left:4px; top:19px; width:9px; height:9px; border-radius:50%; background:var(--blue2); }
+  .ba .after li::before{ background:#6EE7FF; }
+  .ba .big{ margin-top:auto; font-size:15px; }
+  .ba .big b{ font-size:40px; display:block; line-height:1.1; }
+  .ba .before .big b{ color:var(--ink2); }
+  .ba .after .big b{ color:#7FE9F6; }
+
+  /* ステップ */
+  .steps{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; flex:1; align-content:center; }
+  .step{ background:#f6f8fc; border:1px solid var(--line); border-radius:16px; padding:26px 22px; position:relative; display:flex; flex-direction:column; }
+  .step .n{ width:40px; height:40px; border-radius:11px; background:linear-gradient(135deg,var(--blue) 0%, var(--teal) 120%); color:#fff; font-size:19px; font-weight:800; display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+  .step h3{ font-size:18px; margin-bottom:10px; color:var(--ink2); }
+  .step p{ font-size:14px; color:var(--muted); line-height:1.6; }
+  .step .who{ margin-top:auto; padding-top:16px; font-size:11.5px; font-weight:800; letter-spacing:.06em; }
+  .step .who.ai{ color:var(--blue); }
+  .step .who.me{ color:#c07a12; }
+
+  /* 成果グリッド */
+  .out{ display:grid; grid-template-columns:1.25fr 1fr; gap:34px; flex:1; }
+  .out .stats{ display:flex; flex-direction:column; justify-content:center; gap:18px; }
+  .stat{ background:#f6f8fc; border:1px solid var(--line); border-left:5px solid var(--teal); border-radius:12px; padding:20px 24px; }
+  .stat b{ font-size:38px; color:var(--ink); line-height:1; letter-spacing:.01em; }
+  .stat b .u{ font-size:17px; color:var(--muted); font-weight:700; margin-left:4px; }
+  .stat span{ display:block; font-size:14px; color:var(--muted); margin-top:8px; }
+  .out .visual{ border-radius:16px; overflow:hidden; border:1px solid var(--line); background:linear-gradient(135deg,#0B1428,#1B2A4A); color:#fff; padding:28px 26px; display:flex; flex-direction:column; }
+  .out .visual .vh{ font-size:13px; letter-spacing:.1em; color:#7FE9F6; font-weight:800; margin-bottom:16px; }
+  .certchip{ display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.12); font-size:14.5px; }
+  .certchip:last-child{ border-bottom:none; }
+  .certchip .lv{ font-size:10.5px; font-weight:800; letter-spacing:.04em; padding:3px 9px; border-radius:999px; background:rgba(255,255,255,.14); }
+
+  /* ポイント（なぜ効くか） */
+  .why{ display:grid; grid-template-columns:1fr 1fr; gap:22px; flex:1; align-content:center; }
+  .whycard{ background:#f6f8fc; border:1px solid var(--line); border-radius:16px; padding:28px 30px; }
+  .whycard .ic{ font-size:26px; margin-bottom:14px; }
+  .whycard h3{ font-size:20px; color:var(--ink2); margin-bottom:10px; }
+  .whycard p{ font-size:15px; color:var(--muted); line-height:1.7; }
+  .whycard.accent{ background:linear-gradient(150deg,#08155A,#1B2A4A); color:#fff; border:none; }
+  .whycard.accent h3{ color:#fff; }
+  .whycard.accent p{ color:#cdd8ee; }
+
+  /* まとめ / CTA */
+  .cta{ background:linear-gradient(135deg,#0B1428 0%,#1B2A4A 55%,#2A44C4 130%); color:#fff; justify-content:center; }
+  .cta::after{ content:""; position:absolute; right:-160px; bottom:-160px; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle at 40% 40%, rgba(31,176,198,.5), rgba(31,176,198,0) 62%); }
+  .cta .pad{ position:relative; z-index:1; }
+  .cta h2{ font-size:40px; line-height:1.35; margin-bottom:22px; }
+  .cta h2 .hl{ color:#6EE7FF; }
+  .cta .list{ list-style:none; max-width:900px; }
+  .cta .list li{ font-size:18px; line-height:1.6; padding:12px 0 12px 40px; position:relative; color:#e3eaf7; }
+  .cta .list li::before{ content:"→"; position:absolute; left:0; top:11px; color:#6EE7FF; font-weight:800; font-size:20px; }
+  .cta .note{ margin-top:30px; font-size:14px; color:#aebbd6; }
+</style>
+</head>
+<body>
+
+<!-- 1. 表紙 -->
+<section class="slide cover">
+  <div class="pad">
+    <span class="badge">社内AI活用ナレッジ共有 ｜ Claude Code 実践レポート</span>
+    <h1>数万ページ規模のAWS資料を、<br>AIで<span class="hl">たった約15分</span>で<br>「要点＋一問一答」に。</h1>
+    <p class="lead">AWS Black Belt の膨大な資料から、必要なところだけをAIに抽出・要約させて、資格5つぶんの学習ドリルを一気に作りました。「読むだけで数十時間」が、指示するだけの短時間に。</p>
+    <div class="tagrow">
+      <span class="tag">🗂 対象：AWS認定 5資格</span>
+      <span class="tag">⏱ 所要：約15分</span>
+      <span class="tag">🤖 ツール：Claude Code</span>
+    </div>
+  </div>
+  <div class="footer"><span><span class="dot"></span>社内共有用スライド</span><span class="pageno">01 / 06</span></div>
+</section>
+
+<!-- 2. 課題（Before/After） -->
+<section class="slide">
+  <div class="pad">
+    <div class="kicker">WHAT CHANGED</div>
+    <h2 class="title">「読む・まとめる」の重労働が、指示ひとつに変わった</h2>
+    <p class="subhead">やりたかったこと：AWS認定5資格ぶんの要点と一問一答を、実務・学習でそのまま使える形にまとめる</p>
+    <div class="ba">
+      <div class="col before">
+        <div class="lab">BEFORE ｜ これまでの手作業</div>
+        <ul>
+          <li>資格ごとに何十本ものBlack Belt資料（1本で数十〜100ページ超）</li>
+          <li>どこが試験に出る要点か、読み込んで自分で取捨選択</li>
+          <li>まとめ直し・一問一答づくりを手打ちで作成</li>
+        </ul>
+        <div class="big"><b>数十時間〜</b>全部読んで整理すると数日がかり</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="col after">
+        <div class="lab">AFTER ｜ AIに任せた結果</div>
+        <ul>
+          <li>「5資格ぶんの要点と一問一答を作って」と指示</li>
+          <li>AIが該当箇所だけを抽出・要約・構造化</li>
+          <li>レベル別カラーの表紙集つきで一式が完成</li>
+        </ul>
+        <div class="big"><b>約15分</b>指示して待つだけで下地が完成</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span><span class="dot"></span>社内共有用スライド</span><span class="pageno">02 / 06</span></div>
+</section>
+
+<!-- 3. やったこと（ステップ） -->
+<section class="slide">
+  <div class="pad">
+    <div class="kicker">HOW IT WORKS</div>
+    <h2 class="title">やったことは、この4ステップだけ</h2>
+    <p class="subhead">難しい設定は不要。ふだんの言葉で指示して、出てきたものを確認するだけ</p>
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <h3>ゴールを伝える</h3>
+        <p>「AWS認定5資格の要点＋一問一答を、学習に使える形でまとめて」と日本語で依頼。</p>
+        <div class="who me">👤 人がやる</div>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <h3>AIが探索・抽出</h3>
+        <p>膨大な資料から資格ごとの頻出領域だけをAIが自動で拾い、整理。</p>
+        <div class="who ai">🤖 AIがやる</div>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <h3>要点＋ドリル化</h3>
+        <p>要点まとめと一問一答、レベル別の表紙まで一式を自動生成。</p>
+        <div class="who ai">🤖 AIがやる</div>
+      </div>
+      <div class="step">
+        <div class="n">4</div>
+        <h3>人が確認・微調整</h3>
+        <p>出力を眺めて、表現や過不足だけを手直し。最終チェックは人の役目。</p>
+        <div class="who me">👤 人がやる</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span><span class="dot"></span>社内共有用スライド</span><span class="pageno">03 / 06</span></div>
+</section>
+
+<!-- 4. 成果 -->
+<section class="slide">
+  <div class="pad">
+    <div class="kicker">RESULT</div>
+    <h2 class="title">15分で、こんな成果物ができました</h2>
+    <p class="subhead">入門〜アソシエイト〜プロフェッショナルまで、AWS認定5資格を横断でカバー</p>
+    <div class="out">
+      <div class="stats">
+        <div class="stat"><b>5<span class="u">資格</span></b><span>CLF・SAA・SOA・DVA・SAP を一括カバー</span></div>
+        <div class="stat"><b>約15<span class="u">分</span></b><span>指示から一式そろうまでの実所要時間</span></div>
+        <div class="stat"><b>数十時間 → 15分</b><span>自分で全部読んで整理していた時間を大幅に圧縮</span></div>
+      </div>
+      <div class="visual">
+        <div class="vh">できあがった資料（全5資格）</div>
+        <div class="certchip"><span class="lv">入門</span>CLF クラウドプラクティショナー</div>
+        <div class="certchip"><span class="lv">アソシ</span>SAA ソリューションアーキテクト</div>
+        <div class="certchip"><span class="lv">アソシ</span>SOA システムオペレーション</div>
+        <div class="certchip"><span class="lv">アソシ</span>DVA デベロッパー</div>
+        <div class="certchip"><span class="lv">プロ</span>SAP ソリューションアーキテクト Pro</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span><span class="dot"></span>社内共有用スライド</span><span class="pageno">04 / 06</span></div>
+</section>
+
+<!-- 5. なぜ効くのか -->
+<section class="slide">
+  <div class="pad">
+    <div class="kicker">WHY IT WORKS</div>
+    <h2 class="title">なぜ、こんなに速いのか</h2>
+    <p class="subhead">AIが得意なところを任せて、人は判断に集中する — この分担がカギ</p>
+    <div class="why">
+      <div class="whycard">
+        <div class="ic">📚</div>
+        <h3>大量の情報を一気に読む</h3>
+        <p>人なら数十時間かかる量の読み込みも、AIは一瞬。「全部読む」がボトルネックでなくなる。</p>
+      </div>
+      <div class="whycard">
+        <div class="ic">✂️</div>
+        <h3>必要な部分だけ抜き出す</h3>
+        <p>「試験に出る要点」など目的を伝えれば、膨大な中から関連箇所だけを選んで整理してくれる。</p>
+      </div>
+      <div class="whycard">
+        <div class="ic">🧱</div>
+        <h3>使える形に組み立てる</h3>
+        <p>要約・一問一答・見た目の整った資料まで、成果物の形にして出力できる。</p>
+      </div>
+      <div class="whycard accent">
+        <div class="ic">🎯</div>
+        <h3>人は「判断」に集中</h3>
+        <p>正確さの最終確認や表現の調整は人の役目。AIは下ごしらえ、人は仕上げ。この分担が速さの正体。</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span><span class="dot"></span>社内共有用スライド</span><span class="pageno">05 / 06</span></div>
+</section>
+
+<!-- 6. まとめ / CTA -->
+<section class="slide cta">
+  <div class="pad">
+    <span class="kicker" style="color:#7FE9F6;">TAKEAWAY</span>
+    <h2>「読む・まとめる・作る」作業は、<br><span class="hl">まずAIに下書きさせる</span>時代へ。</h2>
+    <ul class="list">
+      <li>膨大な資料の要約・整理は、AIがいちばん得意な仕事のひとつ</li>
+      <li>専門知識がなくても、ふだんの言葉で指示すれば形になる</li>
+      <li>あなたの業務のマニュアル・議事録・調査資料でも同じことができる</li>
+      <li>まずは手元の「読むのが大変な資料」で1回試してみてください</li>
+    </ul>
+    <p class="note">※ AIの出力は必ず人が最終確認を。特に数値・仕様・固有名詞は原典で裏取りしましょう。<br>本資料の作成にも Claude Code を利用しています。</p>
+  </div>
+  <div class="footer"><span style="color:#aebbd6;"><span class="dot"></span>社内共有用スライド</span><span class="pageno" style="color:#aebbd6;">06 / 06</span></div>
+</section>
+
+</body>
+</html>
