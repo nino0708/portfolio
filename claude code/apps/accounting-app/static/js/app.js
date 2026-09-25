@@ -175,7 +175,7 @@ function navigate(page) {
 
 async function render(page) {
   const el = document.getElementById('content');
-  el.innerHTML = '<div style="text-align:center;padding:40px;color:#94a3b8">読み込み中...</div>';
+  el.innerHTML = '<div class="page-loading">読み込み中…</div>';
   try {
     switch (page) {
       case 'journal':  el.innerHTML = renderJournal(); bindJournal(); break;
@@ -197,7 +197,7 @@ async function render(page) {
       case 'csvimport': await renderCsvImport(el); break;
     }
   } catch (e) {
-    el.innerHTML = `<div style="color:red;padding:20px">${e.message}</div>`;
+    el.innerHTML = `<div class="page-error">${e.message}</div>`;
   }
 }
 
@@ -1166,9 +1166,7 @@ async function renderBS(el) {
       const catItems = items.filter(i => (i.category || '') === cat);
       let html = '';
       if (cat) {
-        html += `<tr style="background:#f8fafc">
-          <td colspan="2" style="padding:5px 8px 3px 16px;font-weight:600;font-size:13px;color:#64748b">${cat}</td>
-        </tr>`;
+        html += `<tr class="bs-cat-row"><td colspan="2">${cat}</td></tr>`;
       }
       html += catItems.map(item => `<tr>
         <td style="padding-left:${cat ? 32 : 20}px">${item.name}</td>
@@ -1183,32 +1181,39 @@ async function renderBS(el) {
     <tr class="total-row"><td>${label}合計</td><td class="text-right amount">${fmt(total)}</td></tr>`;
   }
 
+  const balanced = Math.abs(d.total_assets - (d.total_liabilities + d.total_equity)) < 1;
   el.innerHTML = `
   <div class="card">
     <div class="card-header">
       <h2>貸借対照表（B/S）</h2>
       <button class="btn btn-secondary btn-sm" onclick="window.print()">印刷</button>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+    <div class="stats-row no-print" style="margin-bottom:20px">
+      <div class="stat-card bs-assets"><div class="label">資産合計</div><div class="value">${fmt(d.total_assets)}</div></div>
+      <div class="stat-card bs-liab"><div class="label">負債合計</div><div class="value">${fmt(d.total_liabilities)}</div></div>
+      <div class="stat-card bs-equity"><div class="label">正味財産合計</div><div class="value">${fmt(d.total_equity)}</div></div>
+      <div class="stat-card bs-balance"><div class="label">貸借バランス</div><div class="value" style="font-size:16px">${balanced ? '一致 ✓' : '不一致 !'}</div></div>
+    </div>
+    <div class="bs-layout">
       <div>
-        <h3 style="margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--border)">資産の部</h3>
+        <h3 class="bs-section-h3">資産の部</h3>
         <table>${bsSection('資産', d.assets, d.total_assets)}</table>
       </div>
       <div>
-        <h3 style="margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--border)">負債・正味財産の部</h3>
+        <h3 class="bs-section-h3">負債・正味財産の部</h3>
         <table>
           ${d.liabilities.length ? `
-          <tr><td colspan="2" style="font-weight:700;padding:6px 0 4px;font-size:14px">負債の部</td></tr>
+          <tr class="bs-label-head"><td colspan="2">負債の部</td></tr>
           ${bsSection('負債', d.liabilities, d.total_liabilities)}
           <tr><td colspan="2" style="height:12px"></td></tr>` : ''}
-          <tr><td colspan="2" style="font-weight:700;padding:6px 0 4px;font-size:14px">正味財産の部</td></tr>
+          <tr class="bs-label-head"><td colspan="2">正味財産の部</td></tr>
           ${bsSection('正味財産', d.equity, d.total_equity)}
           <tr class="total-row"><td>負債・正味財産合計</td><td class="text-right amount">${fmt(d.total_liabilities + d.total_equity)}</td></tr>
         </table>
       </div>
     </div>
-    ${Math.abs(d.total_assets - (d.total_liabilities + d.total_equity)) < 1 ? '' :
-      `<div style="margin-top:16px;padding:12px;background:#fef2f2;border-radius:8px;color:var(--danger)">
+    ${balanced ? '' :
+      `<div class="bs-mismatch">
         ⚠ 貸借が一致していません（差額: ${fmt(Math.abs(d.total_assets - d.total_liabilities - d.total_equity))}）
       </div>`}
   </div>`;
