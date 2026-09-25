@@ -13,13 +13,13 @@ variable "s3_bucket_name" {
 variable "ses_from_email" {
   description = "SES verified sender email"
   type        = string
-  default     = "redacted@example.com"
+  default     = "sender@example.com"
 }
 
 variable "operator_email" {
   description = "Operator notification email"
   type        = string
-  default     = "redacted@example.com"
+  default     = "operator@example.com"
 }
 
 variable "lambda_function_name" {
