@@ -1,0 +1,19 @@
+-- Tempus: 開発用シード（コメントアウト状態で配置。手で流す用）
+-- 実行前に auth.users にテストユーザーを作成し、以下の <YOUR_USER_ID> を実際の uuid に置き換えること。
+--
+-- begin;
+--
+-- insert into public.profiles (id, display_name, timezone, workday_start, workday_end)
+-- values ('<YOUR_USER_ID>', '開発太郎', 'Asia/Tokyo', '09:00', '22:00')
+-- on conflict (id) do nothing;
+--
+-- insert into public.projects (id, owner_id, name, color)
+-- values ('00000000-0000-0000-0000-000000000001', '<YOUR_USER_ID>', '本業', '#3B82F6')
+-- on conflict (id) do nothing;
+--
+-- insert into public.tasks (project_id, owner_id, title, status, importance, estimate_min, estimate_is_inferred, source)
+-- values
+--   (null, '<YOUR_USER_ID>', '受信箱のタスク（未仕分け）', 'todo', 'mid', 30, true, 'app'),
+--   ('00000000-0000-0000-0000-000000000001', '<YOUR_USER_ID>', 'プロジェクトのタスク', 'todo', 'high', 60, false, 'line');
+--
+-- commit;

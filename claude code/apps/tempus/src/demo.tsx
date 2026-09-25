@@ -67,14 +67,14 @@ const clips: Clip[] = [
     text: 'せどりで一番効くのは「安く買う」より「売れる棚を持つ」こと。\n'
       + '在庫が寝ている間はキャッシュも寝ている。\n\n'
       + '今週の回転率トップ3を貼っておきます。\n#せどり #物販',
-    url: 'https://example.com/friday/weekly', postedAt: null, createdAt: iso(7),
+    url: 'https://example.com/friday/weekly', imageUrl: null, postedAt: null, createdAt: iso(7),
   },
   {
     id: 'k2', ownerId: 'me', taskId: null, label: 'Built Japan 夕方の投稿', kind: 'x_post',
     text: '虎ノ門ヒルズ ステーションタワー、地下から屋上まで「歩ける塔」として作られている話。\n'
       + 'https://builtjapan.com/buildings/toranomon-hills-station-tower/',
     url: 'https://builtjapan.com/buildings/toranomon-hills-station-tower/',
-    postedAt: null, createdAt: iso(7),
+    imageUrl: null, postedAt: null, createdAt: iso(7),
   },
 ];
 
