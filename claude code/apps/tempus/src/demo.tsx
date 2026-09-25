@@ -14,6 +14,11 @@ import { LooseClips } from './components/LooseClips';
 import { groupByTaskId } from './lib/tasks';
 import type { CalendarEvent, ChecklistItem, Clip, Task } from './types/domain';
 import './styles.css';
+import './design-drafts.css';
+
+// デザイン案の見比べ用: demo.html?design=a|b|c
+const design = new URLSearchParams(location.search).get('design');
+if (design) document.documentElement.dataset.design = design;
 
 const TZ = 'Asia/Tokyo';
 const iso = (h: number, m = 0) => new Date(Date.UTC(2026, 7, 26, h - 9, m)).toISOString();

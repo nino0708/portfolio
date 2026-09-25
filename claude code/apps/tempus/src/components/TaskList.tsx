@@ -94,52 +94,57 @@ export function TaskList({
               >
                 ⠿
               </span>
-              {inWindow && (
-                <button
-                  className="badge"
-                  title="今日の空き時間の候補を出す"
-                  aria-expanded={isPickerOpen}
-                  aria-label={`${t.title} を置く候補を出す`}
-                  onClick={() => togglePicker(t.id)}
-                >
-                  候補
-                </button>
-              )}
               <input
                 type="checkbox"
                 checked={t.status === 'done'}
                 onChange={() => onFinishNow(t)}
                 aria-label={`${t.title} を完了`}
               />
-              <button
-                className="task-open"
-                aria-expanded={isOpen}
-                onClick={() => toggle(t.id)}
-              >
-                <span className={`task-title ${t.status === 'done' ? 'done' : ''}`}>{t.title}</span>
-                {note && <div className={`lead-note ${hard ? 'hard' : ''}`}>{note}</div>}
-              </button>
-              {note && <span className={`badge lead ${hard ? 'hard' : ''}`}>
-                {lead.urgency === 'overdue' ? '期限切れ'
-                  : lead.urgency === 'impossible' ? '間に合わない'
-                  : lead.urgency === 'today' ? '今日着手'
-                  : `あと${lead.daysUntilStart}日`}
-              </span>}
-              {t.importance === 'high' && <span className="badge high">高</span>}
-              {t.source === 'line' && <span className="badge line">LINE</span>}
-              {t.source === 'template' && <span className="badge">定期</span>}
-              {t.source === 'routine' && <span className="badge">部署</span>}
-              <button
-                className={`badge ${t.estimateIsInferred ? 'inferred' : ''}`}
-                title={t.estimateIsInferred ? '推定値。押すと直せる' : '見積もり'}
-                onClick={() => {
-                  const v = window.prompt('見積もり（分）', String(t.estimateMin));
-                  const n = Number(v);
-                  if (Number.isFinite(n) && n > 0) onEstimate(t, Math.round(n));
-                }}
-              >
-                {t.estimateMin}分{t.estimateIsInferred ? '?' : ''}
-              </button>
+              {/* スマホ幅でもタイトルを1行ぶん丸ごと使えるよう、印は2段目にまとめる */}
+              <div className="task-main">
+                <button
+                  className="task-open"
+                  aria-expanded={isOpen}
+                  onClick={() => toggle(t.id)}
+                >
+                  <span className={`task-title ${t.status === 'done' ? 'done' : ''}`}>{t.title}</span>
+                  {note && <div className={`lead-note ${hard ? 'hard' : ''}`}>{note}</div>}
+                </button>
+                <div className="task-meta">
+                  {inWindow && (
+                    <button
+                      className="badge"
+                      title="今日の空き時間の候補を出す"
+                      aria-expanded={isPickerOpen}
+                      aria-label={`${t.title} を置く候補を出す`}
+                      onClick={() => togglePicker(t.id)}
+                    >
+                      候補
+                    </button>
+                  )}
+                  {note && <span className={`badge lead ${hard ? 'hard' : ''}`}>
+                    {lead.urgency === 'overdue' ? '期限切れ'
+                      : lead.urgency === 'impossible' ? '間に合わない'
+                      : lead.urgency === 'today' ? '今日着手'
+                      : `あと${lead.daysUntilStart}日`}
+                  </span>}
+                  {t.importance === 'high' && <span className="badge high">高</span>}
+                  {t.source === 'line' && <span className="badge line">LINE</span>}
+                  {t.source === 'template' && <span className="badge">定期</span>}
+                  {t.source === 'routine' && <span className="badge">部署</span>}
+                  <button
+                    className={`badge ${t.estimateIsInferred ? 'inferred' : ''}`}
+                    title={t.estimateIsInferred ? '推定値。押すと直せる' : '見積もり'}
+                    onClick={() => {
+                      const v = window.prompt('見積もり（分）', String(t.estimateMin));
+                      const n = Number(v);
+                      if (Number.isFinite(n) && n > 0) onEstimate(t, Math.round(n));
+                    }}
+                  >
+                    {t.estimateMin}分{t.estimateIsInferred ? '?' : ''}
+                  </button>
+                </div>
+              </div>
               {/* タイトル側でも開けるが、印が無いと開けることに気づけない。
                   幅が最優先なので文字は入れず、中身がある行だけ色を付ける */}
               <button

@@ -75,7 +75,7 @@ input, textarea { font: inherit; }
 .app { max-width: 880px; margin: 0 auto; padding: 0 16px 96px; }
 /* グリッド/フレックスの子は既定が min-width:auto で、長いタイトルがカラムを
    押し広げて横スクロールを起こす。ここを止めないと狭い画面で右端が切れる。 */
-.slot > *, .task-row > * { min-width: 0; }
+.slot > *, .task-row > *, .task-main > * { min-width: 0; }
 .slot-title, .task-title, .banner { overflow-wrap: anywhere; }
 
 /* ホーム感を出すヒーロー */
@@ -212,9 +212,14 @@ input, textarea { font: inherit; }
 .drag-ghost.over { outline: 2px solid var(--on-primary); }
 
 .task-row {
-  display: flex; align-items: center; gap: 10px;
+  display: flex; align-items: flex-start; gap: 10px;
   padding: 10px 4px; border-bottom: 1px solid var(--outline-variant);
 }
+.task-row > .task-drag-handle, .task-row > input[type="checkbox"], .task-row > .disclose { margin-top: 3px; }
+/* タイトルは1行を丸ごと使い、印（候補・期限・見積もりなど）は2段目に並べる。
+   1段に全部並べると、スマホ幅でタイトルが1文字ずつ縦に折り返してしまう */
+.task-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+.task-meta { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
 .task-row:last-child, .task-item:last-child .task-row { border-bottom: none; }
 .task-title { flex: 1; font-size: 14px; }
 .task-title.done { text-decoration: line-through; opacity: .5; }
