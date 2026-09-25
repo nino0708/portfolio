@@ -1,7 +1,7 @@
 -- Tempus: タスクごとの「思考ログ」Googleドキュメントを Drive に作って紐付ける。
 --
 -- Drive 上は  Tempus/<プロジェクト名>/<起票日>_<タイトル>  の形に置く。
--- プロジェクト未設定のタスクは  Tempus/受信箱/  に置く。
+-- プロジェクト未設定のタスクは  Tempus/その他タスク/  に置く。
 -- ドキュメントの実体は Drive 側にあり、ここには ID と URL を覚えておくだけ。
 -- タスクを消してもドキュメントは消さない（Drive に残し続けるのが目的）。
 -- 作成・移動・名前の付け直しは drive-sync（Edge Function）だけが行う。
@@ -15,7 +15,7 @@ alter table public.google_credentials
 comment on column public.google_credentials.drive_root_folder_id is
   'Drive 上の「Tempus」フォルダ。消されていたら drive-sync が作り直す。';
 comment on column public.google_credentials.drive_inbox_folder_id is
-  'プロジェクト未設定のタスクを置く「受信箱」フォルダ。';
+  'プロジェクト未設定のタスクを置く「その他タスク」フォルダ。';
 
 alter table public.projects
   add column drive_folder_id text,

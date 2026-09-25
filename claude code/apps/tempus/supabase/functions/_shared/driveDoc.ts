@@ -5,7 +5,9 @@
 // 後から単体で読んでも何のタスクだったか分かるように、作成時点の情報を本文に書き込んでおく。
 
 export const ROOT_FOLDER_NAME = 'Tempus';
-export const INBOX_FOLDER_NAME = '受信箱';
+export const INBOX_FOLDER_NAME = 'その他タスク';
+/** AI と私が「どう進めたか」を時系列で書き足していく見出し。本文の一番最後に置く（追記は末尾に入るため） */
+export const LOG_HEADING = '進め方の記録（AIと私）';
 
 const TITLE_MAX = 120;
 
@@ -72,6 +74,8 @@ export function docHtml(task: DocTask, projectName: string | null, tz: string): 
     '<h2>考えたこと（日付ごとに追記）</h2>', `<p>${ymdInTz(task.createdAt, tz)}: </p>`,
     '<h2>検討した選択肢と判断</h2>', '<p>何と何を比べて、なぜそれを選んだか。</p>',
     '<h2>結果・振り返り</h2>', '<p>やってみてどうだったか。次に同じことをやるなら何を変えるか。</p>',
+    // 追記はドキュメントの末尾に入るので、この見出しは必ず最後に置く
+    `<h2>${LOG_HEADING}</h2>`, '<p>AI（Claude）と私が、いつ何をしたかをここに書き足していく。</p>',
   );
   // 作成時点で既に終わっているタスク（既存タスクの取り込み）は、完了の記録もここで書いてしまう
   if (task.status === 'done') parts.push(`<p>${escapeHtml(completionText(task, tz).trim())}</p>`);
@@ -84,4 +88,39 @@ export function completionText(task: Pick<DocTask, 'completedAt' | 'actualMin'>,
   const when = task.completedAt ? ymdInTz(task.completedAt, tz) : '日付不明';
   const actual = task.actualMin !== null ? `（実績 ${task.actualMin}分）` : '';
   return `\n■ ${when} に完了${actual}\n`;
+}
+
+const LOG_TEXT_MAX = 5000;
+const LOG_AUTHOR_MAX = 40;
+
+/** 追記の書き手。空なら AI（ルーティンやセッションから呼ばれるのが普通なので） */
+export function logAuthor(author: string | null | undefined): string {
+  const a = (author ?? '').replace(/\s+/g, ' ').trim();
+  if (!a) return 'AI';
+  return a.length > LOG_AUTHOR_MAX ? a.slice(0, LOG_AUTHOR_MAX) : a;
+}
+
+/** ISO8601 をタイムゾーン上の 'YYYY-MM-DD HH:mm' にする */
+export function ymdHmInTz(iso: string, tz: string): string {
+  const hm = new Intl.DateTimeFormat('en-GB', {
+    timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).format(new Date(iso));
+  return `${ymdInTz(iso, tz)} ${hm}`;
+}
+
+/**
+ * 「進め方の記録」に書き足す1件分。
+ *   [2026-09-25 18:30] AI: 構成案を3つ出した
+ * 複数行の本文は2行目以降を字下げして、どこまでが1件か分かるようにする。
+ * 空の本文は null（書き足さない）。
+ */
+export function logEntryText(
+  entry: { author?: string | null; text: string; at: string }, tz: string,
+): string | null {
+  const body = entry.text.replace(/\r\n?/g, '\n').trim();
+  if (!body) return null;
+  const cut = body.length > LOG_TEXT_MAX ? `${body.slice(0, LOG_TEXT_MAX)}…` : body;
+  const lines = cut.split('\n');
+  const head = `[${ymdHmInTz(entry.at, tz)}] ${logAuthor(entry.author)}: ${lines[0]}`;
+  return `\n${[head, ...lines.slice(1).map((l) => `    ${l}`)].join('\n')}\n`;
 }

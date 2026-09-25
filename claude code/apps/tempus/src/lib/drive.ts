@@ -28,3 +28,23 @@ export async function syncDrive(maxRounds = 6): Promise<DriveSyncResult> {
   }
   return { ok: true, docsCreated: created };
 }
+
+export interface DriveLogResult {
+  ok: boolean;
+  needsReconnect?: boolean;
+  error?: string;
+  docUrl?: string | null;
+}
+
+/**
+ * タスクの思考ログ（「進め方の記録（AIと私）」）に1件書き足す。
+ * ドキュメントがまだ無ければ drive-sync がその場で作る。
+ */
+export async function appendDriveLog(taskId: string, text: string, author = '私'): Promise<DriveLogResult> {
+  const { data, error } = await supabase.functions.invoke('drive-sync', {
+    body: { action: 'log', task_id: taskId, author, text },
+  });
+  if (!error) return data as DriveLogResult;
+  return await (error as { context?: Response }).context?.json().catch(() => null)
+    ?? { ok: false, error: error.message };
+}

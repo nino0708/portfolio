@@ -14,8 +14,12 @@
 - [ ] `supabase db push`（0018_drive_task_docs.sql を適用）
 - [ ] `supabase functions deploy drive-sync`
 - [ ] アプリでログアウト→再ログインし、Driveの許可（チェックボックス）を出す
-- [ ] Google ドライブに `Tempus/` フォルダとプロジェクト別フォルダ・ドキュメントができているか確認
+- [ ] Google ドライブに `Tempus/` フォルダとプロジェクト別フォルダ（Built Japan / Friday商事 / Tempus / AWS育成 / その他タスク）・ドキュメントができているか確認
 - [ ] タスク詳細の「思考ログを開く」ボタンが機能するか確認
+- [ ] タスク詳細の「進め方の記録」に書いて Enter → ドキュメント末尾に `[日時] 私: …` が入るか確認
+- [ ] AI からの記録: 関数の環境変数に `TEMPUS_OWNER_EMAIL=redacted@example.com` と `DRIVE_SYNC_KEY` を設定
+      （`supabase secrets set ...`）→ Claude の環境に `DRIVE_SYNC_KEY` と、許可ドメイン
+      `nucqcatwhwdjsphetops.supabase.co` を追加 → 設計書の curl で `[日時] AI: …` が入るか確認
 - [ ] （任意）cron で `drive-sync` を定期実行（calendar-sync と同じ要領、ヘッダーは `x-drive-sync-key`）
 
 詰まったら `google_credentials.drive_last_error` を確認。

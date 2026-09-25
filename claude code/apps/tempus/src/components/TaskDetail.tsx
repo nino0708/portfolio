@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { fmtTime } from '../lib/dates';
+import { appendDriveLog } from '../lib/drive';
 import type { ChecklistItem, Clip, Task } from '../types/domain';
 
 const SOURCE_LABEL: Record<Task['source'], string> = {
@@ -93,12 +94,64 @@ export function TaskDetail({
           <span className="detail-meta">思考ログのドキュメントを準備中</span>
         )}
       </div>
+      <LogForm taskId={task.id} />
 
       <div className="detail-meta">
         起票: {SOURCE_LABEL[task.source]}
         {task.dueAt && ` ／ 期限 ${task.dueAt.slice(0, 10)} ${fmtTime(task.dueAt, tz)}`}
         {task.actualMin !== null && ` ／ 実績 ${task.actualMin}分`}
       </div>
+    </div>
+  );
+}
+
+/**
+ * 思考ログの「進め方の記録（AIと私）」に、私の分を1行書き足す。
+ * AI の分は Claude のセッションやルーティンが drive-sync を直接呼んで書き足す。
+ */
+function LogForm({ taskId }: { taskId: string }) {
+  const [text, setText] = useState('');
+  const [sending, setSending] = useState(false);
+  const [result, setResult] = useState<string | null>(null);
+
+  const send = async () => {
+    if (!text.trim() || sending) return;
+    setSending(true);
+    setResult(null);
+    try {
+      const r = await appendDriveLog(taskId, text);
+      if (r.ok) {
+        setText('');
+        setResult('思考ログに書き足した');
+      } else {
+        setResult(r.needsReconnect
+          ? '書き足せなかった。ログインし直してDriveの許可を出して'
+          : `書き足せなかった: ${r.error ?? '不明なエラー'}`);
+      }
+    } catch (e) {
+      setResult(`書き足せなかった: ${e instanceof Error ? e.message : String(e)}`);
+    } finally {
+      setSending(false);
+    }
+  };
+
+  return (
+    <div className="detail-block">
+      <div className="detail-label">進め方の記録</div>
+      <div className="row">
+        <input
+          value={text}
+          placeholder="やったこと・決めたことを書いて Enter"
+          onChange={(e) => setText(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter' && !e.nativeEvent.isComposing) void send(); }}
+          disabled={sending}
+          style={{ flex: 1 }}
+        />
+        <button className="btn" onClick={() => void send()} disabled={sending || !text.trim()}>
+          {sending ? '送信中…' : '追記'}
+        </button>
+      </div>
+      {result && <div className="detail-meta">{result}</div>}
     </div>
   );
 }

@@ -3,14 +3,20 @@
 //   Tempus/                       … drive_root_folder_id
 //   ├─ <プロジェクト名>/           … projects.drive_folder_id
 //   │   └─ <起票日>_<タイトル>     … tasks.drive_doc_id
-//   └─ 受信箱/                    … drive_inbox_folder_id（プロジェクト未設定）
+//   └─ その他タスク/              … drive_inbox_folder_id（プロジェクト未設定）
 //
 // 1回の呼び出しでやること:
-//   ① ルート・受信箱・プロジェクトのフォルダを用意する（消されていたら作り直す／名前を変えたら付け直す）
+//   ① ルート・その他タスク・プロジェクトのフォルダを用意する（消されていたら作り直す／名前を変えたら付け直す）
 //   ② ドキュメントがまだ無いタスクに作る（既存タスクの取り込みもこれ。1回あたり上限あり）
 //   ③ タイトルを直した／プロジェクトを移したタスクのドキュメントを付け直す・移す
 //   ④ 完了したタスクのドキュメント末尾に完了日と実績を追記する
 // タスクを消してもドキュメントは消さない。消す処理はこのファイルに一切書かない。
+//
+// 本文に { action: 'log' } を付けて呼ぶと、同期の代わりに1件の記録を書き足す:
+//   { action: 'log', task_id?: string, task_title?: string, author?: 'AI' | '私' | ..., text: string }
+// タスクは task_id か task_title（完全一致 → 部分一致の新しい順）で探す。
+// ドキュメントがまだ無ければその場で作ってから書き足す。
+// Claude のセッションやルーティンが「何をしたか」を残すための入口（x-drive-sync-key で呼ぶ）。
 //
 // 権限は drive.file（このアプリが作ったファイルにしか触れない）。
 // 呼び出し口は calendar-sync と同じく2つ:
@@ -19,7 +25,7 @@
 
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import {
-  ROOT_FOLDER_NAME, INBOX_FOLDER_NAME, completionText, docHtml, docTitle, folderName,
+  ROOT_FOLDER_NAME, INBOX_FOLDER_NAME, completionText, docHtml, docTitle, folderName, logEntryText,
 } from '../_shared/driveDoc.ts';
 
 const need = (k: string): string => {
@@ -206,6 +212,152 @@ const toDocTask = (t: TaskRow) => ({
 const TASK_COLS =
   'id,project_id,title,notes,status,due_at,window_start,actual_min,completed_at,created_at,drive_doc_id,drive_doc_title,drive_parent_id,drive_done_logged_at';
 
+type Stats = { foldersCreated: number; foldersRenamed: number; docsCreated: number; docsUpdated: number; completionsLogged: number };
+type Cred = { refresh_token: string; drive_root_folder_id: string | null; drive_inbox_folder_id: string | null };
+
+/** ドキュメントの置き場所。プロジェクトのフォルダ（無ければ その他タスク）と、本文に書くプロジェクト名 */
+type Placement = {
+  parentFor: (t: TaskRow) => string;
+  projectFor: (t: TaskRow) => string | null;
+};
+
+/** ① ルート・その他タスク・プロジェクトのフォルダを用意する（消されていたら作り直す／名前を変えたら付け直す） */
+async function prepareFolders(token: string, ownerId: string, cred: Cred, stats: Stats): Promise<Placement> {
+  let rootId = cred.drive_root_folder_id;
+  if (!(await folderAlive(token, rootId))) {
+    rootId = await createFolder(token, ROOT_FOLDER_NAME, null);
+    stats.foldersCreated++;
+    await db.from('google_credentials')
+      .update({ drive_root_folder_id: rootId, drive_inbox_folder_id: null }).eq('owner_id', ownerId);
+    cred.drive_inbox_folder_id = null;
+  }
+  let inboxId = cred.drive_inbox_folder_id;
+  if (!(await folderAlive(token, inboxId))) {
+    inboxId = await createFolder(token, INBOX_FOLDER_NAME, rootId);
+    stats.foldersCreated++;
+    await db.from('google_credentials').update({ drive_inbox_folder_id: inboxId }).eq('owner_id', ownerId);
+  }
+
+  const { data: projects, error: pErr } = await db.from('projects')
+    .select('id,name,drive_folder_id,drive_folder_name').eq('owner_id', ownerId);
+  if (pErr) throw new Error(`プロジェクトを読めない: ${pErr.message}`);
+
+  const folderOf = new Map<string, string>();
+  for (const p of (projects ?? []) as ProjectRow[]) {
+    const name = folderName(p.name);
+    if (!(await folderAlive(token, p.drive_folder_id))) {
+      const id = await createFolder(token, name, rootId);
+      stats.foldersCreated++;
+      await db.from('projects').update({ drive_folder_id: id, drive_folder_name: name }).eq('id', p.id);
+      folderOf.set(p.id, id);
+      continue;
+    }
+    folderOf.set(p.id, p.drive_folder_id!);
+    if (p.drive_folder_name !== name) {
+      await patchFile(token, p.drive_folder_id!, { name });
+      stats.foldersRenamed++;
+      await db.from('projects').update({ drive_folder_name: name }).eq('id', p.id);
+    }
+  }
+  const projectName = new Map(((projects ?? []) as ProjectRow[]).map((p) => [p.id, p.name]));
+  const inbox = inboxId!;
+  return {
+    // 他人が持ち主のプロジェクトに入っているタスクは、自分の その他タスク に置く
+    parentFor: (t) => (t.project_id && folderOf.get(t.project_id)) || inbox,
+    projectFor: (t) => (t.project_id && folderOf.has(t.project_id) ? projectName.get(t.project_id) ?? null : null),
+  };
+}
+
+/**
+ * ② タスクのドキュメントを作って紐付ける。紐付けた（または先に紐付いていた）ドキュメントの ID を返す。
+ * 同時に2本走っても二重に紐付けない。負けた方は自分が作ったものをゴミ箱へ入れ、勝った方の ID を使う。
+ */
+async function createDocFor(
+  token: string, t: TaskRow, place: Placement, tz: string, stats: Stats,
+): Promise<{ id: string; url: string | null } | null> {
+  const title = docTitle({ title: t.title, createdAt: t.created_at }, tz);
+  const parent = place.parentFor(t);
+  const doc = await createDoc(token, title, parent, docHtml(toDocTask(t), place.projectFor(t), tz));
+  const { data: won } = await db.from('tasks').update({
+    drive_doc_id: doc.id,
+    drive_doc_url: doc.webViewLink,
+    drive_doc_title: title,
+    drive_parent_id: parent,
+    drive_done_logged_at: t.status === 'done' ? new Date().toISOString() : null,
+  }).eq('id', t.id).is('drive_doc_id', null).select('id');
+  if (won && won.length > 0) {
+    stats.docsCreated++;
+    return { id: doc.id, url: doc.webViewLink };
+  }
+  await google(token, `${DRIVE}/${doc.id}?fields=id`, {
+    method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ trashed: true }),
+  });
+  const { data: other } = await db.from('tasks').select('drive_doc_id,drive_doc_url').eq('id', t.id).maybeSingle();
+  return other?.drive_doc_id ? { id: other.drive_doc_id as string, url: (other.drive_doc_url as string) ?? null } : null;
+}
+
+type LogBody = { action: 'log'; task_id?: unknown; task_title?: unknown; author?: unknown; text?: unknown };
+
+/** 記録を書き足す相手のタスクを探す。完了・削除前のものも含めて、持ち主のタスクだけから探す */
+async function findTask(ownerId: string, body: LogBody): Promise<TaskRow | null> {
+  if (typeof body.task_id === 'string' && body.task_id) {
+    const { data } = await db.from('tasks').select(TASK_COLS)
+      .eq('owner_id', ownerId).eq('id', body.task_id).maybeSingle();
+    return (data as TaskRow | null) ?? null;
+  }
+  const title = typeof body.task_title === 'string' ? body.task_title.trim() : '';
+  if (!title) return null;
+  const { data: exact } = await db.from('tasks').select(TASK_COLS)
+    .eq('owner_id', ownerId).eq('title', title).order('created_at', { ascending: false }).limit(1);
+  if (exact && exact.length > 0) return exact[0] as TaskRow;
+  // ilike の % と _ は文字として扱う
+  const pattern = `%${title.replace(/[\\%_]/g, (c) => `\\${c}`)}%`;
+  const { data: near } = await db.from('tasks').select(TASK_COLS)
+    .eq('owner_id', ownerId).ilike('title', pattern).order('created_at', { ascending: false }).limit(1);
+  return near && near.length > 0 ? near[0] as TaskRow : null;
+}
+
+async function handleLog(
+  token: string, ownerId: string, cred: Cred, tz: string, body: LogBody,
+  fail: (msg: string, status: number, needsReconnect?: boolean) => Promise<Response>,
+): Promise<Response> {
+  const text = typeof body.text === 'string' ? body.text : '';
+  const entry = logEntryText({
+    author: typeof body.author === 'string' ? body.author : null, text, at: new Date().toISOString(),
+  }, tz);
+  if (!entry) return json({ ok: false, error: 'text が空' }, 400);
+  if (!body.task_id && !body.task_title) return json({ ok: false, error: 'task_id か task_title が必要' }, 400);
+
+  const task = await findTask(ownerId, body);
+  // 持ち主の違うタスクは「無い」扱い（有るか無いかも漏らさない）
+  if (!task) return json({ ok: false, error: 'タスクが見つからない' }, 404);
+
+  const stats: Stats = { foldersCreated: 0, foldersRenamed: 0, docsCreated: 0, docsUpdated: 0, completionsLogged: 0 };
+  try {
+    let doc = task.drive_doc_id ? { id: task.drive_doc_id, url: null as string | null } : null;
+    if (!doc) {
+      const place = await prepareFolders(token, ownerId, cred, stats);
+      doc = await createDocFor(token, task, place, tz, stats);
+      if (!doc) return json({ ok: false, error: 'ドキュメントを用意できなかった' }, 502);
+    }
+    await appendToDoc(token, doc.id, entry);
+    const { data: row } = await db.from('tasks').select('drive_doc_url').eq('id', task.id).maybeSingle();
+    return json({
+      ok: true, taskId: task.id, taskTitle: task.title,
+      docUrl: (row?.drive_doc_url as string | undefined) ?? doc.url, docCreated: stats.docsCreated > 0,
+    });
+  } catch (e) {
+    if (e instanceof GoogleError && e.scopeMissing) {
+      return await fail(`Drive を使う許可がまだ無い。ログインし直して許可して: ${e.message}`, 409, true);
+    }
+    // 人が Drive からドキュメントを消した場合は 404。作り直しはしない（消したのは本人の意思）
+    if (e instanceof GoogleError && e.status === 404) {
+      return json({ ok: false, error: 'ドキュメントが Drive から消されている（作り直さない）' }, 410);
+    }
+    return json({ ok: false, error: e instanceof Error ? e.message : String(e) }, 502);
+  }
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
   if (req.method !== 'POST') return json({ ok: false, error: 'POSTのみ' }, 405);
@@ -218,12 +370,15 @@ Deno.serve(async (req) => {
   }
   if (!ownerId) return json({ ok: false, error: '認証が必要です' }, 401);
 
-  const { data: cred } = await db.from('google_credentials')
+  const reqBody = await req.json().catch(() => ({})) as Record<string, unknown> | null;
+
+  const { data: credRow } = await db.from('google_credentials')
     .select('refresh_token,drive_root_folder_id,drive_inbox_folder_id')
     .eq('owner_id', ownerId).maybeSingle();
-  if (!cred?.refresh_token) {
+  if (!credRow?.refresh_token) {
     return json({ ok: false, needsReconnect: true, error: 'Googleの連携情報がまだ保存されていない' }, 409);
   }
+  const cred = credRow as Cred;
 
   const fail = async (msg: string, status: number, needsReconnect = false) => {
     await db.from('google_credentials').update({ drive_last_error: msg }).eq('owner_id', ownerId);
@@ -240,50 +395,14 @@ Deno.serve(async (req) => {
   const { data: profile } = await db.from('profiles').select('timezone').eq('id', ownerId).maybeSingle();
   const tz = (profile?.timezone as string | undefined) ?? 'Asia/Tokyo';
 
-  const stats = { foldersCreated: 0, foldersRenamed: 0, docsCreated: 0, docsUpdated: 0, completionsLogged: 0 };
+  if (reqBody?.action === 'log') return await handleLog(token, ownerId, cred, tz, reqBody as LogBody, fail);
+
+  const stats: Stats = { foldersCreated: 0, foldersRenamed: 0, docsCreated: 0, docsUpdated: 0, completionsLogged: 0 };
   const errors: string[] = [];
 
   try {
     // ① フォルダ
-    let rootId = cred.drive_root_folder_id as string | null;
-    if (!(await folderAlive(token, rootId))) {
-      rootId = await createFolder(token, ROOT_FOLDER_NAME, null);
-      stats.foldersCreated++;
-      await db.from('google_credentials')
-        .update({ drive_root_folder_id: rootId, drive_inbox_folder_id: null }).eq('owner_id', ownerId);
-      cred.drive_inbox_folder_id = null;
-    }
-    let inboxId = cred.drive_inbox_folder_id as string | null;
-    if (!(await folderAlive(token, inboxId))) {
-      inboxId = await createFolder(token, INBOX_FOLDER_NAME, rootId);
-      stats.foldersCreated++;
-      await db.from('google_credentials').update({ drive_inbox_folder_id: inboxId }).eq('owner_id', ownerId);
-    }
-
-    const { data: projects, error: pErr } = await db.from('projects')
-      .select('id,name,drive_folder_id,drive_folder_name').eq('owner_id', ownerId);
-    if (pErr) throw new Error(`プロジェクトを読めない: ${pErr.message}`);
-
-    const folderOf = new Map<string, string>();
-    for (const p of (projects ?? []) as ProjectRow[]) {
-      const name = folderName(p.name);
-      if (!(await folderAlive(token, p.drive_folder_id))) {
-        const id = await createFolder(token, name, rootId);
-        stats.foldersCreated++;
-        await db.from('projects').update({ drive_folder_id: id, drive_folder_name: name }).eq('id', p.id);
-        folderOf.set(p.id, id);
-        continue;
-      }
-      folderOf.set(p.id, p.drive_folder_id!);
-      if (p.drive_folder_name !== name) {
-        await patchFile(token, p.drive_folder_id!, { name });
-        stats.foldersRenamed++;
-        await db.from('projects').update({ drive_folder_name: name }).eq('id', p.id);
-      }
-    }
-    const projectName = new Map(((projects ?? []) as ProjectRow[]).map((p) => [p.id, p.name]));
-    // 他人が持ち主のプロジェクトに入っているタスクは、自分の受信箱に置く
-    const parentFor = (t: TaskRow) => (t.project_id && folderOf.get(t.project_id)) || inboxId!;
+    const place = await prepareFolders(token, ownerId, cred, stats);
 
     // ② ドキュメントがまだ無いタスク（既存タスクも古い順に取り込む）
     const { data: missing, error: mErr } = await db.from('tasks')
@@ -293,25 +412,7 @@ Deno.serve(async (req) => {
 
     for (const t of (missing ?? []) as TaskRow[]) {
       try {
-        const title = docTitle({ title: t.title, createdAt: t.created_at }, tz);
-        const parent = parentFor(t);
-        const project = t.project_id && folderOf.has(t.project_id) ? projectName.get(t.project_id) ?? null : null;
-        const doc = await createDoc(token, title, parent, docHtml(toDocTask(t), project, tz));
-        // 同時に2本走っても二重に紐付けない。負けた方は自分が作ったものをゴミ箱へ
-        const { data: won } = await db.from('tasks').update({
-          drive_doc_id: doc.id,
-          drive_doc_url: doc.webViewLink,
-          drive_doc_title: title,
-          drive_parent_id: parent,
-          drive_done_logged_at: t.status === 'done' ? new Date().toISOString() : null,
-        }).eq('id', t.id).is('drive_doc_id', null).select('id');
-        if (!won || won.length === 0) {
-          await google(token, `${DRIVE}/${doc.id}?fields=id`, {
-            method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ trashed: true }),
-          });
-          continue;
-        }
-        stats.docsCreated++;
+        await createDocFor(token, t, place, tz, stats);
       } catch (e) {
         if (e instanceof GoogleError && e.scopeMissing) throw e;
         errors.push(`${t.title}: ${e instanceof Error ? e.message : String(e)}`);
@@ -328,7 +429,7 @@ Deno.serve(async (req) => {
     for (const t of (linked ?? []) as TaskRow[]) {
       if (budget <= 0) break;
       const title = docTitle({ title: t.title, createdAt: t.created_at }, tz);
-      const parent = parentFor(t);
+      const parent = place.parentFor(t);
       const needsLog = t.status === 'done' && !t.drive_done_logged_at;
       if (title === t.drive_doc_title && parent === t.drive_parent_id && !needsLog) continue;
       budget--;
