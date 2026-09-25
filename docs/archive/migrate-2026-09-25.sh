@@ -28,7 +28,7 @@ if [ -d "claude code" ]; then
   for d in .claude/knowledge .claude/docs; do
     [ -e "claude code/$d" ] && mv "claude code/$d" "$A/$(basename $d)"
   done
-  rsync -a --remove-source-files "claude code/" ./
+  rsync -a --ignore-existing --remove-source-files "claude code/" ./   # 同名が既にあれば上書きせず残す
   find "claude code" -type d -empty -delete
 fi
 
