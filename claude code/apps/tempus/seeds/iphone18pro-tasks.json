@@ -1,0 +1,390 @@
+{
+ "agent": "iPhone 18 Pro 設定リスト",
+ "tasks": [
+  {
+   "title": "【iPhone・ボタン】アクションボタンに「Tempusに起票」を割り当てる",
+   "notes": "なぜ: 思いついた瞬間に1押しで起票できると、頭の中に抱えたままにしなくて済む。Tempusの起票口③（ホームから1タップ）を物理ボタンにまで短縮できる。先に「ショートカット」カテゴリの起票ショートカットを作っておくこと。\n\n設定場所: 設定 → アクションボタン → ショートカット → 起票ショートカットを選ぶ\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "high",
+   "dedupeKey": "iphone18pro-01"
+  },
+  {
+   "title": "【iPhone・ボタン】カメラコントロールのダブルクリックでコードスキャナを開く",
+   "notes": "なぜ: QRコード（ログイン、会場受付、Wi-Fi）を読むたびにカメラを開いて待つ手間が消える。iPhone 18 ProのカメラコントロールはMagnifier・コードスキャナ・他社カメラも起動できる。\n\n設定場所: 設定 → カメラ → カメラコントロール → 起動するApp／シングル・ダブルクリック\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-02"
+  },
+  {
+   "title": "【iPhone・ボタン】カメラコントロールのオーバーレイ項目を絞る",
+   "notes": "なぜ: 露出・被写界深度・ズーム・カメラ・スタイル・トーンのうち使わないものを外すと、スライド操作の誤操作が減る。\n\n設定場所: 設定 → カメラ → カメラコントロール → カスタマイズ\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-03"
+  },
+  {
+   "title": "【iPhone・ボタン】カメラコントロールの「フォーカス・露出のロック」を決める",
+   "notes": "なぜ: 資料やホワイトボードを撮る時にピントが迷わなくなる。書類撮影が多いならオン。\n\n設定場所: 設定 → カメラ → カメラコントロール → フォーカスと露出をロック\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-04"
+  },
+  {
+   "title": "【iPhone・ボタン】背面タップにスクリーンショット／起票を割り当てる",
+   "notes": "なぜ: 背面を2回・3回叩くだけで操作できる。ダブル=スクリーンショット、トリプル=Tempus起票にすれば、ボタンを探さずに記録できる。\n\n設定場所: 設定 → アクセシビリティ → タッチ → 背面タップ\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-05"
+  },
+  {
+   "title": "【iPhone・集中モード】「本業」集中モードを作る",
+   "notes": "なぜ: Tempusは本業・副業・生活・学習を1か所に集めている。iPhone側も時間帯ごとに通知と画面を切り替えると、今やるべきこと以外が目に入らなくなる。本業中は業務連絡と家族だけ通知を許可する。\n\n設定場所: 設定 → 集中モード → ＋ → カスタム\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 15,
+   "importance": "high",
+   "dedupeKey": "iphone18pro-06"
+  },
+  {
+   "title": "【iPhone・集中モード】「副業」集中モードを作る",
+   "notes": "なぜ: BuiltJapan・Friday商事・会計アプリなど副業の作業中に、本業のSlackやメールを遮断する。切り替えコストが減る。\n\n設定場所: 設定 → 集中モード → ＋ → カスタム\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-07"
+  },
+  {
+   "title": "【iPhone・集中モード】「学習」集中モードを作る",
+   "notes": "なぜ: AWS・CCNAなどの学習時間に、SNSと仕事の通知を止める。学習用アプリだけ残したホーム画面と組み合わせると効果が大きい。\n\n設定場所: 設定 → 集中モード → ＋ → カスタム\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-08"
+  },
+  {
+   "title": "【iPhone・集中モード】集中モードを時刻・場所・Appで自動オンにする",
+   "notes": "なぜ: 手動で切り替えるのは続かない。勤務時間帯や職場到着、特定Appを開いた時に自動で切り替わるようにする。\n\n設定場所: 設定 → 集中モード → 各モード → スケジュールを追加\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "high",
+   "dedupeKey": "iphone18pro-09"
+  },
+  {
+   "title": "【iPhone・集中モード】集中モードごとにホーム画面のページを切り替える",
+   "notes": "なぜ: 本業中は本業のAppだけ、副業中は副業のAppだけが並ぶ。誘惑になるAppをそもそも見せない。\n\n設定場所: 設定 → 集中モード → 各モード → 画面をカスタマイズ → ホーム画面\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-10"
+  },
+  {
+   "title": "【iPhone・集中モード】集中モードフィルタでカレンダー・メールを絞る",
+   "notes": "なぜ: 本業モード中は仕事のカレンダーとメールアカウントだけ表示するなど、見る情報そのものを減らせる。\n\n設定場所: 設定 → 集中モード → 各モード → 集中モードフィルタ\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-11"
+  },
+  {
+   "title": "【iPhone・集中モード】睡眠集中モードと就寝スケジュールを設定する",
+   "notes": "なぜ: 夜の通知で作業を思い出して眠れなくなるのを防ぐ。朝の起床アラームとセットにすると生活リズムが整う。\n\n設定場所: ヘルスケア → ブラウズ → 睡眠 → スケジュール／設定 → 集中モード → 睡眠\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-12"
+  },
+  {
+   "title": "【iPhone・集中モード】集中モードをMacと共有する",
+   "notes": "なぜ: iPhoneで集中モードに入るとMacも同じ状態になる。Mac作業中にMac側の通知で中断されるのを防ぐ。\n\n設定場所: 設定 → 集中モード → デバイス間で共有\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-13"
+  },
+  {
+   "title": "【iPhone・集中モード】「割り込みを減らす」集中モードを試す",
+   "notes": "なぜ: 重要そうな通知だけを通し、それ以外を後回しにしてくれる。自分で許可リストを作る手間が要らない。\n\n設定場所: 設定 → 集中モード → 割り込みを減らす\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-14"
+  },
+  {
+   "title": "【iPhone・通知】通知の要約をオンにする",
+   "notes": "なぜ: グループチャットやメールの大量通知を短く要約して表示してくれる。全部開かずに要否を判断できる。\n\n設定場所: 設定 → 通知 → 通知を要約\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-15"
+  },
+  {
+   "title": "【iPhone・通知】時刻指定要約で通知を1日2〜3回にまとめる",
+   "notes": "なぜ: 急がない通知（ニュース、ショッピング、SNS）を決まった時刻にまとめて受け取る。作業の中断回数が大きく減る。\n\n設定場所: 設定 → 通知 → 時刻指定要約\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "high",
+   "dedupeKey": "iphone18pro-16"
+  },
+  {
+   "title": "【iPhone・通知】LINEの通知は即時のまま残す",
+   "notes": "なぜ: TempusはLINEで起票・毎朝の見立て通知を受ける。LINEが要約や集中モードで止まると起票の返信を見逃すので、LINEだけは例外にしておく。\n\n設定場所: 設定 → 通知 → LINE → 即時通知／各集中モードの許可Appに追加\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "high",
+   "dedupeKey": "iphone18pro-17"
+  },
+  {
+   "title": "【iPhone・通知】不要なAppの通知をまとめてオフにする",
+   "notes": "なぜ: 通知を出す必要のないApp（ゲーム、ショッピング等）を一度棚卸しする。通知の総量を減らすのが一番効く。\n\n設定場所: 設定 → 通知 → Appごとに通知を許可をオフ\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 15,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-18"
+  },
+  {
+   "title": "【iPhone・通知】ロック画面の通知表示を「数」にする",
+   "notes": "なぜ: ロック画面に通知の中身が並ばないので、スマホを見るたびに気が散らない。\n\n設定場所: 設定 → 通知 → 表示形式 → 数\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-19"
+  },
+  {
+   "title": "【iPhone・ホーム画面】TempusをSafariからホーム画面に追加する",
+   "notes": "なぜ: TempusはPWAなので、ホーム画面に追加するとアプリのように1タップで開ける（起票口③）。オフラインでも見る＋起票ができる。\n\n設定場所: Safariで本番URLを開く → 共有 → ホーム画面に追加\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "high",
+   "dedupeKey": "iphone18pro-20"
+  },
+  {
+   "title": "【iPhone・ホーム画面】ホーム画面1ページ目を「今やること」専用にする",
+   "notes": "なぜ: 1ページ目にはTempus・カレンダー・メモなど行動につながるものだけを置き、SNSやゲームは2ページ目以降かAppライブラリへ。開いた瞬間に迷わない。\n\n設定場所: ホーム画面を長押し → 編集\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 15,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-21"
+  },
+  {
+   "title": "【iPhone・ホーム画面】ショートカットのXLウィジェットを置く",
+   "notes": "なぜ: iOS 27の新機能。ショートカットを最大16個、Appを開かずに実行できる。起票・集中モード切替・よく使う操作をまとめておく。\n\n設定場所: ホーム画面を長押し → 編集 → ウィジェットを追加 → ショートカット → XL\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-22"
+  },
+  {
+   "title": "【iPhone・ホーム画面】カレンダーのウィジェットを置く",
+   "notes": "なぜ: Tempusの予定の正はGoogleカレンダー。次の予定がホーム画面で常に見えると、空き時間にTempusのタスクを入れる判断が速くなる。\n\n設定場所: ホーム画面を長押し → 編集 → ウィジェットを追加 → カレンダー\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-23"
+  },
+  {
+   "title": "【iPhone・ホーム画面】ロック画面にカレンダーのウィジェットを置く",
+   "notes": "なぜ: ロックを解除しなくても次の予定が見える。スマホを開いてそのまま別のことを始めてしまうのを防ぐ。\n\n設定場所: ロック画面を長押し → カスタマイズ → ロック画面 → ウィジェットを追加\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-24"
+  },
+  {
+   "title": "【iPhone・ホーム画面】ロック画面の時計を小さい表示にする",
+   "notes": "なぜ: iOS 27の新機能。時計を小さくするとロック画面にウィジェットを置ける場所が増える。\n\n設定場所: ロック画面を長押し → カスタマイズ → 時計 → フォントとカラーのメニュー\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-25"
+  },
+  {
+   "title": "【iPhone・ホーム画面】使わないAppをホーム画面から外してAppライブラリへ",
+   "notes": "なぜ: Appは消さずにホーム画面からだけ外せる。目に入るAppが減るほど、ついでに開く回数が減る。\n\n設定場所: Appを長押し → Appを削除 → ホーム画面から取り除く\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 15,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-26"
+  },
+  {
+   "title": "【iPhone・ホーム画面】コントロールセンターを整理する",
+   "notes": "なぜ: タイマー・集中モード・メモ・コードスキャナ・画面収録など、作業で使うものだけを並べる。使わない項目は外す。\n\n設定場所: コントロールセンターを開く → 左上の＋ → 編集\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-27"
+  },
+  {
+   "title": "【iPhone・ショートカット】「Tempusに起票」ショートカットを作る",
+   "notes": "なぜ: アクションボタン・背面タップ・Siri・ウィジェットのすべてから呼べる起票の土台になる。音声やテキストで一言入力 → LINEでTempusに送る、またはTempusを開く、の形にする。\n\n設定場所: ショートカットApp → ＋ → テキストを要求／音声入力 → LINE送信 or URLを開く\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 15,
+   "importance": "high",
+   "dedupeKey": "iphone18pro-28"
+  },
+  {
+   "title": "【iPhone・ショートカット】Siriに「Tempusに追加」と言えるようにする",
+   "notes": "なぜ: ショートカット名がそのままSiriの呼び出し語になる。歩きながら・運転中でも声だけで起票できる。\n\n設定場所: ショートカットAppで起票ショートカットの名前を「Tempusに追加」にする\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-29"
+  },
+  {
+   "title": "【iPhone・ショートカット】朝の自動化：起床後にTempusを開く",
+   "notes": "なぜ: アラームを止めた時や決まった時刻に、Tempusの「今日の見立て」を自動で開く。朝7時にできる見立てを見てから1日を始める習慣にする。\n\n設定場所: ショートカットApp → オートメーション → ＋ → アラーム／時刻\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-30"
+  },
+  {
+   "title": "【iPhone・ショートカット】場所の自動化：職場到着・帰宅で集中モードを切り替える",
+   "notes": "なぜ: 職場に着いたら本業、帰宅したら副業や生活のモードに自動で切り替わる。切り替え忘れがなくなる。\n\n設定場所: ショートカットApp → オートメーション → ＋ → 到着／出発\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-31"
+  },
+  {
+   "title": "【iPhone・ショートカット】充電開始で睡眠準備の自動化を作る",
+   "notes": "なぜ: 夜に充電器へつないだら睡眠集中モードをオン、画面を暗く、明日の最初の予定を表示、などをまとめて実行する。\n\n設定場所: ショートカットApp → オートメーション → ＋ → 充電器\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-32"
+  },
+  {
+   "title": "【iPhone・ショートカット】スクリーンショットをきっかけにした自動化を試す",
+   "notes": "なぜ: iOS 27でスクリーンショットや通知の受信も自動化のきっかけにできるようになった。スクショしたら整理用アルバムに入れる、などに使える。\n\n設定場所: ショートカットApp → オートメーション → ＋ → スクリーンショット\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-33"
+  },
+  {
+   "title": "【iPhone・ショートカット】明日の最初の予定に合わせてアラームを自動設定する",
+   "notes": "なぜ: カレンダーの最初の予定の時刻から逆算してアラームを設定するショートカット。早い予定がある日の寝坊を防ぐ。\n\n設定場所: ショートカットApp → オートメーション → 時刻 → 「カレンダーの予定を検索」→「アラームを作成」\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 15,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-34"
+  },
+  {
+   "title": "【iPhone・Siri】新しいSiri（Siri AI）を有効にして日本語対応を確認する",
+   "notes": "なぜ: iOS 27のSiri AIは画面の内容を理解してAppの操作までできる。日本語で使える範囲を確認し、使えるなら起票や予定確認を声で済ませる。iPhone本体の機能なのでTempusの無料方針とは別。\n\n設定場所: 設定 → Apple IntelligenceとSiri\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-35"
+  },
+  {
+   "title": "【iPhone・Siri】Siriへのタイプ入力をオンにする",
+   "notes": "なぜ: 声を出せない電車内や職場でもSiriに文字で頼める。画面下をダブルタップで入力できる。\n\n設定場所: 設定 → Apple IntelligenceとSiri → Siriと話す／タイプ入力\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-36"
+  },
+  {
+   "title": "【iPhone・Siri】作文ツールを文章作業に使う",
+   "notes": "なぜ: 月刊AWSなどの文章の校正・要約・言い換えをiPhone上ですぐできる。テキストを選択するとメニューに出る。\n\n設定場所: テキストを選択 → 作文ツール\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-37"
+  },
+  {
+   "title": "【iPhone・カレンダー】iPhoneのカレンダーにGoogleアカウントを追加し既定にする",
+   "notes": "なぜ: Tempusが読む予定の正はGoogleカレンダー。iPhoneで追加した予定がiCloudに入ると、Tempusの時間割に出てこない。既定のカレンダーをGoogleにしておく。\n\n設定場所: 設定 → App → カレンダー → アカウント／デフォルトカレンダー\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "high",
+   "dedupeKey": "iphone18pro-38"
+  },
+  {
+   "title": "【iPhone・カレンダー】写真や文面から予定をまとめて追加する機能を試す",
+   "notes": "なぜ: iOS 27では日程の書かれた紙や画像を撮ると予定をまとめて追加できる。予定が入ればTempusの空き時間計算にも自動で反映される。\n\n設定場所: カレンダーApp → 新規 → 自然文で入力／写真から追加\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-39"
+  },
+  {
+   "title": "【iPhone・バッテリー】充電上限を80%〜90%にする",
+   "notes": "なぜ: 満充電を避けるとバッテリーが長持ちする。長く使い倒すための基本設定。\n\n設定場所: 設定 → バッテリー → 充電\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-40"
+  },
+  {
+   "title": "【iPhone・バッテリー】バッテリー残量を%で表示する",
+   "notes": "なぜ: 残りが数字で分かると、外出前に充電するかの判断がすぐできる。\n\n設定場所: 設定 → バッテリー → バッテリー残量（%）\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-41"
+  },
+  {
+   "title": "【iPhone・バッテリー】常時表示ディスプレイの設定を見直す",
+   "notes": "なぜ: 常時表示は便利だがバッテリーを使い、時計や通知が目に入り続ける。集中を優先するならオフか、壁紙だけオフに。\n\n設定場所: 設定 → 画面表示と明るさ → 常時表示ディスプレイ\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-42"
+  },
+  {
+   "title": "【iPhone・セキュリティ】盗難デバイスの保護をオンにする",
+   "notes": "なぜ: 盗まれてパスコードを知られても、Face IDなしではパスワードやApple Accountの変更ができなくなる。Supabase・AWS・Googleなど仕事の鍵を守る。\n\n設定場所: 設定 → Face IDとパスコード → 盗難デバイスの保護\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "high",
+   "dedupeKey": "iphone18pro-43"
+  },
+  {
+   "title": "【iPhone・セキュリティ】パスワードAppで確認コード（2FA）を管理する",
+   "notes": "なぜ: AWS・GitHub・Supabaseなどの2段階認証コードをパスワードAppに入れると自動入力される。認証アプリを行き来する手間が消える。\n\n設定場所: パスワードApp → 各アカウント → 確認コードを設定\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 15,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-44"
+  },
+  {
+   "title": "【iPhone・セキュリティ】主要アカウントをパスキーに切り替える",
+   "notes": "なぜ: Google・GitHub・Appleなどはパスキーに対応。Face IDだけでログインでき、パスワード漏れの心配がなくなる。\n\n設定場所: 各サービスのセキュリティ設定 → パスキーを作成\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 20,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-45"
+  },
+  {
+   "title": "【iPhone・セキュリティ】iCloudバックアップが動いているか確認する",
+   "notes": "なぜ: 機種変更や故障の時に全部を戻せる状態にしておく。最終バックアップ日時を確認する。\n\n設定場所: 設定 → 自分の名前 → iCloud → iCloudバックアップ\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-46"
+  },
+  {
+   "title": "【iPhone・Mac連携】iPhoneミラーリングを使えるようにする",
+   "notes": "なぜ: Macの画面からiPhoneを操作できる。Mac作業中にiPhoneを手に取らずに済み、そのまま気が散るのを防ぐ。\n\n設定場所: Mac → iPhoneミラーリングApp（iPhoneとMacが同じApple Account）\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-47"
+  },
+  {
+   "title": "【iPhone・Mac連携】ユニバーサルクリップボードとHandoffを確認する",
+   "notes": "なぜ: iPhoneでコピーした文字をMacで貼れる。Terminalのコマンドや記事の下書きをすぐ移せる。\n\n設定場所: 設定 → 一般 → AirPlayと連係 → Handoff\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-48"
+  },
+  {
+   "title": "【iPhone・時間の使い方】スクリーンタイムで週の使い方を確認する",
+   "notes": "なぜ: 何にどれだけ時間を使っているかを数字で見る。Tempusの実績時間と並べると、スマホに取られている時間がわかる。\n\n設定場所: 設定 → スクリーンタイム → すべてのアクティビティを確認\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-49"
+  },
+  {
+   "title": "【iPhone・時間の使い方】SNSにApp使用時間の制限をかける",
+   "notes": "なぜ: 1日の上限を決めておくと、上限に達したところで気づける。作業時間を守るための仕組み。\n\n設定場所: 設定 → スクリーンタイム → App使用時間の制限\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-50"
+  },
+  {
+   "title": "【iPhone・時間の使い方】休止時間を設定する",
+   "notes": "なぜ: 夜など決めた時間帯は、許可したApp以外が使えなくなる。寝る前のだらだら使いを防ぐ。\n\n設定場所: 設定 → スクリーンタイム → 休止時間\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 10,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-51"
+  },
+  {
+   "title": "【iPhone・入力】ユーザ辞書によく使う言葉を登録する",
+   "notes": "なぜ: Tempus・Supabase・BuiltJapanなどの固有名詞や定型文を短い読みで入力できる。起票やメッセージの入力が速くなる。\n\n設定場所: 設定 → 一般 → キーボード → ユーザ辞書\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 15,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-52"
+  },
+  {
+   "title": "【iPhone・入力】音声入力を使えるようにする",
+   "notes": "なぜ: キーボードのマイクから話すだけで文字になる。長めのメモや起票は打つより速い。\n\n設定場所: 設定 → 一般 → キーボード → 音声入力\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "mid",
+   "dedupeKey": "iphone18pro-53"
+  },
+  {
+   "title": "【iPhone・スキャン】メモAppの書類スキャンを使う",
+   "notes": "なぜ: 紙の書類をその場できれいなPDFにできる。領収書や配布資料をすぐデジタル化できる。\n\n設定場所: メモApp → 新規メモ → クリップ → 書類をスキャン\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-54"
+  },
+  {
+   "title": "【iPhone・スキャン】テキスト認識表示（写真の文字をコピー）を使う",
+   "notes": "なぜ: 写真やカメラに写った文字をそのまま選択・コピーできる。紙のタスクやホワイトボードの内容をTempusに起票する時に打ち直さなくて済む。\n\n設定場所: 設定 → 一般 → 言語と地域 → テキスト認識表示\n\n※設定の表記はiOSの版で多少違うことがある。\n親タスク: iPhone18proを使い倒す。必要なければこのタスクは消してOK。",
+   "estimateMin": 5,
+   "importance": "low",
+   "dedupeKey": "iphone18pro-55"
+  }
+ ]
+}
