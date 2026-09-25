@@ -74,8 +74,22 @@ export interface Clip {
   label: string;
   text: string;
   url: string | null;
+  imageUrl: string | null; // 投稿に添える画像（任意）。投稿済みになった後にプレビュー表示する
   kind: string;            // 既定 'x_post'
   postedAt: string | null; // 人が「投稿した」を押した時刻
+  createdAt: string;
+}
+
+/**
+ * 検証ログ。「仮説→結果→次アクション」を1件ずつ記録する。tasks/clips とは無関係の独立機能。
+ */
+export interface Verification {
+  id: string;
+  ownerId: string;
+  hypothesis: string;
+  result: string | null;
+  nextAction: string | null;
+  category: string | null;
   createdAt: string;
 }
 

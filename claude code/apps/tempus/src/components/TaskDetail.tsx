@@ -167,9 +167,13 @@ export function ClipBlock({
 
   // クリップボードAPIは権限や非HTTPSで黙って失敗する。押したのにコピーされて
   // いない状態が一番困るので、失敗したことを画面に出して手で選べる形に倒す。
+  // URLが本文に含まれていない場合は、貼るだけで済むように末尾に足してコピーする。
+  const copyText = clip.url && !clip.text.includes(clip.url)
+    ? `${clip.text}\n${clip.url}`
+    : clip.text;
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(clip.text);
+      await navigator.clipboard.writeText(copyText);
       setCopyError(false);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1600);

@@ -16,6 +16,7 @@ import {
   startTask, finishTask, groupByTaskId,
 } from './lib/tasks';
 import { listClips, setClipPosted } from './lib/clips';
+import { listVerifications, createVerification, updateVerification } from './lib/verifications';
 import { listChecklistItems, setChecklistDone } from './lib/checklist';
 import { syncDrive } from './lib/drive';
 import { priorityScore } from './lib/plan';
@@ -33,7 +34,10 @@ import { CalendarView } from './components/CalendarView';
 import { Recurrences } from './components/Recurrences';
 import { Review } from './components/Review';
 import { LooseClips } from './components/LooseClips';
-import type { CalendarEvent, ChecklistItem, Clip, Profile, Task } from './types/domain';
+import { Verifications } from './components/Verifications';
+import type {
+  CalendarEvent, ChecklistItem, Clip, Profile, Task, Verification,
+} from './types/domain';
 import type { Recurrence } from './lib/recurrence';
 
 const DEFAULT_PROFILE: Omit<Profile, 'id' | 'createdAt'> = {
@@ -56,6 +60,7 @@ export default function App() {
   const [recurrences, setRecurrences] = useState<Recurrence[]>([]);
   const [checklist, setChecklist] = useState<ChecklistItem[]>([]);
   const [clips, setClips] = useState<Clip[]>([]);
+  const [verifications, setVerifications] = useState<Verification[]>([]);
   // 毎朝7時のcronが plan_reviews に保存した見立て。Claude を有効にしていなければ
   // 中身は計算で出したもの（model='deterministic'）で、表示もそう名乗らせる。
   const [review, setReview] = useState<ReviewNote[]>([]);
@@ -81,14 +86,16 @@ export default function App() {
 
   const reload = useCallback(async () => {
     if (!session) return;
-    const [open, dayT, recs, cl] = await Promise.all([
+    const [open, dayT, recs, cl, ver] = await Promise.all([
       listOpenTasks(), listDayTasks(day, tz), listRecurrences().catch(() => [] as Recurrence[]),
       listClips().catch(() => [] as Clip[]),
+      listVerifications().catch(() => [] as Verification[]),
     ]);
     setOpenTasks(open);
     setDayTasks(dayT);
     setRecurrences(recs);
     setClips(cl);
+    setVerifications(ver);
     // 手順は表示中のタスクの分だけ。行を開くたびに引くとタスクの数だけ往復する
     const ids = [...new Set([...open, ...dayT].map((t) => t.id))];
     setChecklist(await listChecklistItems(ids).catch(() => [] as ChecklistItem[]));
@@ -384,6 +391,11 @@ export default function App() {
     await reload();
   };
 
+  const verificationsToday = useMemo(
+    () => verifications.filter((v) => todayInTz(tz, new Date(v.createdAt)) === day).length,
+    [verifications, tz, day],
+  );
+
   const doneToday = dayTasks.filter((t) => t.status === 'done').length;
   const plannedMin = dayTasks
     .filter((t) => t.scheduledStart && t.scheduledEnd && t.status !== 'done')
@@ -391,12 +403,15 @@ export default function App() {
 
   const sortedOpen = useMemo(() => {
     const now = new Date().toISOString();
-    return [...openTasks].sort((a, b) => priorityScore(
-      { id: b.id, title: b.title, estimateMin: b.estimateMin, importance: b.importance, dueAt: b.dueAt, status: b.status }, now,
-    ) - priorityScore(
-      { id: a.id, title: a.title, estimateMin: a.estimateMin, importance: a.importance, dueAt: a.dueAt, status: a.status }, now,
-    ));
-  }, [openTasks]);
+    // 着手可能日が今日より後のタスクは、まだやる日じゃないので「やること」に出さない
+    return [...openTasks]
+      .filter((t) => !t.windowStart || t.windowStart <= day)
+      .sort((a, b) => priorityScore(
+        { id: b.id, title: b.title, estimateMin: b.estimateMin, importance: b.importance, dueAt: b.dueAt, status: b.status }, now,
+      ) - priorityScore(
+        { id: a.id, title: a.title, estimateMin: a.estimateMin, importance: a.importance, dueAt: a.dueAt, status: a.status }, now,
+      ));
+  }, [openTasks, day]);
 
   const checklistByTask = useMemo(() => groupByTaskId(checklist), [checklist]);
   const clipsByTask = useMemo(() => groupByTaskId(clips), [clips]);
@@ -414,6 +429,24 @@ export default function App() {
       setChecklist((prev) => prev.map((c) => (c.id === item.id ? { ...c, done: !item.done } : c)));
     } catch (e) {
       setNotice(`手順の保存に失敗した: ${e instanceof Error ? e.message : String(e)}`);
+    }
+  };
+
+  const addVerification = async (v: { hypothesis: string; category: string | null }) => {
+    try {
+      const created = await createVerification(v);
+      setVerifications((prev) => [created, ...prev]);
+    } catch (e) {
+      setNotice(`検証の保存に失敗した: ${e instanceof Error ? e.message : String(e)}`);
+    }
+  };
+
+  const editVerification = async (v: Verification, patch: { result?: string | null; nextAction?: string | null }) => {
+    try {
+      await updateVerification(v.id, patch);
+      setVerifications((prev) => prev.map((x) => (x.id === v.id ? { ...x, ...patch } : x)));
+    } catch (e) {
+      setNotice(`検証の更新に失敗した: ${e instanceof Error ? e.message : String(e)}`);
     }
   };
 
@@ -595,6 +628,16 @@ export default function App() {
             await deleteRecurrence(id);
             await reload();
           }}
+        />
+      </div>
+
+      <div className="card">
+        <h2>検証</h2>
+        <Verifications
+          items={verifications}
+          todayCount={verificationsToday}
+          onCreate={(v) => void addVerification(v)}
+          onUpdate={(v, patch) => void editVerification(v, patch)}
         />
       </div>
 
