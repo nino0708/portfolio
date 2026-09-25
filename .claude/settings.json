@@ -29,7 +29,9 @@
       "Bash(git clean -f*)",
       "Bash(git checkout -- *)",
       "Bash(git restore .)",
-      "Bash(git branch -D *)"
+      "Bash(git branch -D *)",
+      "Read(**/package-lock.json)",
+      "Read(**/deno.lock)"
     ]
   }
 }

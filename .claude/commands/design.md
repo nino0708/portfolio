@@ -22,9 +22,4 @@ description: デザイン作業モード。Google Design MCPツールとデザ�
 2. **フォント選定** → `search_fonts` でカテゴリ検索 → `describe_font` で詳細確認
 3. **アイコン選定** → `search_icons` でキーワード検索 → `icons_instructions` で実装方法確認
 
-## 参照ドキュメント（@で読み込む）
-
-- `@.claude/docs/best-practices.md` — Claude Code ベストプラクティス
-- `@.claude/docs/common-workflows.md` — よく使うワークフロー
-
 $ARGUMENTS

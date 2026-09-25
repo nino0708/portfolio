@@ -47,7 +47,7 @@ https://www.youtube.com/watch?v=CcZjTpUM6eg
 
 - 使いどころ: 「毎回同じ手順を説明している」と感じた作業すべて
 - **この環境での状態: 運用中**（`.claude/skills/`・`.claude/commands/`）
-- 裏取り: `公式ドキュメントあり` → `@.claude/docs/claude-directory.md`
+- 裏取り: `公式ドキュメントあり` → 公式ドキュメント（https://code.claude.com/docs）
 
 ## 3. オートモード（`auto`）
 
@@ -55,7 +55,7 @@ https://www.youtube.com/watch?v=CcZjTpUM6eg
 
 - 使いどころ: 長時間タスク、許可待ちが頻発してテンポが悪いとき
 - 危険度の並び: `plan` < `acceptEdits` < **`auto`** < `bypassPermissions`（最も危険）
-- 裏取り: `公式ドキュメント確認済み` → `@.claude/docs/permission-modes.md`
+- 裏取り: `公式ドキュメント確認済み` → 公式ドキュメント（https://code.claude.com/docs）
   - **v2.1.83 以降が必要**（動画の「2.1.32」は字幕の聞き取り違い。公式記載を採用）
   - リサーチプレビュー。**プロンプトを消すだけで安全性を保証しない**。機密操作のレビュー代わりにはしない
   - デフォルト化は**ユーザー設定**の `defaultMode: "auto"`。プロジェクト設定・ローカル設定の `defaultMode: "auto"` は無視される
@@ -69,7 +69,7 @@ https://www.youtube.com/watch?v=CcZjTpUM6eg
 
 - 判断指針: **常時使う広範な連携はMCP、単機能はCLIスクリプト**。`tools/youtube/yt.py` はまさに後者の実例
 - **この環境での状態: 運用中**（`.mcp.json` の google-design ほか、claude.ai コネクタ経由で Gmail/Drive/Calendar/Notion）
-- 裏取り: `公式ドキュメントあり`。コンテキスト消費の考え方は `@.claude/docs/context-window.md`
+- 裏取り: `公式ドキュメントあり`。コンテキスト消費の考え方は 公式ドキュメント（https://code.claude.com/docs）
 
 ## 5. ルーティン（定期実行）
 
@@ -77,7 +77,7 @@ https://www.youtube.com/watch?v=CcZjTpUM6eg
 
 - **トリガーはcronだけではない**。API呼び出し・GitHubイベントでも起動できるので「自分が指示したら実行」も組める。ただし実行回数の上限があるので設計は要検討（動画では「15回」と言及、数値は未検証）
 - **この環境での状態: 運用中**（Friday商事10本・Built Japan 4本ほか。管理は `/schedule` と https://claude.ai/code/routines）
-- 裏取り: `公式ドキュメント確認済み`（API/GitHubイベントトリガー） → `@.claude/docs/common-workflows.md`・`@.claude/docs/overview.md`
+- 裏取り: `公式ドキュメント確認済み`（API/GitHubイベントトリガー） → 公式ドキュメント（https://code.claude.com/docs）・公式ドキュメント（https://code.claude.com/docs）
 
 ## 6. エージェントチームズ
 
@@ -102,7 +102,7 @@ https://www.youtube.com/watch?v=CcZjTpUM6eg
 
 PCで Claude Code を走らせたまま、外出先のスマホから指示を出す。待ち時間が消えるのが最大の効用。
 
-- 裏取り: `公式ドキュメント確認済み` → `@.claude/docs/platforms.md`・`@.claude/docs/permission-modes.md`
+- 裏取り: `公式ドキュメント確認済み` → 公式ドキュメント（https://code.claude.com/docs）・公式ドキュメント（https://code.claude.com/docs）
   - Remote Control セッションで使えるのは 許可確認 / acceptEdits / plan のみ。**`auto` と `bypassPermissions` は使えない**
 
 ## 9. Claude Design / Pencil
