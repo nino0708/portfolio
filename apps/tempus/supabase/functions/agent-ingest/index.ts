@@ -19,6 +19,7 @@
 
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2.45.0";
 import { resolveClipKind } from "../_shared/clipKind.ts";
+import { expandQuickAdd } from "../_shared/quickAdd.ts";
 
 function requireEnv(name: string): string {
   const value = Deno.env.get(name);
@@ -479,7 +480,8 @@ Deno.serve(async (req: Request) => {
     }
 
     const rawBody = await readBodyWithLimit(req);
-    const parsed = parseJson(rawBody);
+    // iPhone ショートカットの簡易形式 { title, notes } を通常形式に広げる（_shared/quickAdd.ts）
+    const parsed = expandQuickAdd(parseJson(rawBody));
     validateShape(parsed);
 
     const ownerId = await resolveOwnerId();
