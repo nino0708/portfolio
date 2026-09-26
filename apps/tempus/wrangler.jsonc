@@ -1,0 +1,7 @@
+// Tempus の画面（Cloudflare Workers の静的アセット）。公開は `npm run deploy`。
+// Worker 名は管理画面で最初に作った時の自動命名のまま（URL が変わるので変えない）。
+{
+  "name": "divine-breeze-3e59",
+  "compatibility_date": "2026-09-01",
+  "assets": { "directory": "./dist" }
+}
