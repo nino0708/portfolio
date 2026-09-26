@@ -108,6 +108,8 @@ export function ClipBlock({
   // いない状態が一番困るので、失敗したことを画面に出して手で選べる形に倒す。
   // URLが本文に含まれていない場合は、貼るだけで済むように末尾に足してコピーする。
   const copyText = clipPostText(clip);
+  // 参考メモ（秘書が部署資料から抜き出した文）は投稿しないので、コピーだけ出す
+  const isPost = clip.kind === 'x_post';
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(copyText);
@@ -123,7 +125,7 @@ export function ClipBlock({
     <div className={`detail-block clip ${clip.postedAt ? 'posted' : ''}`}>
       <div className="detail-label">
         {clip.label}
-        {clip.postedAt && <span className="badge">投稿済み</span>}
+        {isPost && clip.postedAt && <span className="badge">投稿済み</span>}
       </div>
       <div className="detail-text selectable">{clip.text}</div>
       {/* 投稿文の中にURLが入っているのが普通なので、同じものを2回出さない */}
@@ -132,7 +134,7 @@ export function ClipBlock({
       )}
       <div className="row" style={{ marginTop: 8 }}>
         {/* コピー→Xを開く→貼る を1タップに。X アプリがあればアプリの投稿画面が本文入りで開く */}
-        {clip.kind === 'x_post' && (
+        {isPost && (
           <a className="btn filled" href={xIntentUrl(clip)} target="_blank" rel="noreferrer">
             Xで投稿
           </a>
@@ -140,9 +142,11 @@ export function ClipBlock({
         <button className="btn tonal" onClick={() => void copy()}>
           {copied ? 'コピーした' : '本文をコピー'}
         </button>
-        <button className="btn" onClick={() => onMarkPosted(clip, !clip.postedAt)}>
-          {clip.postedAt ? '投稿済みを取り消す' : '投稿した'}
-        </button>
+        {isPost && (
+          <button className="btn" onClick={() => onMarkPosted(clip, !clip.postedAt)}>
+            {clip.postedAt ? '投稿済みを取り消す' : '投稿した'}
+          </button>
+        )}
       </div>
       {copyError && <div className="detail-meta warn">コピーできなかった。本文を長押しして選んで。</div>}
     </div>

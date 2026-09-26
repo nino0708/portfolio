@@ -18,6 +18,7 @@
 // - tasks/reports/clipsはそれぞれ最大100件、超えたら400
 
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2.45.0";
+import { resolveClipKind } from "../_shared/clipKind.ts";
 
 function requireEnv(name: string): string {
   const value = Deno.env.get(name);
@@ -71,6 +72,7 @@ interface IncomingClip {
   imageUrl?: string;        // 投稿に添える画像URL（任意）。UIは投稿済みになった後にプレビュー表示する
   dedupeKey?: string;
   taskDedupeKey?: string;   // 同じリクエストで送ったタスクのdedupeKey。付けるとそのタスクの詳細に出る
+  kind?: string;            // "x_post"（Xに貼る投稿文）| "note"（参考メモ）。省略時は送信元で決める（_shared/clipKind.ts）
 }
 
 interface IngestRequestBody {
@@ -368,6 +370,7 @@ async function resolveTaskId(
 
 async function ingestClips(
   ownerId: string,
+  agent: string,
   items: IncomingClip[],
 ): Promise<{ inserted: number; skipped: number; warnings: string[] }> {
   let inserted = 0;
@@ -408,6 +411,7 @@ async function ingestClips(
           image_url: nonEmptyString(raw.imageUrl) ? raw.imageUrl : null,
           task_id: taskId,
           dedupe_key: dedupeKey,
+          kind: resolveClipKind(raw.kind, agent),
         },
         { onConflict: "owner_id,dedupe_key", ignoreDuplicates: true },
       )
@@ -499,7 +503,7 @@ Deno.serve(async (req: Request) => {
       results.inserted.reports = r.inserted;
       results.skipped.reports = r.skipped;
 
-      const c = await ingestClips(ownerId, parsed.clips ?? []);
+      const c = await ingestClips(ownerId, parsed.agent!, parsed.clips ?? []);
       results.inserted.clips = c.inserted;
       results.skipped.clips = c.skipped;
       results.warnings = c.warnings;
