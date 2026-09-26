@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { fmtTime } from '../lib/dates';
 import type { ChecklistItem, Clip, Task } from '../types/domain';
-import { clipPostText, xIntentUrl } from '../lib/xPost';
+import { clipPostText, xPostTarget } from '../lib/xPost';
 
 const SOURCE_LABEL: Record<Task['source'], string> = {
   app: 'アプリ', line: 'LINE', shortcut: 'ショートカット',
@@ -133,12 +133,17 @@ export function ClipBlock({
         <a className="detail-url" href={clip.url} target="_blank" rel="noreferrer">{clip.url}</a>
       )}
       <div className="row" style={{ marginTop: 8 }}>
-        {/* コピー→Xを開く→貼る を1タップに。X アプリがあればアプリの投稿画面が本文入りで開く */}
-        {isPost && (
-          <a className="btn filled" href={xIntentUrl(clip)} target="_blank" rel="noreferrer">
-            Xで投稿
-          </a>
-        )}
+        {/* コピー→Xを開く→貼る を1タップに。投稿アカウントは開く場所で分ける（lib/xPost.ts） */}
+        {isPost && (() => {
+          const t = xPostTarget(clip);
+          return (
+            // アプリ用の twitter:// は新しいタブだと開けないことがあるので、https の時だけ別タブにする
+            <a className="btn filled" href={t.href}
+              {...(t.href.startsWith('https:') ? { target: '_blank', rel: 'noreferrer' } : {})}>
+              {t.label}
+            </a>
+          );
+        })()}
         <button className="btn tonal" onClick={() => void copy()}>
           {copied ? 'コピーした' : '本文をコピー'}
         </button>
