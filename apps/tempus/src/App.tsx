@@ -13,7 +13,7 @@ import {
 import { syncGoogleDay, loadCachedEvents, toBusyBlocks } from './lib/google';
 import {
   listOpenTasks, listDayTasks, createTask, updateTask,
-  startTask, finishTask, groupByTaskId,
+  startTask, finishTask, groupByTaskId, listRecentlyDone, reopenTask,
 } from './lib/tasks';
 import { listClips, setClipPosted } from './lib/clips';
 import { listVerifications, createVerification, updateVerification } from './lib/verifications';
@@ -31,6 +31,7 @@ import { Timeline } from './components/Timeline';
 import { TaskList } from './components/TaskList';
 import { CalendarView } from './components/CalendarView';
 import { Recurrences } from './components/Recurrences';
+import { RecentlyDone } from './components/RecentlyDone';
 import { Review } from './components/Review';
 import { LooseClips } from './components/LooseClips';
 import { Verifications } from './components/Verifications';
@@ -57,6 +58,7 @@ export default function App() {
   const [notice, setNotice] = useState<string | null>(null);
   const [captureError, setCaptureError] = useState<string | null>(null);
   const [recurrences, setRecurrences] = useState<Recurrence[]>([]);
+  const [recentDone, setRecentDone] = useState<Task[]>([]);
   const [checklist, setChecklist] = useState<ChecklistItem[]>([]);
   const [clips, setClips] = useState<Clip[]>([]);
   const [verifications, setVerifications] = useState<Verification[]>([]);
@@ -85,11 +87,13 @@ export default function App() {
 
   const reload = useCallback(async () => {
     if (!session) return;
-    const [open, dayT, recs, cl, ver] = await Promise.all([
+    const [open, dayT, recs, cl, ver, done] = await Promise.all([
       listOpenTasks(), listDayTasks(day, tz), listRecurrences().catch(() => [] as Recurrence[]),
       listClips().catch(() => [] as Clip[]),
       listVerifications().catch(() => [] as Verification[]),
+      listRecentlyDone().catch(() => [] as Task[]),
     ]);
+    setRecentDone(done);
     setOpenTasks(open);
     setDayTasks(dayT);
     setRecurrences(recs);
@@ -579,6 +583,12 @@ export default function App() {
       </div>
 
       <LooseClips clips={looseClips} onMarkPosted={(clip, posted) => void markPosted(clip, posted)} />
+
+      <RecentlyDone tasks={recentDone} tz={tz} onReopen={async (t) => {
+        await reopenTask(t.id);
+        setNotice(`「${t.title}」を未完了に戻した`);
+        await reload();
+      }} />
 
       <div className="card">
         <h2>毎日やる作業</h2>

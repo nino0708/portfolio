@@ -161,3 +161,23 @@ export async function listRunningTasks(): Promise<Task[]> {
   const { data } = await supabase.from('tasks').select('*').not('started_at', 'is', null);
   return (data ?? []).map(rowToTask);
 }
+
+/**
+ * 最近完了したタスク。チェックを押し間違えて一覧から消えた時に戻せるようにするため、
+ * 完了が新しい順に少しだけ引く。
+ */
+export async function listRecentlyDone(limit = 30): Promise<Task[]> {
+  const { data, error } = await supabase
+    .from('tasks')
+    .select('*')
+    .eq('status', 'done')
+    .order('completed_at', { ascending: false, nullsFirst: false })
+    .limit(limit);
+  if (error) throw error;
+  return (data ?? []).map(rowToTask);
+}
+
+/** 完了を取り消して未完了に戻す。完了時に入れた実績時間も消す（押し間違いの完了なので） */
+export async function reopenTask(id: string): Promise<void> {
+  await updateTask(id, { status: 'todo', completed_at: null, actual_min: null, started_at: null });
+}
