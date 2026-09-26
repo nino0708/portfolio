@@ -245,6 +245,7 @@ input, textarea { font: inherit; }
 .btn.filled { background: var(--primary); color: var(--on-primary); border-color: transparent; font-weight: 600; }
 .btn.tonal { background: var(--primary-container); color: var(--on-primary-container); border-color: transparent; }
 .btn:disabled { opacity: .45; cursor: default; }
+a.btn { display: inline-block; text-decoration: none; }
 
 .banner {
   display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
