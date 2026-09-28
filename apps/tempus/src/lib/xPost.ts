@@ -21,10 +21,10 @@ export function xAppUrl(clip: Pick<Clip, 'text' | 'url'>): string {
 export type XAccount = 'builtjapan' | 'friday';
 
 /**
- * どのアカウントから投稿する文案か。
- * X の URL では投稿アカウントを指定できないので、開く場所で分ける運用にしている:
- *   Built Japan … ブラウザ版 X（Built Japan でログイン）
- *   Friday商事  … X アプリ（Friday商事でログイン）
+ * どのアカウントから投稿する文案か（ボタンの表示名に使う）。
+ * X の URL では投稿アカウントを指定できないので、どちらも X アプリで開き、
+ * アプリ側でアカウントを切り替えてから投稿する運用にしている
+ * （ブラウザ版は読み込みが遅く時間がかかるため使わない）。
  * Built Japan の文案は必ず記事（builtjapan.com）へのリンクを含むので、それで見分ける。
  */
 export function xAccountOf(clip: Pick<Clip, 'text' | 'url'>): XAccount {
@@ -32,7 +32,8 @@ export function xAccountOf(clip: Pick<Clip, 'text' | 'url'>): XAccount {
 }
 
 export function xPostTarget(clip: Pick<Clip, 'text' | 'url'>): { href: string; label: string } {
-  return xAccountOf(clip) === 'builtjapan'
-    ? { href: xIntentUrl(clip), label: 'Xで投稿（Built Japan）' }
-    : { href: xAppUrl(clip), label: 'Xアプリで投稿（Friday商事）' };
+  return {
+    href: xAppUrl(clip),
+    label: xAccountOf(clip) === 'builtjapan' ? 'Xアプリで投稿（Built Japan）' : 'Xアプリで投稿（Friday商事）',
+  };
 }
