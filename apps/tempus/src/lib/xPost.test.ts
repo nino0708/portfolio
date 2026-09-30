@@ -22,9 +22,10 @@ describe('xIntentUrl', () => {
 });
 
 describe('xPostTarget', () => {
-  it('builtjapan.com のリンクがあればブラウザ版（Built Japan）', () => {
+  it('builtjapan.com のリンクがあっても X アプリ（Built Japan）', () => {
     const t = xPostTarget({ text: '虎ノ門の塔', url: 'https://builtjapan.com/buildings/x/' });
-    expect(t.href.startsWith('https://x.com/intent/post?text=')).toBe(true);
+    expect(t.href.startsWith('twitter://post?message=')).toBe(true);
+    expect(decodeURIComponent(t.href.split('message=')[1])).toBe('虎ノ門の塔\nhttps://builtjapan.com/buildings/x/');
     expect(t.label).toContain('Built Japan');
   });
   it('それ以外は X アプリ（Friday商事）', () => {
